@@ -4,23 +4,56 @@ const DATA_URL = "./data_combined.csv";
 /* ===============================
    MAP INIT
 =================================*/
-const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
-// Add a reliable class we control when fullscreen toggles
-map.on("enterFullscreen", () => document.body.classList.add("hg-fs"));
-map.on("exitFullscreen", () => document.body.classList.remove("hg-fs"));
-/* Keep map below topbar */
-function setMapTopOffset() {
+// Make map globally accessible so we can invalidate size from anywhere
+window.map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
+
+// Add a reliable class we control when fullscreen toggles (your CSS uses hg-fs)
+window.map.on("enterFullscreen", () => {
+  document.body.classList.add("hg-fs");
+  // Let the DOM update, then force Leaflet to re-measure
+  setTimeout(() => window.map.invalidateSize(), 50);
+});
+window.map.on("exitFullscreen", () => {
+  document.body.classList.remove("hg-fs");
+  setTimeout(() => {
+    setMapOffsets();
+    window.map.invalidateSize();
+  }, 50);
+});
+
+/* ===============================
+   LAYOUT FIX: TOPBAR + FOOTER OFFSETS
+   (critical for Google Sites iframe + mobile wrapping)
+=================================*/
+function setMapOffsets() {
   const topbar = document.getElementById("topbar");
-  if (!topbar) return;
+  const footer = document.getElementById("footerHint");
 
-  const top = topbar.offsetHeight + 10;
-  document.documentElement.style.setProperty("--map-top", `${top}px`);
+  const top = topbar ? topbar.getBoundingClientRect().height : 0;
+  const bottom = footer ? footer.getBoundingClientRect().height : 0;
 
-  if (map && map.invalidateSize) map.invalidateSize();
+  // Add a small cushion so Leaflet controls don't tuck under the bar
+  const topWithPad = Math.ceil(top + 10);
+  const bottomWithPad = Math.ceil(bottom);
+
+  document.documentElement.style.setProperty("--map-top", `${topWithPad}px`);
+  document.documentElement.style.setProperty("--map-bottom", `${bottomWithPad}px`);
+
+  if (window.map && window.map.invalidateSize) window.map.invalidateSize();
 }
-window.addEventListener("load", setMapTopOffset);
-window.addEventListener("resize", setMapTopOffset);
-setTimeout(setMapTopOffset, 0);
+
+window.addEventListener("load", () => {
+  setMapOffsets();
+  if (window.map) window.map.invalidateSize();
+});
+
+window.addEventListener("resize", () => {
+  setMapOffsets();
+  if (window.map) window.map.invalidateSize();
+});
+
+// Run once ASAP
+setTimeout(setMapOffsets, 0);
 
 /* ===============================
    BASEMAPS
@@ -60,7 +93,7 @@ const esriLabels = L.tileLayer(
 const satBase = L.layerGroup([esriSatellite, esriLabels]);
 
 // Default basemap
-esriStreet.addTo(map);
+esriStreet.addTo(window.map);
 
 // Layer toggle
 L.control.layers(
@@ -72,13 +105,13 @@ L.control.layers(
   },
   {},
   { position: "topright" }
-).addTo(map);
+).addTo(window.map);
 
 /* ===============================
    CLUSTER
 =================================*/
 const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
-map.addLayer(cluster);
+window.map.addLayer(cluster);
 
 /* ===============================
    DOM REFS
@@ -234,9 +267,15 @@ function refresh() {
 
   if (plotted > 0 && !hasAutoZoomed) {
     const group = L.featureGroup(plottedMarkers);
-    map.fitBounds(group.getBounds().pad(0.12));
+    window.map.fitBounds(group.getBounds().pad(0.12));
     hasAutoZoomed = true;
   }
+
+  // After refresh, re-measure layout + fix Leaflet sizing in iframe
+  setTimeout(() => {
+    setMapOffsets();
+    if (window.map) window.map.invalidateSize();
+  }, 0);
 }
 
 /* ===============================
@@ -280,7 +319,12 @@ function loadData() {
 
       populateYearDropdown();
       refresh();
-      setTimeout(setMapTopOffset, 0);
+
+      // Ensure offsets are correct after controls wrap on mobile
+      setTimeout(() => {
+        setMapOffsets();
+        if (window.map) window.map.invalidateSize();
+      }, 50);
     },
     error: (err) => {
       console.error(err);
@@ -289,7 +333,16 @@ function loadData() {
   });
 }
 
-els.yearSelect.addEventListener("change", refresh);
-els.ptypeChecks.forEach((c) => c.addEventListener("change", refresh));
+els.yearSelect.addEventListener("change", () => {
+  refresh();
+  setTimeout(setMapOffsets, 0);
+});
+
+els.ptypeChecks.forEach((c) =>
+  c.addEventListener("change", () => {
+    refresh();
+    setTimeout(setMapOffsets, 0);
+  })
+);
 
 loadData();
