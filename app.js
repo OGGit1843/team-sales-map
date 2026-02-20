@@ -32,19 +32,14 @@ const MAPTILER_ATTR =
 function maptilerLayer(mapId) {
   return L.tileLayer(
     `https://api.maptiler.com/maps/${mapId}/256/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`,
-    {
-      maxZoom: 20,
-      attribution: MAPTILER_ATTR
-    }
+    { maxZoom: 20, attribution: MAPTILER_ATTR }
   );
 }
 
-// MapTiler styles
 const mtStreet = maptilerLayer("streets-v2");
 const mtWinter = maptilerLayer("winter-v2");
 const mtHybrid = maptilerLayer("hybrid");
 
-// Existing basemaps
 const esriStreet = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19, attribution: "Tiles © Esri" }
@@ -67,10 +62,10 @@ const esriLabels = L.tileLayer(
 
 const satBase = L.layerGroup([esriSatellite, esriLabels]);
 
-// Default layer (keep Google-like street as default)
+// Default
 esriStreet.addTo(window.map);
 
-// Layer switcher (ordered)
+// Layer order
 L.control.layers(
   {
     "MapTiler Street": mtStreet,
@@ -94,11 +89,14 @@ const cluster = L.markerClusterGroup({
 window.map.addLayer(cluster);
 
 /* ===============================
-   DATA / FILTERING
+   DATA / FILTERING + SEARCH
 =================================*/
 const els = {
   yearSelect: document.getElementById("yearSelect"),
-  ptypeChecks: Array.from(document.querySelectorAll(".ptype"))
+  ptypeChecks: Array.from(document.querySelectorAll(".ptype")),
+  searchInput: document.getElementById("searchInput"),
+  searchNext: document.getElementById("searchNext"),
+  searchCount: document.getElementById("searchCount")
 };
 
 let allRows = [];
@@ -106,10 +104,17 @@ let plottedMarkers = [];
 let availableYears = new Set();
 let hasAutoZoomed = false;
 
+let searchMatches = [];
+let searchIndex = -1;
+
 function parseDate(raw) {
   if (!raw) return null;
   const d = new Date(raw);
   return isNaN(d.getTime()) ? null : d;
+}
+
+function normalize(s) {
+  return String(s || "").trim().toLowerCase();
 }
 
 function getActivePropertyTypes() {
@@ -150,6 +155,58 @@ function buildPopup(row) {
   `;
 }
 
+function focusMarker(marker) {
+  const ll = marker.getLatLng();
+  window.map.setView(ll, Math.max(window.map.getZoom(), 15), { animate: true });
+  marker.openPopup();
+}
+
+function updateSearchCount() {
+  if (!els.searchCount) return;
+
+  if (!normalize(els.searchInput?.value)) {
+    els.searchCount.textContent = "";
+    return;
+  }
+
+  if (searchMatches.length === 0) {
+    els.searchCount.textContent = "0/0";
+    return;
+  }
+
+  els.searchCount.textContent = `${searchIndex + 1}/${searchMatches.length}`;
+}
+
+function rebuildSearchMatches() {
+  const q = normalize(els.searchInput?.value);
+  searchMatches = [];
+  searchIndex = -1;
+
+  if (!q) {
+    updateSearchCount();
+    return;
+  }
+
+  searchMatches = plottedMarkers.filter(m =>
+    (m.__searchText || "").includes(q)
+  );
+
+  updateSearchCount();
+}
+
+function goToNextMatch() {
+  if (searchMatches.length === 0) {
+    rebuildSearchMatches();
+    if (searchMatches.length === 0) return;
+  }
+
+  searchIndex = (searchIndex + 1) % searchMatches.length;
+  updateSearchCount();
+
+  const marker = searchMatches[searchIndex];
+  cluster.zoomToShowLayer(marker, () => focusMarker(marker));
+}
+
 function refresh() {
   cluster.clearLayers();
   plottedMarkers = [];
@@ -170,10 +227,14 @@ function refresh() {
 
     const marker = L.marker([lat, lng], { icon: makeIcon(row) });
     marker.bindPopup(buildPopup(row));
-    cluster.addLayer(marker);
 
+    marker.__searchText = normalize(row["Full Address"]);
+
+    cluster.addLayer(marker);
     plottedMarkers.push(marker);
   }
+
+  rebuildSearchMatches();
 
   if (plottedMarkers.length > 0 && !hasAutoZoomed) {
     const group = L.featureGroup(plottedMarkers);
@@ -213,7 +274,29 @@ function loadData() {
   });
 }
 
+// Filters
 els.yearSelect.addEventListener("change", refresh);
 els.ptypeChecks.forEach(c => c.addEventListener("change", refresh));
+
+// Search events
+if (els.searchInput) {
+  let t = null;
+
+  els.searchInput.addEventListener("input", () => {
+    clearTimeout(t);
+    t = setTimeout(rebuildSearchMatches, 200);
+  });
+
+  els.searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      goToNextMatch();
+    }
+  });
+}
+
+if (els.searchNext) {
+  els.searchNext.addEventListener("click", goToNextMatch);
+}
 
 loadData();
