@@ -5,9 +5,9 @@ const DATA_URL = "./data_combined.csv";
 
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
 // --- Basemaps ---
-// --- Basemaps (Polished 4-pack, No API Keys) ---
+// --- Final Basemaps (Polished Professional Set) ---
 
-// 1️⃣ ESRI World Street Map (Google-like, slightly darker)
+// 1️⃣ ESRI World Street Map (Google-like)
 const esriStreet = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   {
@@ -16,21 +16,29 @@ const esriStreet = L.tileLayer(
   }
 );
 
-// 2️⃣ OpenTopoMap (terrain + subtle color depth)
-const topo = L.tileLayer(
-  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+// 2️⃣ Muted (softer OSM balance)
+const muted = L.tileLayer(
+  "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
   {
-    maxZoom: 17,
-    attribution: "&copy; OpenTopoMap contributors"
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap contributors"
   }
 );
 
-// 3️⃣ CARTO Dark Matter (modern dark)
-const cartoDark = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+// 3️⃣ ESRI Dark Gray Canvas (clean subtle dark)
+const esriDark = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
   {
-    maxZoom: 19,
-    attribution: "&copy; CARTO &copy; OpenStreetMap contributors"
+    maxZoom: 16,
+    attribution: "Tiles &copy; Esri"
+  }
+);
+
+// Dark labels overlay (needed for ESRI dark base)
+const esriDarkLabels = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+  {
+    maxZoom: 16
   }
 );
 
@@ -43,24 +51,26 @@ const esriSatellite = L.tileLayer(
   }
 );
 
-// Labels overlay (works for Satellite; can also be toggled as an overlay)
+// Satellite labels overlay
 const esriLabels = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-  { maxZoom: 19 }
+  {
+    maxZoom: 19
+  }
 );
 
 // ✅ Default map (choose ONE line)
 esriStreet.addTo(map);
-// cartoDark.addTo(map);
-// topo.addTo(map);
+// muted.addTo(map);
+// L.layerGroup([esriDark, esriDarkLabels]).addTo(map);
 // L.layerGroup([esriSatellite, esriLabels]).addTo(map);
 
 // Basemap + overlay control
 L.control.layers(
   {
     "Street (Google-like)": esriStreet,
-    "Terrain (OpenTopo)": topo,
-    "Dark (Modern)": cartoDark,
+    "Muted": muted,
+    "Dark Gray (Subtle)": L.layerGroup([esriDark, esriDarkLabels]),
     "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
   },
   {
