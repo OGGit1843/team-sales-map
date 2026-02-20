@@ -5,7 +5,7 @@ const DATA_URL = "./data_combined.csv";
 
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
 // --- Basemaps ---
-// --- Basemaps (Test Version) ---
+// --- Final Basemaps ---
 
 // 1️⃣ Original OpenStreetMap
 const original = L.tileLayer(
@@ -16,37 +16,46 @@ const original = L.tileLayer(
   }
 );
 
-// 2️⃣ ESRI World Street Map (Google-ish feel)
-const esriStreet = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+// 2️⃣ Muted (softer color balance)
+const muted = L.tileLayer(
+  "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+  {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap contributors"
+  }
+);
+
+// 3️⃣ Satellite base
+const esriSatellite = L.tileLayer(
+  "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   {
     maxZoom: 19,
     attribution: "Tiles &copy; Esri"
   }
 );
 
-// 3️⃣ OpenTopoMap (subtle terrain + color)
-const topo = L.tileLayer(
-  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+// Satellite labels overlay
+const esriLabels = L.tileLayer(
+  "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
   {
-    maxZoom: 17,
-    attribution: "&copy; OpenTopoMap contributors"
+    maxZoom: 19
   }
 );
 
-// Default
+// Default map (change to muted.addTo(map) if you prefer that default)
 original.addTo(map);
 
 // Toggle control
 L.control.layers(
   {
-    "Original OSM": original,
-    "ESRI Street (Google-like)": esriStreet,
-    "OpenTopo (Terrain feel)": topo
+    "Original": original,
+    "Muted": muted,
+    "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
   },
   null,
   { position: "topright" }
 ).addTo(map);
+
 
 
 
