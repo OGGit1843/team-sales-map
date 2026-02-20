@@ -5,56 +5,49 @@ const DATA_URL = "./data_combined.csv";
 
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
 // --- Basemaps ---
-// --- Basemaps ---
+// --- Basemaps (Test Version) ---
 
-// 1️⃣ Muted (soft balanced colors)
-const muted = L.tileLayer(
-  "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+// 1️⃣ Original OpenStreetMap
+const original = L.tileLayer(
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   {
     maxZoom: 19,
     attribution: "&copy; OpenStreetMap contributors"
   }
 );
 
-// 2️⃣ Vibrant (richer greens + stronger roads)
-const vibrant = L.tileLayer(
-  "https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png",
-  {
-    maxZoom: 19,
-    attribution: "&copy; OpenStreetMap contributors"
-  }
-);
-
-// 3️⃣ Satellite base
-const esriSatellite = L.tileLayer(
-  "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+// 2️⃣ ESRI World Street Map (Google-ish feel)
+const esriStreet = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   {
     maxZoom: 19,
     attribution: "Tiles &copy; Esri"
   }
 );
 
-// Satellite labels overlay
-const esriLabels = L.tileLayer(
-  "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+// 3️⃣ OpenTopoMap (subtle terrain + color)
+const topo = L.tileLayer(
+  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
   {
-    maxZoom: 19
+    maxZoom: 17,
+    attribution: "&copy; OpenTopoMap contributors"
   }
 );
 
-// Default map (pick your favorite here)
-muted.addTo(map);
+// Default
+original.addTo(map);
 
 // Toggle control
 L.control.layers(
   {
-    "Muted": muted,
-    "Vibrant": vibrant,
-    "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
+    "Original OSM": original,
+    "ESRI Street (Google-like)": esriStreet,
+    "OpenTopo (Terrain feel)": topo
   },
   null,
   { position: "topright" }
 ).addTo(map);
+
 
 
 const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
