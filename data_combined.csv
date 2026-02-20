@@ -12,7 +12,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "4475 Millwater Drive, OH 43065",40.179569,-83.110686,Buyer,"510,000",08/31/2021,Residential
 "8071 Cranes Crossing Drive S, OH 43035",40.170333,-83.010579,Seller/Listing,"168,000",09/10/2021,Residential
 "334 Amesbury Drive, Gahanna, OH 43230",40.027590,-82.901725,Seller/Listing,"225,000",09/17/2021,Residential
-"8443 Gardenia Drive Lot 1053, OH 43064",,,Buyer,"547,220",09/20/2021,Residential
+"8443 Gardenia Drive Lot 1053, OH 43064",40.186869,-83.185799,Buyer,"547,220",09/20/2021,Residential
 "5746 Braymoore Drive, OH 43021",40.184628,-82.935297,Buyer,"495,000",09/21/2021,Residential
 "8734 Renfrew Street, Columbus, OH 43065",40.134174,-83.083561,Seller/Listing,"426,500",09/24/2021,Residential
 "6125 Paris Boulevard N, OH 43081",40.094304,-82.913730,Seller/Listing,"210,000",09/24/2021,Residential
@@ -357,5 +357,6 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "0 S Riverside Drive, Powell, OH 43065",40.134531,-83.113877,Buyer,205000,03/09/2022,Land
 "5177 Carters Corner Road, Sunbury, OH 43074",40.32185,-82.885062,Seller/Listing,210000,03/28/2023,Land
 "6233 Tussic Street Road, Westerville, OH 43082",40.158761,-82.899843,Buyer,195000,03/21/2022,Land
+
 
 
