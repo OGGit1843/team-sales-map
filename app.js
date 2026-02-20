@@ -4,56 +4,78 @@ const DATA_URL = "./data_combined.csv";
 /* ===============================
    MAP INIT
 =================================*/
-// Make map globally accessible so we can invalidate size from anywhere
 window.map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
 
-// Add a reliable class we control when fullscreen toggles (your CSS uses hg-fs)
 window.map.on("enterFullscreen", () => {
   document.body.classList.add("hg-fs");
-  // Let the DOM update, then force Leaflet to re-measure
   setTimeout(() => window.map.invalidateSize(), 50);
 });
 window.map.on("exitFullscreen", () => {
   document.body.classList.remove("hg-fs");
-  setTimeout(() => {
-    setMapOffsets();
-    window.map.invalidateSize();
-  }, 50);
+  setTimeout(() => window.map.invalidateSize(), 50);
 });
 
 /* ===============================
-   LAYOUT FIX: TOPBAR + FOOTER OFFSETS
-   (critical for Google Sites iframe + mobile wrapping)
+   UI: Inject panel as Leaflet control
 =================================*/
-function setMapOffsets() {
-  const topbar = document.getElementById("topbar");
-  const footer = document.getElementById("footerHint");
-
-  const top = topbar ? topbar.getBoundingClientRect().height : 0;
-  const bottom = footer ? footer.getBoundingClientRect().height : 0;
-
-  // Add a small cushion so Leaflet controls don't tuck under the bar
-  const topWithPad = Math.ceil(top + 10);
-  const bottomWithPad = Math.ceil(bottom);
-
-  document.documentElement.style.setProperty("--map-top", `${topWithPad}px`);
-  document.documentElement.style.setProperty("--map-bottom", `${bottomWithPad}px`);
-
-  if (window.map && window.map.invalidateSize) window.map.invalidateSize();
+function stop(e) {
+  L.DomEvent.stopPropagation(e);
+  L.DomEvent.preventDefault(e);
 }
 
-window.addEventListener("load", () => {
-  setMapOffsets();
-  if (window.map) window.map.invalidateSize();
-});
+function mountLeafletUI() {
+  const tpl = document.getElementById("uiTemplate");
+  if (!tpl) throw new Error("Missing #uiTemplate");
 
-window.addEventListener("resize", () => {
-  setMapOffsets();
-  if (window.map) window.map.invalidateSize();
-});
+  const frag = tpl.content.cloneNode(true);
+  const panel = frag.querySelector("#hgPanel");
+  const openBtn = frag.querySelector("#hgOpenBtn");
+  const closeBtn = frag.querySelector("#hgCloseBtn");
 
-// Run once ASAP
-setTimeout(setMapOffsets, 0);
+  // Floating open button in the map container (not a Leaflet control)
+  window.map.getContainer().appendChild(openBtn);
+
+  // Leaflet control for the panel (bottom-left is better for mobile)
+  const HgControl = L.Control.extend({
+    options: { position: "bottomleft" },
+    onAdd: function () {
+      const container = L.DomUtil.create("div", "hg-wrap");
+      container.classList.add("hg-control");
+
+      container.appendChild(panel);
+
+      // Prevent map drag/zoom when interacting with UI
+      L.DomEvent.disableClickPropagation(container);
+      L.DomEvent.disableScrollPropagation(container);
+
+      return container;
+    }
+  });
+
+  const ctl = new HgControl();
+  window.map.addControl(ctl);
+
+  // Toggle logic (mobile)
+  function openPanel() {
+    panel.classList.add("is-open");
+  }
+  function closePanel() {
+    panel.classList.remove("is-open");
+  }
+
+  // Only used on mobile (CSS hides buttons appropriately)
+  openBtn.addEventListener("click", (e) => { stop(e); openPanel(); });
+  closeBtn.addEventListener("click", (e) => { stop(e); closePanel(); });
+
+  // Close panel when clicking map (mobile quality of life)
+  window.map.on("click", () => closePanel());
+
+  // Keep a handle
+  return { panel, openBtn };
+}
+
+// Mount UI first so DOM refs exist
+mountLeafletUI();
 
 /* ===============================
    BASEMAPS
@@ -114,7 +136,7 @@ const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRad
 window.map.addLayer(cluster);
 
 /* ===============================
-   DOM REFS
+   DOM REFS (now that UI is mounted)
 =================================*/
 const els = {
   yearSelect: document.getElementById("yearSelect"),
@@ -271,11 +293,8 @@ function refresh() {
     hasAutoZoomed = true;
   }
 
-  // After refresh, re-measure layout + fix Leaflet sizing in iframe
-  setTimeout(() => {
-    setMapOffsets();
-    if (window.map) window.map.invalidateSize();
-  }, 0);
+  // iframe/resize stability
+  setTimeout(() => window.map.invalidateSize(), 0);
 }
 
 /* ===============================
@@ -320,11 +339,7 @@ function loadData() {
       populateYearDropdown();
       refresh();
 
-      // Ensure offsets are correct after controls wrap on mobile
-      setTimeout(() => {
-        setMapOffsets();
-        if (window.map) window.map.invalidateSize();
-      }, 50);
+      setTimeout(() => window.map.invalidateSize(), 50);
     },
     error: (err) => {
       console.error(err);
@@ -333,16 +348,7 @@ function loadData() {
   });
 }
 
-els.yearSelect.addEventListener("change", () => {
-  refresh();
-  setTimeout(setMapOffsets, 0);
-});
-
-els.ptypeChecks.forEach((c) =>
-  c.addEventListener("change", () => {
-    refresh();
-    setTimeout(setMapOffsets, 0);
-  })
-);
+els.yearSelect.addEventListener("change", refresh);
+els.ptypeChecks.forEach((c) => c.addEventListener("change", refresh));
 
 loadData();
