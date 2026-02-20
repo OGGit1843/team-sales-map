@@ -1,5 +1,4 @@
 // Hance Group Team Sales Map (Leaflet)
-
 const DATA_URL = "./data_combined.csv";
 
 /* ===============================
@@ -7,9 +6,7 @@ const DATA_URL = "./data_combined.csv";
 =================================*/
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
 
-/* ===============================
-   AUTO OFFSET (TOPBAR SAFE)
-=================================*/
+/* Keep map below topbar */
 function setMapTopOffset() {
   const topbar = document.getElementById("topbar");
   if (!topbar) return;
@@ -26,124 +23,60 @@ setTimeout(setMapTopOffset, 0);
 /* ===============================
    BASEMAPS
 =================================*/
+// 1) ESRI World Street Map
 const esriStreet = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19, attribution: "Tiles © Esri" }
 );
 
+// 2) Muted (OSM HOT style you liked as “muted-ish”)
 const muted = L.tileLayer(
   "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
   { maxZoom: 19, attribution: "© OpenStreetMap contributors" }
 );
 
+// 3) ESRI Dark Gray Canvas + labels
 const esriDark = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 16, attribution: "Tiles © Esri" }
 );
-
 const esriDarkLabels = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 16 }
 );
+const darkBase = L.layerGroup([esriDark, esriDarkLabels]);
 
+// 4) Satellite + labels
 const esriSatellite = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19, attribution: "Tiles © Esri" }
 );
-
 const esriLabels = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19 }
 );
+const satBase = L.layerGroup([esriSatellite, esriLabels]);
 
-const darkBase = L.layerGroup([esriDark, esriDarkLabels]);
-
-// default basemap
+// Default basemap
 esriStreet.addTo(map);
 
-/* ===============================
-   CLUSTER + HEAT
-=================================*/
-const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
-map.addLayer(cluster);
-
-const heatLayer = L.heatLayer([], { radius: 28, blur: 22, maxZoom: 17 });
-
-/* ===============================
-   LAYER CONTROL
-=================================*/
+// Layer toggle
 L.control.layers(
   {
     "Street (Google-like)": esriStreet,
     "Muted": muted,
     "Dark Gray (Subtle)": darkBase,
-    "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
+    "Satellite + Labels": satBase
   },
-  {
-    "Heatmap (Density)": heatLayer,
-    "Extra Labels (More names)": esriLabels
-  },
+  {},
   { position: "topright" }
 ).addTo(map);
 
 /* ===============================
-   DARK UI toggle when dark basemap active
+   CLUSTER
 =================================*/
-function setBasemapUI(isDark) {
-  document.body.classList.toggle("basemap-dark", !!isDark);
-}
-map.on("baselayerchange", (e) => {
-  setBasemapUI(e.layer === darkBase);
-});
-setBasemapUI(false);
-
-/* ===============================
-   SIDE PANEL TOGGLE (MOBILE)
-=================================*/
-const sidePanel = document.getElementById("sidePanel");
-const panelToggle = document.getElementById("panelToggle");
-
-function setPanelCollapsed(collapsed) {
-  if (!sidePanel || !panelToggle) return;
-
-  sidePanel.classList.toggle("collapsed", collapsed);
-  panelToggle.setAttribute("aria-expanded", (!collapsed).toString());
-  panelToggle.textContent = collapsed ? "Stats ▾" : "Stats ▴";
-
-  // Store state so it stays the way you left it
-  try { localStorage.setItem("panelCollapsed", collapsed ? "1" : "0"); } catch {}
-
-  // Leaflet needs a resize recalc after layout shifts
-  setTimeout(() => map.invalidateSize(), 50);
-}
-
-if (sidePanel && panelToggle) {
-  // default: collapsed on mobile, open on desktop
-  let collapsed = window.matchMedia("(max-width: 900px)").matches;
-
-  // restore saved preference
-  try {
-    const saved = localStorage.getItem("panelCollapsed");
-    if (saved === "1") collapsed = true;
-    if (saved === "0") collapsed = false;
-  } catch {}
-
-  setPanelCollapsed(collapsed);
-
-  panelToggle.addEventListener("click", () => {
-    const nowCollapsed = !sidePanel.classList.contains("collapsed") ? true : false;
-    setPanelCollapsed(nowCollapsed);
-  });
-
-  // when switching between desktop/mobile widths, keep it sane
-  window.addEventListener("resize", () => {
-    const isMobile = window.matchMedia("(max-width: 900px)").matches;
-    if (!isMobile) {
-      // desktop: keep open
-      setPanelCollapsed(false);
-    }
-  });
-}
+const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
+map.addLayer(cluster);
 
 /* ===============================
    DOM REFS
@@ -151,14 +84,9 @@ if (sidePanel && panelToggle) {
 const els = {
   yearSelect: document.getElementById("yearSelect"),
   stats: document.getElementById("stats"),
-  kpiVolume: document.getElementById("kpiVolume"),
-  panelBody: document.getElementById("panelBody"),
   ptypeChecks: Array.from(document.querySelectorAll(".ptype"))
 };
 
-/* ===============================
-   DATA STATE
-=================================*/
 let allRows = [];
 let plottedMarkers = [];
 let availableYears = new Set();
@@ -190,16 +118,17 @@ function parseDate(raw) {
 
 function fmtMoney(n) {
   if (n == null) return "";
-  return n.toLocaleString(undefined, {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0
-  });
+  try {
+    return n.toLocaleString(undefined, { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+  } catch {
+    return `$${Math.round(n).toLocaleString()}`;
+  }
 }
 
 function getActivePropertyTypes() {
-  return new Set(els.ptypeChecks.filter((c) => c.checked).map((c) => c.value));
+  return new Set(els.ptypeChecks.filter(c => c.checked).map(c => c.value));
 }
+
 function getActiveYear() {
   return els.yearSelect.value || "all";
 }
@@ -221,11 +150,12 @@ function typeEmoji(ptype) {
 }
 
 function makeIcon(row) {
+  const cls = txClass(row["Transaction Type"]);
+  const emoji = typeEmoji(row["Property Type"]);
+
   return L.divIcon({
     className: "",
-    html: `<div class="marker ${txClass(row["Transaction Type"])}" title="${row["Property Type"] || ""}">
-            ${typeEmoji(row["Property Type"])}
-          </div>`,
+    html: `<div class="marker ${cls}" title="${row["Property Type"] || ""}">${emoji}</div>`,
     iconSize: [34, 34],
     iconAnchor: [17, 34],
     popupAnchor: [0, -30]
@@ -237,9 +167,7 @@ function buildPopup(row) {
   const dt = parseDate(row["Sold Date"]);
 
   const photo = (row["PhotoURL"] || row["Photo Url"] || row["Photo"] || "").toString().trim();
-  const imgHtml = photo
-    ? `<div class="photo"><img src="${photo}" alt="Property photo" loading="lazy"/></div>`
-    : "";
+  const imgHtml = photo ? `<div class="photo"><img src="${photo}" alt="Property photo" loading="lazy"/></div>` : "";
 
   const safe = (v) => (v == null ? "" : String(v));
 
@@ -264,15 +192,12 @@ function refresh() {
   cluster.clearLayers();
   plottedMarkers = [];
 
-  const heatPoints = [];
-  let volume = 0;
-
-  let buyerCount = 0, sellerCount = 0, unknownCount = 0;
-
   const activeTypes = getActivePropertyTypes();
   const activeYear = getActiveYear();
 
-  let total = 0, plotted = 0, missing = 0;
+  let total = 0;
+  let plotted = 0;
+  let missing = 0;
 
   for (const row of allRows) {
     total++;
@@ -282,48 +207,28 @@ function refresh() {
 
     const lat = Number(row["Latitude"]);
     const lng = Number(row["Longitude"]);
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) { missing++; continue; }
+
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+      missing++;
+      continue;
+    }
 
     const dt = parseDate(row["Sold Date"]);
     const year = dt ? String(dt.getFullYear()) : null;
     if (activeYear !== "all" && year !== activeYear) continue;
 
-    heatPoints.push([lat, lng, 1]);
-
-    const price = parseSoldPrice(row["Sold Price"]);
-    if (price != null) volume += price;
-
-    const cls = txClass(row["Transaction Type"]);
-    if (cls === "buyer") buyerCount++;
-    else if (cls === "seller") sellerCount++;
-    else unknownCount++;
-
     const marker = L.marker([lat, lng], { icon: makeIcon(row) });
     marker.bindPopup(buildPopup(row), { maxWidth: 320 });
-
     cluster.addLayer(marker);
+
     plottedMarkers.push(marker);
     plotted++;
   }
 
   if (els.stats) {
-    els.stats.textContent = `${plotted.toLocaleString()} pinned • ${missing.toLocaleString()} missing coords • ${total.toLocaleString()} total`;
+    els.stats.textContent =
+      `${plotted.toLocaleString()} pinned • ${missing.toLocaleString()} missing coords • ${total.toLocaleString()} total`;
   }
-
-  if (els.kpiVolume) {
-    const label = activeYear === "all" ? "Volume" : `Volume (${activeYear})`;
-    els.kpiVolume.textContent = `${label}: ${fmtMoney(volume)}`;
-  }
-
-  if (els.panelBody) {
-    els.panelBody.innerHTML = `
-      <div class="row"><span>Buyer</span><b>${buyerCount.toLocaleString()}</b></div>
-      <div class="row"><span>Seller</span><b>${sellerCount.toLocaleString()}</b></div>
-      <div class="row"><span>Unknown</span><b>${unknownCount.toLocaleString()}</b></div>
-    `;
-  }
-
-  heatLayer.setLatLngs(heatPoints);
 
   if (plotted > 0 && !hasAutoZoomed) {
     const group = L.featureGroup(plottedMarkers);
@@ -333,26 +238,28 @@ function refresh() {
 }
 
 /* ===============================
-   LOAD DATA
+   YEAR DROPDOWN
 =================================*/
 function populateYearDropdown() {
   const years = Array.from(availableYears).sort((a, b) => b - a);
-  if (!els.yearSelect) return;
-
   const current = els.yearSelect.value || "all";
+
   els.yearSelect.innerHTML = '<option value="all">All</option>';
 
-  years.forEach((y) => {
+  for (const y of years) {
     const opt = document.createElement("option");
     opt.value = String(y);
     opt.textContent = String(y);
     els.yearSelect.appendChild(opt);
-  });
+  }
 
-  if (current === "all" || years.includes(Number(current))) els.yearSelect.value = current;
-  else els.yearSelect.value = "all";
+  const exists = (current === "all") || years.includes(Number(current));
+  els.yearSelect.value = exists ? current : "all";
 }
 
+/* ===============================
+   LOAD DATA
+=================================*/
 function loadData() {
   if (els.stats) els.stats.textContent = "Loading…";
 
@@ -364,10 +271,10 @@ function loadData() {
       allRows = results.data || [];
 
       availableYears = new Set();
-      allRows.forEach((row) => {
+      for (const row of allRows) {
         const dt = parseDate(row["Sold Date"]);
         if (dt) availableYears.add(dt.getFullYear());
-      });
+      }
 
       populateYearDropdown();
       refresh();
@@ -380,7 +287,7 @@ function loadData() {
   });
 }
 
-if (els.yearSelect) els.yearSelect.addEventListener("change", refresh);
+els.yearSelect.addEventListener("change", refresh);
 els.ptypeChecks.forEach((c) => c.addEventListener("change", refresh));
 
 loadData();
