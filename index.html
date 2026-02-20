@@ -8,9 +8,11 @@
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<!-- Leaflet Fullscreen Plugin -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.css" />
-<script src="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.js"></script>
+
+  <!-- Leaflet Fullscreen Plugin -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.css" />
+  <script src="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.js"></script>
+
   <!-- MarkerCluster -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
@@ -19,7 +21,8 @@
   <!-- Papa Parse -->
   <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
 
-  <link rel="stylesheet" href="./style.css" />
+  <!-- Cache-busted local CSS -->
+  <link rel="stylesheet" href="./style.css?v=7" />
 </head>
 
 <body>
@@ -50,6 +53,7 @@
 
   <div id="footerHint">Tip: Use fullscreen for the best mobile experience.</div>
 
-  <script src="./app.js"></script>
+  <!-- Cache-busted local JS -->
+  <script src="./app.js?v=7"></script>
 </body>
 </html>
