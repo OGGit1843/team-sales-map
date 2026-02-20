@@ -21,13 +21,13 @@
   <!-- Papa Parse -->
   <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
 
-  <link rel="stylesheet" href="./style.css?v=9" />
+  <link rel="stylesheet" href="./style.css?v=10" />
 </head>
 
 <body>
   <div id="map"></div>
 
-  <!-- Hidden UI template that we inject into a Leaflet control -->
+  <!-- Hidden UI template injected into Leaflet control -->
   <template id="uiTemplate">
     <div class="hg-panel" id="hgPanel">
       <div class="hg-panel__header">
@@ -52,13 +52,19 @@
 
       <div id="stats" class="hg-stats">Loading…</div>
 
-      <div class="hg-hint">Tip: Use fullscreen for the best mobile experience.</div>
+      <div class="hg-actions">
+        <a class="hg-link" id="hgOpenStandalone" href="#" target="_blank" rel="noopener">
+          Open fullscreen in new tab
+        </a>
+      </div>
+
+      <div class="hg-hint">Tip: If fullscreen doesn’t work inside Google Sites, use the link above.</div>
     </div>
 
     <!-- Mobile-only floating open button -->
     <button class="hg-open" id="hgOpenBtn" type="button">Filters</button>
   </template>
 
-  <script src="./app.js?v=9"></script>
+  <script src="./app.js?v=10"></script>
 </body>
 </html>
