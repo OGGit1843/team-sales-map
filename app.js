@@ -5,23 +5,28 @@ const DATA_URL = "./data_combined.csv";
 
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
 // --- Basemaps ---
-const cartoLight = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+// --- Basemaps ---
+
+// Soft neutral map (Google-ish muted)
+const osmMuted = L.tileLayer(
+  "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+  {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap contributors"
+  }
+);
+
+// Soft gray Zillow-style (less bright)
+const cartoSoftGray = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png",
   {
     maxZoom: 19,
     attribution: "&copy; CARTO &copy; OpenStreetMap contributors"
   }
 );
 
-const cartoVoyager = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-  {
-    maxZoom: 19,
-    attribution: "&copy; CARTO &copy; OpenStreetMap contributors"
-  }
-);
-
-const esriHybrid = L.tileLayer(
+// Satellite base
+const esriSatellite = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   {
     maxZoom: 19,
@@ -29,6 +34,7 @@ const esriHybrid = L.tileLayer(
   }
 );
 
+// Satellite labels overlay
 const esriLabels = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
   {
@@ -36,19 +42,20 @@ const esriLabels = L.tileLayer(
   }
 );
 
-// Add default map
-cartoLight.addTo(map);
+// Default map
+osmMuted.addTo(map);
 
 // Layer control
 L.control.layers(
   {
-    "Light (Clean)": cartoLight,
-    "Voyager (Modern)": cartoVoyager,
-    "Satellite + Labels": L.layerGroup([esriHybrid, esriLabels])
+    "Muted Map (Google-style)": osmMuted,
+    "Soft Gray (Zillow vibe)": cartoSoftGray,
+    "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
   },
   null,
   { position: "topright" }
 ).addTo(map);
+
 const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
 map.addLayer(cluster);
 
