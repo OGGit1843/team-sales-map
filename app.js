@@ -6,7 +6,6 @@ const DATA_URL = "./data_combined.csv";
 =================================*/
 window.map = L.map("map", {
   fullscreenControl: true,
-  // Keep fullscreen away from the top-right Filters button
   fullscreenControlOptions: { position: "topleft" }
 }).setView([39.96, -82.99], 10);
 
@@ -20,7 +19,7 @@ window.map.on("exitFullscreen", () => {
 });
 
 /* ===============================
-   UI: Inject panel as Leaflet control
+   UI PANEL
 =================================*/
 function stop(e) {
   L.DomEvent.stopPropagation(e);
@@ -29,8 +28,6 @@ function stop(e) {
 
 function mountLeafletUI() {
   const tpl = document.getElementById("uiTemplate");
-  if (!tpl) throw new Error("Missing #uiTemplate");
-
   const frag = tpl.content.cloneNode(true);
   const panel = frag.querySelector("#hgPanel");
   const openBtn = frag.querySelector("#hgOpenBtn");
@@ -50,75 +47,56 @@ function mountLeafletUI() {
       const container = L.DomUtil.create("div", "hg-wrap");
       container.classList.add("hg-control");
       container.appendChild(panel);
-
       L.DomEvent.disableClickPropagation(container);
       L.DomEvent.disableScrollPropagation(container);
-
       return container;
     }
   });
 
-  const ctl = new HgControl();
-  window.map.addControl(ctl);
+  window.map.addControl(new HgControl());
 
-  function openPanel() {
-    panel.classList.add("is-open");
-  }
-  function closePanel() {
-    panel.classList.remove("is-open");
-  }
+  function openPanel() { panel.classList.add("is-open"); }
+  function closePanel() { panel.classList.remove("is-open"); }
 
   openBtn.addEventListener("click", (e) => { stop(e); openPanel(); });
   closeBtn.addEventListener("click", (e) => { stop(e); closePanel(); });
 
-  window.map.on("click", () => closePanel());
-
-  return { panel, openBtn };
+  window.map.on("click", closePanel);
 }
-
 mountLeafletUI();
 
 /* ===============================
    BASEMAPS
 =================================*/
+
+const esriTopo = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+  { maxZoom: 19, attribution: "Tiles © Esri" }
+);
+
 const esriStreet = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19, attribution: "Tiles © Esri" }
 );
 
-const muted = L.tileLayer(
-  "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
-  { maxZoom: 19, attribution: "© OpenStreetMap contributors" }
-);
+const satBase = L.layerGroup([
+  L.tileLayer(
+    "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    { maxZoom: 19 }
+  ),
+  L.tileLayer(
+    "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+    { maxZoom: 19 }
+  )
+]);
 
-const esriDark = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-  { maxZoom: 16, attribution: "Tiles © Esri" }
-);
-const esriDarkLabels = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
-  { maxZoom: 16 }
-);
-const darkBase = L.layerGroup([esriDark, esriDarkLabels]);
-
-const esriSatellite = L.tileLayer(
-  "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  { maxZoom: 19, attribution: "Tiles © Esri" }
-);
-const esriLabels = L.tileLayer(
-  "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-  { maxZoom: 19 }
-);
-const satBase = L.layerGroup([esriSatellite, esriLabels]);
-
-esriStreet.addTo(window.map);
+esriTopo.addTo(window.map);
 
 L.control.layers(
   {
-    "Street (Google-like)": esriStreet,
-    "Muted": muted,
-    "Dark Gray (Subtle)": darkBase,
-    "Satellite + Labels": satBase
+    "Topo (Google-like Terrain)": esriTopo,
+    "Street": esriStreet,
+    "Satellite": satBase
   },
   {},
   { position: "topright" }
@@ -129,13 +107,16 @@ L.control.layers(
 =================================*/
 const cluster = L.markerClusterGroup({
   showCoverageOnHover: false,
-  maxClusterRadius: 45
+  maxClusterRadius: 28,
+  disableClusteringAtZoom: 14,
+  spiderfyOnMaxZoom: true
 });
 window.map.addLayer(cluster);
 
 /* ===============================
-   DOM REFS
+   DATA / FILTERING
 =================================*/
+
 const els = {
   yearSelect: document.getElementById("yearSelect"),
   stats: document.getElementById("stats"),
@@ -147,70 +128,30 @@ let plottedMarkers = [];
 let availableYears = new Set();
 let hasAutoZoomed = false;
 
-/* ===============================
-   HELPERS
-=================================*/
-function parseSoldPrice(raw) {
-  if (!raw) return null;
-  const s = String(raw).replace(/[^0-9.]/g, "");
-  const n = Number(s);
-  return Number.isFinite(n) ? n : null;
-}
-
 function parseDate(raw) {
   if (!raw) return null;
-  const s = String(raw).trim();
-
-  let m = s.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})/);
-  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
-
-  m = s.match(/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})/);
-  if (m) return new Date(Number(m[3]), Number(m[1]) - 1, Number(m[2]));
-
-  const d = new Date(s);
+  const d = new Date(raw);
   return isNaN(d.getTime()) ? null : d;
-}
-
-function fmtMoney(n) {
-  if (n == null) return "";
-  try {
-    return n.toLocaleString(undefined, { style: "currency", currency: "USD", maximumFractionDigits: 0 });
-  } catch {
-    return `$${Math.round(n).toLocaleString()}`;
-  }
 }
 
 function getActivePropertyTypes() {
   return new Set(els.ptypeChecks.filter(c => c.checked).map(c => c.value));
 }
 
-function getActiveYear() {
-  return els.yearSelect.value || "all";
-}
-
-function txClass(tx) {
-  const t = (tx || "").toString().toLowerCase();
-  if (t.includes("seller") || t.includes("listing")) return "seller";
-  if (t.includes("buyer")) return "buyer";
-  return "unknown";
-}
-
-function typeEmoji(ptype) {
-  const p = (ptype || "").toString().toLowerCase();
-  if (p.includes("res")) return "🏠";
-  if (p.includes("comm")) return "🏢";
-  if (p.includes("multi")) return "🏘️";
-  if (p.includes("land")) return "🌾";
-  return "📍";
-}
-
 function makeIcon(row) {
-  const cls = txClass(row["Transaction Type"]);
-  const emoji = typeEmoji(row["Property Type"]);
+  const emoji =
+    row["Property Type"]?.includes("Residential") ? "🏠" :
+    row["Property Type"]?.includes("Commercial") ? "🏢" :
+    row["Property Type"]?.includes("Multi") ? "🏘️" :
+    row["Property Type"]?.includes("Land") ? "🌾" : "📍";
+
+  const cls =
+    row["Transaction Type"]?.toLowerCase().includes("seller") ? "seller" :
+    row["Transaction Type"]?.toLowerCase().includes("buyer") ? "buyer" :
+    "unknown";
 
   return L.divIcon({
-    className: "",
-    html: `<div class="marker ${cls}" title="${row["Property Type"] || ""}">${emoji}</div>`,
+    html: `<div class="marker ${cls}">${emoji}</div>`,
     iconSize: [34, 34],
     iconAnchor: [17, 34],
     popupAnchor: [0, -30]
@@ -218,51 +159,35 @@ function makeIcon(row) {
 }
 
 function buildPopup(row) {
-  const price = parseSoldPrice(row["Sold Price"]);
-  const dt = parseDate(row["Sold Date"]);
-
-  const photo = (row["PhotoURL"] || row["Photo Url"] || row["Photo"] || "").toString().trim();
-  const imgHtml = photo ? `<div class="photo"><img src="${photo}" alt="Property photo" loading="lazy"/></div>` : "";
-
-  const safe = (v) => (v == null ? "" : String(v));
-
   return `
     <div class="popup">
-      <div class="addr"><strong>${safe(row["Full Address"])}</strong></div>
-      ${imgHtml}
+      <div class="addr"><strong>${row["Full Address"] || ""}</strong></div>
       <div class="meta">
-        <div><span>Type:</span> ${safe(row["Transaction Type"])}</div>
-        <div><span>Property:</span> ${safe(row["Property Type"])}</div>
-        <div><span>Sold:</span> ${price != null ? fmtMoney(price) : safe(row["Sold Price"])}</div>
-        <div><span>Date:</span> ${dt ? dt.toLocaleDateString() : safe(row["Sold Date"])}</div>
+        <div><span>Type:</span> ${row["Transaction Type"] || ""}</div>
+        <div><span>Property:</span> ${row["Property Type"] || ""}</div>
+        <div><span>Sold:</span> ${row["Sold Price"] || ""}</div>
+        <div><span>Date:</span> ${row["Sold Date"] || ""}</div>
       </div>
     </div>
   `;
 }
 
-/* ===============================
-   REFRESH
-=================================*/
 function refresh() {
   cluster.clearLayers();
   plottedMarkers = [];
 
   const activeTypes = getActivePropertyTypes();
-  const activeYear = getActiveYear();
+  const activeYear = els.yearSelect.value;
 
-  let total = 0;
-  let plotted = 0;
-  let missing = 0;
+  let total = 0, plotted = 0, missing = 0;
 
   for (const row of allRows) {
     total++;
 
-    const ptype = (row["Property Type"] || "").toString();
-    if (!activeTypes.has(ptype)) continue;
+    if (!activeTypes.has(row["Property Type"])) continue;
 
     const lat = Number(row["Latitude"]);
     const lng = Number(row["Longitude"]);
-
     if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
       missing++;
       continue;
@@ -273,61 +198,43 @@ function refresh() {
     if (activeYear !== "all" && year !== activeYear) continue;
 
     const marker = L.marker([lat, lng], { icon: makeIcon(row) });
-    marker.bindPopup(buildPopup(row), { maxWidth: 320 });
+    marker.bindPopup(buildPopup(row));
     cluster.addLayer(marker);
 
     plottedMarkers.push(marker);
     plotted++;
   }
 
-  if (els.stats) {
-    els.stats.textContent =
-      `${plotted.toLocaleString()} pinned • ${missing.toLocaleString()} missing coords • ${total.toLocaleString()} total`;
-  }
+  els.stats.textContent =
+    `${plotted} pinned • ${missing} missing coords • ${total} total`;
 
   if (plotted > 0 && !hasAutoZoomed) {
     const group = L.featureGroup(plottedMarkers);
     window.map.fitBounds(group.getBounds().pad(0.12));
     hasAutoZoomed = true;
   }
-
-  setTimeout(() => window.map.invalidateSize(), 0);
 }
 
-/* ===============================
-   YEAR DROPDOWN
-=================================*/
 function populateYearDropdown() {
   const years = Array.from(availableYears).sort((a, b) => b - a);
-  const current = els.yearSelect.value || "all";
-
   els.yearSelect.innerHTML = '<option value="all">All</option>';
-
   for (const y of years) {
     const opt = document.createElement("option");
-    opt.value = String(y);
-    opt.textContent = String(y);
+    opt.value = y;
+    opt.textContent = y;
     els.yearSelect.appendChild(opt);
   }
-
-  const exists = (current === "all") || years.includes(Number(current));
-  els.yearSelect.value = exists ? current : "all";
 }
 
-/* ===============================
-   LOAD DATA
-=================================*/
 function loadData() {
-  if (els.stats) els.stats.textContent = "Loading…";
-
   Papa.parse(DATA_URL, {
     download: true,
     header: true,
     skipEmptyLines: true,
     complete: (results) => {
       allRows = results.data || [];
-
       availableYears = new Set();
+
       for (const row of allRows) {
         const dt = parseDate(row["Sold Date"]);
         if (dt) availableYears.add(dt.getFullYear());
@@ -335,16 +242,11 @@ function loadData() {
 
       populateYearDropdown();
       refresh();
-      setTimeout(() => window.map.invalidateSize(), 50);
-    },
-    error: (err) => {
-      console.error(err);
-      if (els.stats) els.stats.textContent = "Failed to load data_combined.csv";
     }
   });
 }
 
 els.yearSelect.addEventListener("change", refresh);
-els.ptypeChecks.forEach((c) => c.addEventListener("change", refresh));
+els.ptypeChecks.forEach(c => c.addEventListener("change", refresh));
 
 loadData();
