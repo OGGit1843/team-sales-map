@@ -21,43 +21,44 @@
   <!-- Papa Parse -->
   <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
 
-  <!-- Local CSS -->
-  <link rel="stylesheet" href="./style.css?v=8" />
+  <link rel="stylesheet" href="./style.css?v=9" />
 </head>
 
 <body>
+  <div id="map"></div>
 
-  <div id="topbar">
-    <div class="brand">Hance Group • Team Sales Map</div>
+  <!-- Hidden UI template that we inject into a Leaflet control -->
+  <template id="uiTemplate">
+    <div class="hg-panel" id="hgPanel">
+      <div class="hg-panel__header">
+        <div class="hg-title">Hance Group • Team Sales Map</div>
+        <button class="hg-close" id="hgCloseBtn" type="button" aria-label="Close filters">✕</button>
+      </div>
 
-    <div class="controls">
-      <div class="control">
-        <span class="label">Year</span>
+      <div class="hg-row">
+        <div class="hg-label">Year</div>
         <select id="yearSelect">
           <option value="all">All</option>
         </select>
       </div>
 
-      <div class="control">
-        <span class="label">Property Type</span>
-        <label><input class="ptype" type="checkbox" value="Residential" checked /> Residential</label>
-        <label><input class="ptype" type="checkbox" value="Commercial" checked /> Commercial</label>
-        <label><input class="ptype" type="checkbox" value="Multi-Family" checked /> Multi-Family</label>
-        <label><input class="ptype" type="checkbox" value="Land" checked /> Land</label>
+      <div class="hg-row hg-row--stack">
+        <div class="hg-label">Property Type</div>
+        <label class="hg-check"><input class="ptype" type="checkbox" value="Residential" checked /> Residential</label>
+        <label class="hg-check"><input class="ptype" type="checkbox" value="Commercial" checked /> Commercial</label>
+        <label class="hg-check"><input class="ptype" type="checkbox" value="Multi-Family" checked /> Multi-Family</label>
+        <label class="hg-check"><input class="ptype" type="checkbox" value="Land" checked /> Land</label>
       </div>
 
-      <div id="stats" class="stats">Loading…</div>
+      <div id="stats" class="hg-stats">Loading…</div>
+
+      <div class="hg-hint">Tip: Use fullscreen for the best mobile experience.</div>
     </div>
-  </div>
 
-  <div id="map"></div>
+    <!-- Mobile-only floating open button -->
+    <button class="hg-open" id="hgOpenBtn" type="button">Filters</button>
+  </template>
 
-  <div id="footerHint">
-    Tip: Use fullscreen for the best mobile experience.
-  </div>
-
-  <!-- Local JS -->
-  <script src="./app.js?v=8"></script>
-
+  <script src="./app.js?v=9"></script>
 </body>
 </html>
