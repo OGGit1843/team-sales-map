@@ -94,32 +94,7 @@ html, body {
   font-weight: 800;
 }
 
-.hg-stats {
-  margin-top: 8px;
-  font-weight: 900;
-  font-size: 13px;
-}
-
-.hg-actions {
-  margin-top: 10px;
-}
-
-.hg-link {
-  display: inline-block;
-  font-weight: 900;
-  font-size: 13px;
-  color: rgba(255,255,255,0.96);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.hg-hint {
-  margin-top: 8px;
-  font-size: 12px;
-  opacity: 0.9;
-}
-
-/* ✅ Mobile "Filters" open button moved to TOP-RIGHT */
+/* ✅ Desktop floating "Filters" open button (hidden by default) */
 .hg-open {
   position: absolute;
   right: 12px;
@@ -210,6 +185,7 @@ html, body {
 .marker-cluster-large div {
   background: rgba(80, 170, 90, 0.78) !important;
 }
+
 /* =========================================
    POPUPS
 ========================================= */
@@ -253,37 +229,60 @@ html, body {
 .leaflet-popup-tip { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18)); }
 
 /* =========================================
-   FULLSCREEN MODE
+   FULLSCREEN MODE (FIXED FOR MOBILE)
 ========================================= */
-body.hg-fs .hg-control,
-body.hg-fs .hg-open {
-  display: none !important;
+/* Desktop: hide panel/button in fullscreen */
+@media (min-width: 701px) {
+  body.hg-fs .hg-control,
+  body.hg-fs .hg-open {
+    display: none !important;
+  }
+}
+
+/* Mobile: KEEP the Filters button in fullscreen */
+@media (max-width: 700px) {
+  body.hg-fs .hg-open {
+    display: block !important;
+  }
 }
 
 /* =========================================
-   MOBILE BEHAVIOR
+   MOBILE BEHAVIOR (IMPROVED)
 ========================================= */
 @media (max-width: 700px) {
+  /* Show the Filters button on mobile */
   .hg-open { display: block; }
 
+  /*
+    Put the panel in a fixed "bottom sheet" container so it’s centered
+    and not shoved around by other Leaflet controls.
+  */
   .leaflet-control.hg-control {
     margin: 0 !important;
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+    z-index: 9999 !important;
+    width: auto !important;
   }
 
   .hg-panel {
-    width: calc(100vw - 24px);
-    max-height: 70vh;
+    width: 100% !important;
+    max-height: 62vh;
     overflow: auto;
+    padding: 12px;
   }
 
-  .hg-close {
-    display: inline-block;
+  /* Make dropdown not huge + prevent iOS zoom on focus */
+  .hg-panel select {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px;
   }
+
+  .hg-close { display: inline-block; }
 
   .hg-panel { display: none; }
   .hg-panel.is-open { display: block; }
-
-  .leaflet-bottom.leaflet-left .hg-panel {
-    margin: 0 0 12px 12px;
-  }
 }
