@@ -1,46 +1,91 @@
-html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* ===============================
+   TOP BAR
+=================================*/
 #topbar {
-  position: fixed; top: 0; left: 0; right: 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
   z-index: 1000;
   background: rgba(255,255,255,0.92);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid #e6e6e6;
   padding: 10px 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
 }
-.brand { font-weight: 700; margin-bottom: 8px; }
-.controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
-.control { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 14px; }
-.control .label { font-weight: 600; margin-right: 6px; }
+
+.brand {
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+  font-size: 15px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.control {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.control .label {
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+.stats {
+  margin-left: auto;
+  font-weight: 700;
+}
+
+/* ✅ Dropdown (always readable) */
 #topbar select {
   padding: 6px 10px;
   border-radius: 10px;
   border: 1px solid #d0d0d0;
   background: #ffffff;
   color: #222;
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
 #topbar select option {
   background: #ffffff;
   color: #222;
 }
-.stats { margin-left: auto; font-weight: 600; }
-#map { 
-  position: absolute; 
-  top: var(--map-top, 86px); 
-  left: 0; right: 0; bottom: 24px; 
+
+/* ===============================
+   MAP CONTAINER
+=================================*/
+#map {
+  position: absolute;
+  top: var(--map-top, 86px);
+  left: 0;
+  right: 0;
+  bottom: 24px;
 }
 
-@media (max-width: 700px) {
-  .stats { width: 100%; margin-left: 0; }
-}
-
-/* Keep controls a little off the very top INSIDE the map */
+/* Keep Leaflet controls a little off the top INSIDE the map */
 .leaflet-top.leaflet-left,
 .leaflet-top.leaflet-right {
   top: 12px !important;
 }
-/* Custom marker */
+
+/* ===============================
+   CUSTOM MARKERS
+=================================*/
 .marker {
   line-height: 1;
   width: 34px;
@@ -52,30 +97,36 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
   background: rgba(255,255,255,0.96);
   border: 3px solid #333;
   box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  transition: transform 120ms ease, box-shadow 120ms ease;
 }
 
-.marker.buyer { border-color: #2e7d32; }      /* green */
-.marker.seller { border-color: #1565c0; }     /* blue */
-.marker.unknown { border-color: #6d6d6d; }    /* gray */
+.marker:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.28);
+}
+
+.marker.buyer { border-color: #2e7d32; }   /* green */
+.marker.seller { border-color: #1565c0; }  /* blue */
+.marker.unknown { border-color: #6d6d6d; } /* gray */
 
 .leaflet-div-icon {
   background: transparent;
   border: none;
 }
+
 .leaflet-marker-icon.leaflet-div-icon {
   background: transparent !important;
   border: none !important;
-}
-/* Make sure Leaflet doesn't clip/offset our custom divIcon */
-.leaflet-marker-icon.leaflet-div-icon {
   width: 34px !important;
   height: 34px !important;
-  margin-left: -17px !important;  /* half of width */
-  margin-top: -34px !important;   /* full height because anchor is bottom */
+  margin-left: -17px !important; /* half width */
+  margin-top: -34px !important;  /* full height (anchor bottom) */
   overflow: visible !important;
 }
-/* ---------- Popup styling (premium) ---------- */
 
+/* ===============================
+   POPUPS (PREMIUM)
+=================================*/
 .popup {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   line-height: 1.25;
@@ -84,7 +135,7 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 .popup .addr {
   margin-bottom: 8px;
   font-size: 14px;
-  font-weight: 750;
+  font-weight: 800;
 }
 
 .popup .meta {
@@ -96,40 +147,38 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
   font-size: 13px;
 }
 
-/* Make the label/value layout clean */
+/* label/value alignment */
 .popup .meta div span {
   color: #666;
   display: inline-block;
   width: 88px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* Photo container */
 .popup .photo {
   margin: 8px 0 6px 0;
-  border-radius: 14px;              /* rounded corners */
-  overflow: hidden;                 /* ensures rounded corners clip image */
-  box-shadow: 0 6px 18px rgba(0,0,0,0.22); /* subtle shadow */
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
   background: #f3f3f3;
 }
 
-/* Fixed-height image crop (no stretching) */
 .popup .photo img {
   display: block;
   width: 100%;
-  height: 165px;        /* ✅ fixed height */
-  object-fit: cover;    /* ✅ keeps it pretty */
+  height: 165px;       /* fixed height */
+  object-fit: cover;   /* no stretching */
   transform: scale(1);
   transition: transform 180ms ease, filter 180ms ease;
 }
 
-/* Hover animation */
 .popup .photo:hover img {
   transform: scale(1.03);
   filter: saturate(1.05) contrast(1.03);
 }
 
-/* Optional: make Leaflet popup itself feel nicer */
+/* Leaflet popup shell polish */
 .leaflet-popup-content-wrapper {
   border-radius: 14px;
 }
@@ -141,50 +190,26 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 .leaflet-popup-tip {
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));
 }
-/* Make topbar/footer slightly darker when user is on a dark basemap */
-@media (prefers-color-scheme: dark) {
-  #topbar, #footerHint {
-    background: rgba(20, 20, 20, 0.72);
-    border-color: rgba(255,255,255,0.10);
-    color: rgba(255,255,255,0.92);
-  }
 
-  .control .label, .stats, .brand { color: rgba(255,255,255,0.92); }
- 
-#topbar {
-  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
-  border-bottom: 0;
-}
-
-.brand {
-  letter-spacing: 0.2px;
-  font-size: 15px;
-}
-
-.control select {
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
-/* Nicer cluster bubbles */
+/* ===============================
+   CLUSTERS (NICER BUBBLES)
+=================================*/
 .marker-cluster div {
   border-radius: 999px !important;
-  font-weight: 800;
+  font-weight: 900;
   box-shadow: 0 6px 18px rgba(0,0,0,0.22);
   border: 2px solid rgba(255,255,255,0.9);
 }
+
 .marker-cluster-small div,
 .marker-cluster-medium div,
 .marker-cluster-large div {
   background: rgba(80, 170, 90, 0.78) !important;
 }
-.marker {
-  transition: transform 120ms ease, box-shadow 120ms ease;
-}
 
-.marker:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.28);
-}
-/* Controls: rounded + modern */
+/* ===============================
+   LEAFLET CONTROLS (MODERN)
+=================================*/
 .leaflet-bar a,
 .leaflet-control-layers {
   border-radius: 12px !important;
@@ -202,14 +227,11 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
   width: 38px !important;
   height: 38px !important;
 }
-@media (max-width: 700px) {
-  #topbar { padding: 10px 10px; }
-  .controls { gap: 10px; }
-  .control { font-size: 13px; }
-  .control select { padding: 6px 8px; }
-}
-/* ---------- KPI box ---------- */
-.kpi{
+
+/* ===============================
+   KPI BOX
+=================================*/
+.kpi {
   margin-left: auto;
   padding: 6px 10px;
   border-radius: 12px;
@@ -219,12 +241,11 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
   box-shadow: 0 4px 14px rgba(0,0,0,0.10);
   white-space: nowrap;
 }
-@media (max-width:700px){
-  .kpi{ width: 100%; margin-left: 0; }
-}
 
-/* ---------- Side stats panel ---------- */
-#sidePanel{
+/* ===============================
+   SIDE STATS PANEL (DESKTOP)
+=================================*/
+#sidePanel {
   position: fixed;
   right: 12px;
   top: calc(var(--map-top, 86px) + 12px);
@@ -240,11 +261,66 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
   padding: 10px 12px;
 }
 
-.panelTitle{ font-weight: 900; margin-bottom: 8px; }
-#panelBody{ font-size: 13px; line-height: 1.35; }
-#panelBody .row{ display:flex; justify-content:space-between; padding: 4px 0; }
-#panelBody .row b{ font-weight: 900; }
+.panelTitle { font-weight: 900; margin-bottom: 8px; }
+#panelBody { font-size: 13px; line-height: 1.35; }
+#panelBody .row { display: flex; justify-content: space-between; padding: 4px 0; }
+#panelBody .row b { font-weight: 900; }
 
-@media (max-width: 900px){
-  #sidePanel{ display:none; } /* hide on smaller screens */
+/* ===============================
+   RESPONSIVE (MOBILE)
+=================================*/
+@media (max-width: 700px) {
+  #topbar { padding: 10px 10px; }
+  .controls { gap: 10px; }
+  .control { font-size: 13px; }
+  .stats { width: 100%; margin-left: 0; }
+  .kpi { width: 100%; margin-left: 0; }
+}
+
+@media (max-width: 900px) {
+  #sidePanel { display: none; }
+}
+
+/* ===============================
+   DARK MODE (ONLY TOPBAR/FOOTER)
+=================================*/
+@media (prefers-color-scheme: dark) {
+  #topbar, #footerHint {
+    background: rgba(20, 20, 20, 0.72);
+    border-color: rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.92);
+  }
+
+  .control .label, .stats, .brand {
+    color: rgba(255,255,255,0.92);
+  }
+/* ===============================
+   DARK UI WHEN DARK BASEMAP IS SELECTED
+   (independent of OS theme)
+=================================*/
+body.basemap-dark #topbar,
+body.basemap-dark #footerHint,
+body.basemap-dark #sidePanel {
+  background: rgba(20, 20, 20, 0.78);
+  border-color: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.92);
+}
+
+body.basemap-dark .control .label,
+body.basemap-dark .stats,
+body.basemap-dark .brand,
+body.basemap-dark .panelTitle,
+body.basemap-dark #panelBody {
+  color: rgba(255,255,255,0.92);
+}
+
+body.basemap-dark #panelBody .row span {
+  color: rgba(255,255,255,0.78);
+}
+
+/* Keep dropdown readable (we keep it white on purpose) */
+body.basemap-dark #topbar select {
+  background: #ffffff;
+  color: #222;
+  border-color: rgba(0,0,0,0.15);
 }
