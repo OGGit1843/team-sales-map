@@ -228,3 +228,9 @@ body.hg-fs .leaflet-top.leaflet-left,
 body.hg-fs .leaflet-top.leaflet-right {
   top: 10px !important;
 }
+/* Force ALL leaflet-bar icons to be centered (fixes fullscreen misalignment) */
+.leaflet-bar a {
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 18px 18px !important;
+}
