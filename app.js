@@ -29,21 +29,27 @@ function stop(e) {
 function mountLeafletUI() {
   const tpl = document.getElementById("uiTemplate");
   const frag = tpl.content.cloneNode(true);
+
   const panel = frag.querySelector("#hgPanel");
   const openBtn = frag.querySelector("#hgOpenBtn");
   const closeBtn = frag.querySelector("#hgCloseBtn");
+  const topbar = frag.querySelector("#hgTopbar");
 
-  window.map.getContainer().appendChild(openBtn);
+  // Add the topbar (mobile) and the open button into the map container
+  if (topbar) window.map.getContainer().appendChild(topbar);
 
   L.DomEvent.disableClickPropagation(openBtn);
   L.DomEvent.disableScrollPropagation(openBtn);
 
+  // Leaflet control for the panel content
   const HgControl = L.Control.extend({
-    options: { position: "bottomleft" },
+    options: { position: "topleft" }, // actual mobile positioning is handled by CSS (fixed)
     onAdd: function () {
       const container = L.DomUtil.create("div", "hg-wrap");
       container.classList.add("hg-control");
       container.appendChild(panel);
+
+      // Prevent map interactions while touching panel
       L.DomEvent.disableClickPropagation(container);
       L.DomEvent.disableScrollPropagation(container);
       return container;
@@ -58,7 +64,17 @@ function mountLeafletUI() {
   openBtn.addEventListener("click", (e) => { stop(e); openPanel(); });
   closeBtn.addEventListener("click", (e) => { stop(e); closePanel(); });
 
-  window.map.on("click", closePanel);
+  // ✅ Recommended change: only close when clicking the map background, not UI
+  window.map.on("click", (e) => {
+    const t = e?.originalEvent?.target;
+    if (!t) return closePanel();
+
+    // If click was inside our UI, don't close
+    if (t.closest && (t.closest(".hg-panel") || t.closest(".hg-topbar") || t.closest(".leaflet-control"))) {
+      return;
+    }
+    closePanel();
+  });
 }
 mountLeafletUI();
 
@@ -140,7 +156,6 @@ window.map.addLayer(cluster);
 /* ===============================
    DATA / FILTERING
 =================================*/
-
 const els = {
   yearSelect: document.getElementById("yearSelect"),
   ptypeChecks: Array.from(document.querySelectorAll(".ptype"))
@@ -203,7 +218,6 @@ function refresh() {
   const activeYear = els.yearSelect.value;
 
   for (const row of allRows) {
-
     if (!activeTypes.has(row["Property Type"])) continue;
 
     const lat = Number(row["Latitude"]);
