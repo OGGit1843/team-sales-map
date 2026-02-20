@@ -13,6 +13,11 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.css" />
   <script src="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.js"></script>
 
+  <!-- MarkerCluster (REQUIRED for clustering) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
   <!-- Papa Parse -->
   <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
 
@@ -39,10 +44,22 @@
 
       <div class="hg-row hg-row--stack">
         <div class="hg-label">Property Type</div>
-        <label class="hg-check"><input class="ptype" type="checkbox" value="Residential" checked /> Residential</label>
-        <label class="hg-check"><input class="ptype" type="checkbox" value="Commercial" checked /> Commercial</label>
-        <label class="hg-check"><input class="ptype" type="checkbox" value="Multi-Family" checked /> Multi-Family</label>
-        <label class="hg-check"><input class="ptype" type="checkbox" value="Land" checked /> Land</label>
+        <label class="hg-check">
+          <input class="ptype" type="checkbox" value="Residential" checked />
+          Residential
+        </label>
+        <label class="hg-check">
+          <input class="ptype" type="checkbox" value="Commercial" checked />
+          Commercial
+        </label>
+        <label class="hg-check">
+          <input class="ptype" type="checkbox" value="Multi-Family" checked />
+          Multi-Family
+        </label>
+        <label class="hg-check">
+          <input class="ptype" type="checkbox" value="Land" checked />
+          Land
+        </label>
       </div>
 
       <div id="stats" class="hg-stats">Loading…</div>
@@ -53,7 +70,9 @@
         </a>
       </div>
 
-      <div class="hg-hint">Tip: If fullscreen doesn’t work inside Google Sites, use the link above.</div>
+      <div class="hg-hint">
+        Tip: If fullscreen doesn’t work inside Google Sites, use the link above.
+      </div>
     </div>
 
     <!-- Mobile-only floating open button -->
