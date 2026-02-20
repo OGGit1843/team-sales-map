@@ -30,6 +30,7 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 }
 /* Custom marker */
 .marker {
+  line-height: 1;
   width: 34px;
   height: 34px;
   border-radius: 999px;
@@ -52,6 +53,14 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 .leaflet-marker-icon.leaflet-div-icon {
   background: transparent !important;
   border: none !important;
+}
+/* Make sure Leaflet doesn't clip/offset our custom divIcon */
+.leaflet-marker-icon.leaflet-div-icon {
+  width: 34px !important;
+  height: 34px !important;
+  margin-left: -17px !important;  /* half of width */
+  margin-top: -34px !important;   /* full height because anchor is bottom */
+  overflow: visible !important;
 }
 /* ---------- Popup styling (premium) ---------- */
 
