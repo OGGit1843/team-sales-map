@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.css" />
   <script src="https://unpkg.com/leaflet.fullscreen@3.0.2/Control.FullScreen.js"></script>
 
-  <!-- MarkerCluster (REQUIRED for clustering) -->
+  <!-- MarkerCluster -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
@@ -21,7 +21,7 @@
   <!-- Papa Parse -->
   <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
 
-  <link rel="stylesheet" href="./style.css?v=11" />
+  <link rel="stylesheet" href="./style.css?v=12" />
 </head>
 
 <body>
@@ -31,7 +31,7 @@
   <template id="uiTemplate">
     <div class="hg-panel" id="hgPanel">
       <div class="hg-panel__header">
-        <div class="hg-title">Hance Group • Team Sales Map</div>
+        <div class="hg-title">Filters</div>
         <button class="hg-close" id="hgCloseBtn" type="button" aria-label="Close filters">✕</button>
       </div>
 
@@ -63,10 +63,12 @@
       </div>
     </div>
 
-    <!-- Mobile-only floating open button -->
-    <button class="hg-open" id="hgOpenBtn" type="button">Filters</button>
+    <!-- Mobile Topbar -->
+    <div class="hg-topbar" id="hgTopbar">
+      <button class="hg-open" id="hgOpenBtn" type="button">Filters</button>
+    </div>
   </template>
 
-  <script src="./app.js?v=11"></script>
+  <script src="./app.js?v=12"></script>
 </body>
 </html>
