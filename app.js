@@ -5,17 +5,9 @@ const DATA_URL = "./data_combined.csv";
 
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
 // --- Basemaps ---
-// --- Final Basemaps ---
+// --- Basemaps (No API Keys Needed) ---
 
-// --- Basemaps (Original + Darker ESRI Street + Satellite Labels) ---
-
-// 1) Original OpenStreetMap
-const original = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 19,
-  attribution: "&copy; OpenStreetMap contributors"
-});
-
-// 2) ESRI World Street Map (darker / richer)
+// 1️⃣ ESRI World Street Map (Google-like, slightly darker)
 const esriStreet = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   {
@@ -24,7 +16,16 @@ const esriStreet = L.tileLayer(
   }
 );
 
-// 3) Satellite imagery
+// 2️⃣ OpenTopoMap (terrain + subtle color depth)
+const topo = L.tileLayer(
+  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+  {
+    maxZoom: 17,
+    attribution: "&copy; OpenTopoMap contributors"
+  }
+);
+
+// 3️⃣ Satellite imagery
 const esriSatellite = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   {
@@ -33,22 +34,24 @@ const esriSatellite = L.tileLayer(
   }
 );
 
-// Labels overlay (works on satellite, and can be toggled on other basemaps too)
+// Satellite labels overlay
 const esriLabels = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-  { maxZoom: 19 }
+  {
+    maxZoom: 19
+  }
 );
 
-// ✅ Pick your default basemap (choose ONE line)
-// original.addTo(map);
+// ✅ Default map (choose ONE — currently ESRI Street)
 esriStreet.addTo(map);
-// L.layerGroup([esriSatellite, esriLabels]).addTo(map); // (if you ever want satellite default)
+// topo.addTo(map);
+// L.layerGroup([esriSatellite, esriLabels]).addTo(map);
 
-// Basemap toggle (left) + overlays (right)
+// Basemap + overlay control
 L.control.layers(
   {
-    "Original (OSM)": original,
-    "Street (Darker)": esriStreet,
+    "Street (Google-like)": esriStreet,
+    "Terrain (OpenTopo)": topo,
     "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
   },
   {
