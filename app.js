@@ -5,13 +5,11 @@ const DATA_URL = "./data_combined.csv";
 /* ===============================
    MAP INIT
 =================================*/
-
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
 
 /* ===============================
    AUTO OFFSET (TOPBAR SAFE)
 =================================*/
-
 function setMapTopOffset() {
   const topbar = document.getElementById("topbar");
   if (!topbar) return;
@@ -21,7 +19,6 @@ function setMapTopOffset() {
 
   if (map && map.invalidateSize) map.invalidateSize();
 }
-
 window.addEventListener("load", setMapTopOffset);
 window.addEventListener("resize", setMapTopOffset);
 setTimeout(setMapTopOffset, 0);
@@ -29,7 +26,6 @@ setTimeout(setMapTopOffset, 0);
 /* ===============================
    BASEMAPS
 =================================*/
-
 const esriStreet = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19, attribution: "Tiles © Esri" }
@@ -60,7 +56,7 @@ const esriLabels = L.tileLayer(
   { maxZoom: 19 }
 );
 
-// Layer group for dark basemap (so we can detect it reliably)
+// Group for dark base (so we can detect it)
 const darkBase = L.layerGroup([esriDark, esriDarkLabels]);
 
 // Default basemap
@@ -69,14 +65,13 @@ esriStreet.addTo(map);
 /* ===============================
    CLUSTERS + HEAT
 =================================*/
-
 const cluster = L.markerClusterGroup({
   showCoverageOnHover: false,
   maxClusterRadius: 45
 });
 map.addLayer(cluster);
 
-let heatLayer = L.heatLayer([], {
+const heatLayer = L.heatLayer([], {
   radius: 28,
   blur: 22,
   maxZoom: 17
@@ -85,7 +80,6 @@ let heatLayer = L.heatLayer([], {
 /* ===============================
    LAYER CONTROL
 =================================*/
-
 L.control.layers(
   {
     "Street (Google-like)": esriStreet,
@@ -101,25 +95,19 @@ L.control.layers(
 ).addTo(map);
 
 /* ===============================
-   DARK UI TOGGLE BASED ON BASEMAP
+   DARK UI TOGGLE (optional)
 =================================*/
-
 function setBasemapUI(isDark) {
   document.body.classList.toggle("basemap-dark", !!isDark);
 }
-
-// Fires when the BASE layer changes
 map.on("baselayerchange", (e) => {
   setBasemapUI(e.layer === darkBase);
 });
-
-// On first load we default to Street (light)
 setBasemapUI(false);
 
 /* ===============================
    DOM REFERENCES
 =================================*/
-
 const els = {
   yearSelect: document.getElementById("yearSelect"),
   stats: document.getElementById("stats"),
@@ -131,7 +119,6 @@ const els = {
 /* ===============================
    DATA STATE
 =================================*/
-
 let allRows = [];
 let plottedMarkers = [];
 let availableYears = new Set();
@@ -140,7 +127,6 @@ let hasAutoZoomed = false;
 /* ===============================
    HELPERS
 =================================*/
-
 function parseSoldPrice(raw) {
   if (!raw) return null;
   const s = String(raw).replace(/[^0-9.]/g, "");
@@ -150,8 +136,6 @@ function parseSoldPrice(raw) {
 
 function parseDate(raw) {
   if (!raw) return null;
-
-  // Handles: YYYY-MM-DD, MM/DD/YYYY, etc.
   const s = String(raw).trim();
 
   let m = s.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})/);
@@ -174,11 +158,8 @@ function fmtMoney(n) {
 }
 
 function getActivePropertyTypes() {
-  return new Set(
-    els.ptypeChecks.filter((c) => c.checked).map((c) => c.value)
-  );
+  return new Set(els.ptypeChecks.filter((c) => c.checked).map((c) => c.value));
 }
-
 function getActiveYear() {
   return els.yearSelect.value || "all";
 }
@@ -237,9 +218,8 @@ function buildPopup(row) {
 }
 
 /* ===============================
-   REFRESH (CORE LOGIC)
+   REFRESH
 =================================*/
-
 function refresh() {
   cluster.clearLayers();
   plottedMarkers = [];
@@ -293,13 +273,18 @@ function refresh() {
     plotted++;
   }
 
-  els.stats.textContent = `${plotted.toLocaleString()} pinned • ${missing.toLocaleString()} missing coords • ${total.toLocaleString()} total`;
+  // top right stat line
+  if (els.stats) {
+    els.stats.textContent = `${plotted.toLocaleString()} pinned • ${missing.toLocaleString()} missing coords • ${total.toLocaleString()} total`;
+  }
 
+  // KPI volume box
   if (els.kpiVolume) {
     const label = activeYear === "all" ? "Volume" : `Volume (${activeYear})`;
     els.kpiVolume.textContent = `${label}: ${fmtMoney(volume)}`;
   }
 
+  // Side panel
   if (els.panelBody) {
     els.panelBody.innerHTML = `
       <div class="row"><span>Buyer</span><b>${buyerCount.toLocaleString()}</b></div>
@@ -308,8 +293,10 @@ function refresh() {
     `;
   }
 
+  // Heatmap points
   heatLayer.setLatLngs(heatPoints);
 
+  // Auto zoom ONCE on first load so it doesn't fight the user
   if (plotted > 0 && !hasAutoZoomed) {
     const group = L.featureGroup(plottedMarkers);
     map.fitBounds(group.getBounds().pad(0.12));
@@ -320,17 +307,26 @@ function refresh() {
 /* ===============================
    LOAD DATA
 =================================*/
-
 function populateYearDropdown() {
   const years = Array.from(availableYears).sort((a, b) => b - a);
-  els.yearSelect.innerHTML = '<option value="all">All</option>';
 
+  if (!els.yearSelect) return;
+  const current = els.yearSelect.value || "all";
+
+  els.yearSelect.innerHTML = '<option value="all">All</option>';
   years.forEach((y) => {
     const opt = document.createElement("option");
     opt.value = String(y);
     opt.textContent = String(y);
     els.yearSelect.appendChild(opt);
   });
+
+  // restore selection
+  if (current === "all" || years.includes(Number(current))) {
+    els.yearSelect.value = current;
+  } else {
+    els.yearSelect.value = "all";
+  }
 }
 
 function loadData() {
@@ -351,6 +347,7 @@ function loadData() {
 
       populateYearDropdown();
       refresh();
+      setTimeout(setMapTopOffset, 0); // recalc after everything renders
     },
     error: (err) => {
       console.error(err);
