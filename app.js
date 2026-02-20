@@ -19,66 +19,6 @@ window.map.on("exitFullscreen", () => {
 });
 
 /* ===============================
-   UI PANEL
-=================================*/
-function stop(e) {
-  L.DomEvent.stopPropagation(e);
-  L.DomEvent.preventDefault(e);
-}
-
-function mountLeafletUI() {
-  const tpl = document.getElementById("uiTemplate");
-  const frag = tpl.content.cloneNode(true);
-
-  const panel = frag.querySelector("#hgPanel");
-  const openBtn = frag.querySelector("#hgOpenBtn");
-  const closeBtn = frag.querySelector("#hgCloseBtn");
-  const topbar = frag.querySelector("#hgTopbar");
-
-  // Add the topbar (mobile) and the open button into the map container
-  if (topbar) window.map.getContainer().appendChild(topbar);
-
-  L.DomEvent.disableClickPropagation(openBtn);
-  L.DomEvent.disableScrollPropagation(openBtn);
-
-  // Leaflet control for the panel content
-  const HgControl = L.Control.extend({
-    options: { position: "topleft" }, // actual mobile positioning is handled by CSS (fixed)
-    onAdd: function () {
-      const container = L.DomUtil.create("div", "hg-wrap");
-      container.classList.add("hg-control");
-      container.appendChild(panel);
-
-      // Prevent map interactions while touching panel
-      L.DomEvent.disableClickPropagation(container);
-      L.DomEvent.disableScrollPropagation(container);
-      return container;
-    }
-  });
-
-  window.map.addControl(new HgControl());
-
-  function openPanel() { panel.classList.add("is-open"); }
-  function closePanel() { panel.classList.remove("is-open"); }
-
-  openBtn.addEventListener("click", (e) => { stop(e); openPanel(); });
-  closeBtn.addEventListener("click", (e) => { stop(e); closePanel(); });
-
-  // ✅ Recommended change: only close when clicking the map background, not UI
-  window.map.on("click", (e) => {
-    const t = e?.originalEvent?.target;
-    if (!t) return closePanel();
-
-    // If click was inside our UI, don't close
-    if (t.closest && (t.closest(".hg-panel") || t.closest(".hg-topbar") || t.closest(".leaflet-control"))) {
-      return;
-    }
-    closePanel();
-  });
-}
-mountLeafletUI();
-
-/* ===============================
    BASEMAPS
 =================================*/
 
@@ -127,7 +67,7 @@ const esriLabels = L.tileLayer(
 
 const satBase = L.layerGroup([esriSatellite, esriLabels]);
 
-// Default layer
+// Default layer (keep Google-like street as default)
 esriStreet.addTo(window.map);
 
 // Layer switcher (ordered)
