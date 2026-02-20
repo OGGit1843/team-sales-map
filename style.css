@@ -27,3 +27,24 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
   #map { top: 126px; }
   .stats { width: 100%; margin-left: 0; }
 }
+/* Custom marker */
+.marker {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  background: rgba(255,255,255,0.92);
+  border: 3px solid #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+
+.marker.buyer { border-color: #2e7d32; }      /* green */
+.marker.seller { border-color: #1565c0; }     /* blue */
+.marker.unknown { border-color: #6d6d6d; }    /* gray */
+
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
