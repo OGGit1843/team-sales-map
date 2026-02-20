@@ -227,3 +227,27 @@ body.hg-fs .leaflet-top.leaflet-left,
 body.hg-fs .leaflet-top.leaflet-right {
   top: 10px !important;
 }
+/* Mobile fix: don't use fixed header/footer inside tiny iframes */
+@media (max-width: 700px) {
+  #topbar, #footerHint {
+    position: static !important;
+  }
+
+  /* Now the map can simply be a normal block with a big height */
+  #map {
+    position: relative !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    height: 75vh !important; /* tweak: 70–85vh */
+  }
+
+  /* Leaflet controls can go back to normal */
+  .leaflet-top.leaflet-left,
+  .leaflet-top.leaflet-right {
+    top: 10px !important;
+  }
+
+  html, body {
+    overflow: auto !important;
+  }
+}
