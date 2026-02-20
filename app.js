@@ -128,7 +128,7 @@ L.control.layers(
     "Satellite + Labels": satBase
   },
   {},
-  { position: "topright" }
+  { position: "topleft" }
 ).addTo(window.map);
 /* ===============================
    CLUSTER
