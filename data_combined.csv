@@ -1,5 +1,5 @@
 Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property Type,PhotoURL
-"9103 Longstone Drive, Columbus, OH 43035",40.151342,-83.003197,Buyer,"362,000",07/12/2021,Residential,images/9103 Longstone DR.jpg
+"9103 Longstone Drive, Columbus, OH 43035",40.151342,-83.003197,Buyer,"362,000",07/12/2021,Residential,images/9103 Longstone Dr.jpg
 "7169 Steel Dust Drive 27-716, Columbus, OH 43054",40.106632,-82.823967,Buyer,"215,000",07/12/2021,Residential
 "1992 Big Tree Drive, Columbus, OH 43223",39.924571,-83.050200,Seller/Listing,"251,700",07/16/2021,Residential
 "5142 Doral Avenue, Whitehall, OH 43213",39.962797,-82.861384,Buyer,"265,000",07/19/2021,Residential
@@ -357,4 +357,5 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "0 S Riverside Drive, Powell, OH 43065",40.134531,-83.113877,Buyer,205000,03/09/2022,Land
 "5177 Carters Corner Road, Sunbury, OH 43074",40.32185,-82.885062,Seller/Listing,210000,03/28/2023,Land
 "6233 Tussic Street Road, Westerville, OH 43082",40.158761,-82.899843,Buyer,195000,03/21/2022,Land
+
 
