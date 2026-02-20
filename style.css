@@ -5,7 +5,7 @@ html, body {
 }
 
 /* ===============================
-   TOP BAR
+   TOPBAR
 =================================*/
 #topbar {
   position: fixed;
@@ -15,7 +15,7 @@ html, body {
   backdrop-filter: blur(6px);
   border-bottom: 1px solid #e6e6e6;
   padding: 10px 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
 .brand {
@@ -28,7 +28,7 @@ html, body {
 .controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
 }
 
@@ -45,12 +45,7 @@ html, body {
   margin-right: 6px;
 }
 
-.stats {
-  margin-left: auto;
-  font-weight: 700;
-}
-
-/* ✅ Dropdown (always readable) */
+/* dropdowns always readable */
 #topbar select {
   padding: 6px 10px;
   border-radius: 10px;
@@ -58,12 +53,29 @@ html, body {
   background: #ffffff;
   color: #222;
   font-weight: 700;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
-
 #topbar select option {
   background: #ffffff;
   color: #222;
+}
+
+/* pinned/missing/total */
+.stats {
+  margin-left: auto;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* KPI (volume) */
+.kpi {
+  margin-left: auto;
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-weight: 900;
+  background: rgba(255,255,255,0.95);
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
+  white-space: nowrap;
 }
 
 /* ===============================
@@ -77,10 +89,102 @@ html, body {
   bottom: 24px;
 }
 
-/* Keep Leaflet controls a little off the top INSIDE the map */
+/* footer hint if you use it */
+#footerHint {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.92);
+  border-top: 1px solid #e6e6e6;
+  font-size: 12px;
+  padding: 6px 10px;
+  text-align: center;
+}
+
+/* ===============================
+   LEAFLET CONTROL PLACEMENT
+   - push down below topbar
+   - keep away from side panel (desktop)
+=================================*/
 .leaflet-top.leaflet-left,
 .leaflet-top.leaflet-right {
-  top: 12px !important;
+  top: calc(var(--map-top, 86px) + 10px) !important;
+}
+
+/* push RIGHT controls left a bit so they don't sit under the side panel */
+@media (min-width: 901px) {
+  .leaflet-top.leaflet-right {
+    right: 290px !important; /* side panel width (260) + padding */
+  }
+}
+
+/* Make controls rounded/modern */
+.leaflet-bar a,
+.leaflet-control-layers {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+.leaflet-bar a {
+  width: 38px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+}
+.leaflet-control-layers-toggle {
+  width: 38px !important;
+  height: 38px !important;
+}
+
+/* ===============================
+   SIDE STATS PANEL
+   Desktop: fixed right
+   Mobile: becomes full-width card below topbar
+=================================*/
+#sidePanel {
+  position: fixed;
+  right: 12px;
+  top: calc(var(--map-top, 86px) + 12px);
+  z-index: 900;
+  width: 260px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+  padding: 10px 12px;
+}
+
+.panelTitle { font-weight: 900; margin-bottom: 8px; }
+#panelBody { font-size: 13px; line-height: 1.35; }
+#panelBody .row { display:flex; justify-content:space-between; padding: 4px 0; }
+#panelBody .row b { font-weight: 900; }
+
+/* MOBILE panel: show as a card under topbar */
+@media (max-width: 900px) {
+  #sidePanel {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    top: calc(var(--map-top, 86px) + 8px);
+  }
+}
+
+/* ===============================
+   MOBILE TOPBAR LAYOUT FIXES
+   - ensure stats + kpi don't disappear
+=================================*/
+@media (max-width: 700px) {
+  #topbar { padding: 10px 10px; }
+  .controls { gap: 10px; }
+  .control { font-size: 13px; }
+
+  /* stats + kpi become full width rows */
+  .stats { width: 100%; margin-left: 0; white-space: normal; }
+  .kpi { width: 100%; margin-left: 0; white-space: normal; }
+
+  /* give map more room since mobile panel is now visible */
+  #map {
+    top: calc(var(--map-top, 86px) + 120px);
+  }
 }
 
 /* ===============================
@@ -99,108 +203,37 @@ html, body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.35);
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
-
 .marker:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(0,0,0,0.28);
 }
-
-.marker.buyer { border-color: #2e7d32; }   /* green */
-.marker.seller { border-color: #1565c0; }  /* blue */
-.marker.unknown { border-color: #6d6d6d; } /* gray */
+.marker.buyer { border-color: #2e7d32; }
+.marker.seller { border-color: #1565c0; }
+.marker.unknown { border-color: #6d6d6d; }
 
 .leaflet-div-icon {
   background: transparent;
   border: none;
 }
-
 .leaflet-marker-icon.leaflet-div-icon {
   background: transparent !important;
   border: none !important;
   width: 34px !important;
   height: 34px !important;
-  margin-left: -17px !important; /* half width */
-  margin-top: -34px !important;  /* full height (anchor bottom) */
+  margin-left: -17px !important;
+  margin-top: -34px !important;
   overflow: visible !important;
 }
 
 /* ===============================
-   POPUPS (PREMIUM)
-=================================*/
-.popup {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  line-height: 1.25;
-}
-
-.popup .addr {
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 800;
-}
-
-.popup .meta {
-  margin-top: 6px;
-}
-
-.popup .meta div {
-  margin: 3px 0;
-  font-size: 13px;
-}
-
-/* label/value alignment */
-.popup .meta div span {
-  color: #666;
-  display: inline-block;
-  width: 88px;
-  font-weight: 700;
-}
-
-/* Photo container */
-.popup .photo {
-  margin: 8px 0 6px 0;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
-  background: #f3f3f3;
-}
-
-.popup .photo img {
-  display: block;
-  width: 100%;
-  height: 165px;       /* fixed height */
-  object-fit: cover;   /* no stretching */
-  transform: scale(1);
-  transition: transform 180ms ease, filter 180ms ease;
-}
-
-.popup .photo:hover img {
-  transform: scale(1.03);
-  filter: saturate(1.05) contrast(1.03);
-}
-
-/* Leaflet popup shell polish */
-.leaflet-popup-content-wrapper {
-  border-radius: 14px;
-}
-
-.leaflet-popup-content {
-  margin: 12px 14px;
-}
-
-.leaflet-popup-tip {
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));
-}
-
-/* ===============================
-   CLUSTERS (NICER BUBBLES)
+   CLUSTER BUBBLES
 =================================*/
 .marker-cluster div {
   border-radius: 999px !important;
-  font-weight: 900;
+  font-weight: 800;
   box-shadow: 0 6px 18px rgba(0,0,0,0.22);
   border: 2px solid rgba(255,255,255,0.9);
 }
-
 .marker-cluster-small div,
 .marker-cluster-medium div,
 .marker-cluster-large div {
@@ -208,119 +241,60 @@ html, body {
 }
 
 /* ===============================
-   LEAFLET CONTROLS (MODERN)
+   POPUPS (PREMIUM)
 =================================*/
-.leaflet-bar a,
-.leaflet-control-layers {
-  border-radius: 12px !important;
+.popup { line-height: 1.25; }
+.popup .addr { margin-bottom: 8px; font-size: 14px; font-weight: 750; }
+.popup .meta div { margin: 3px 0; font-size: 13px; }
+.popup .meta div span {
+  color: #666;
+  display: inline-block;
+  width: 88px;
+  font-weight: 600;
+}
+.popup .photo {
+  margin: 8px 0 6px 0;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  background: #f3f3f3;
 }
-
-.leaflet-bar a {
-  width: 38px !important;
-  height: 38px !important;
-  line-height: 38px !important;
+.popup .photo img {
+  display: block;
+  width: 100%;
+  height: 165px;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 180ms ease, filter 180ms ease;
 }
-
-.leaflet-control-layers-toggle {
-  width: 38px !important;
-  height: 38px !important;
+.popup .photo:hover img {
+  transform: scale(1.03);
+  filter: saturate(1.05) contrast(1.03);
 }
+.leaflet-popup-content-wrapper { border-radius: 14px; }
+.leaflet-popup-content { margin: 12px 14px; }
+.leaflet-popup-tip { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18)); }
 
 /* ===============================
-   KPI BOX
-=================================*/
-.kpi {
-  margin-left: auto;
-  padding: 6px 10px;
-  border-radius: 12px;
-  font-weight: 900;
-  background: rgba(255,255,255,0.95);
-  border: 1px solid rgba(0,0,0,0.08);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
-  white-space: nowrap;
-}
-
-/* ===============================
-   SIDE STATS PANEL (DESKTOP)
-=================================*/
-#sidePanel {
-  position: fixed;
-  right: 12px;
-  top: calc(var(--map-top, 86px) + 12px);
-  z-index: 900;
-  width: 260px;
-  max-height: calc(100vh - var(--map-top, 86px) - 60px);
-  overflow: auto;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0,0,0,0.10);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.18);
-  padding: 10px 12px;
-}
-
-.panelTitle { font-weight: 900; margin-bottom: 8px; }
-#panelBody { font-size: 13px; line-height: 1.35; }
-#panelBody .row { display: flex; justify-content: space-between; padding: 4px 0; }
-#panelBody .row b { font-weight: 900; }
-
-/* ===============================
-   RESPONSIVE (MOBILE)
-=================================*/
-@media (max-width: 700px) {
-  #topbar { padding: 10px 10px; }
-  .controls { gap: 10px; }
-  .control { font-size: 13px; }
-  .stats { width: 100%; margin-left: 0; }
-  .kpi { width: 100%; margin-left: 0; }
-}
-
-@media (max-width: 900px) {
-  #sidePanel { display: none; }
-}
-
-/* ===============================
-   DARK MODE (ONLY TOPBAR/FOOTER)
-=================================*/
-@media (prefers-color-scheme: dark) {
-  #topbar, #footerHint {
-    background: rgba(20, 20, 20, 0.72);
-    border-color: rgba(255,255,255,0.10);
-    color: rgba(255,255,255,0.92);
-  }
-
-  .control .label, .stats, .brand {
-    color: rgba(255,255,255,0.92);
-  }
-/* ===============================
-   DARK UI WHEN DARK BASEMAP IS SELECTED
-   (independent of OS theme)
+   OPTIONAL: dark UI when .basemap-dark class is on body
 =================================*/
 body.basemap-dark #topbar,
 body.basemap-dark #footerHint,
 body.basemap-dark #sidePanel {
-  background: rgba(20, 20, 20, 0.78);
-  border-color: rgba(255,255,255,0.12);
+  background: rgba(20, 20, 20, 0.72);
+  border-color: rgba(255,255,255,0.10);
   color: rgba(255,255,255,0.92);
 }
 
 body.basemap-dark .control .label,
 body.basemap-dark .stats,
 body.basemap-dark .brand,
-body.basemap-dark .panelTitle,
-body.basemap-dark #panelBody {
+body.basemap-dark .panelTitle {
   color: rgba(255,255,255,0.92);
 }
 
-body.basemap-dark #panelBody .row span {
-  color: rgba(255,255,255,0.78);
-}
-
-/* Keep dropdown readable (we keep it white on purpose) */
-body.basemap-dark #topbar select {
-  background: #ffffff;
-  color: #222;
-  border-color: rgba(0,0,0,0.15);
+body.basemap-dark .kpi {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.92);
 }
