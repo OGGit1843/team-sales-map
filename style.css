@@ -11,7 +11,19 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 .controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .control { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 14px; }
 .control .label { font-weight: 600; margin-right: 6px; }
-.control select { padding: 6px 8px; border: 1px solid #d0d0d0; border-radius: 10px; }
+#topbar select {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #d0d0d0;
+  background: #ffffff;
+  color: #222;
+  font-weight: 600;
+}
+
+#topbar select option {
+  background: #ffffff;
+  color: #222;
+}
 .stats { margin-left: auto; font-weight: 600; }
 #map { 
   position: absolute; 
@@ -138,12 +150,7 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
   }
 
   .control .label, .stats, .brand { color: rgba(255,255,255,0.92); }
-  #topbar select {
-    background: rgba(255,255,255,0.10);
-    color: rgba(255,255,255,0.92);
-    border-color: rgba(255,255,255,0.18);
-  }
-}
+ 
 #topbar {
   box-shadow: 0 6px 20px rgba(0,0,0,0.18);
   border-bottom: 0;
