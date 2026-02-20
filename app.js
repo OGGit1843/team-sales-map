@@ -4,7 +4,11 @@ const DATA_URL = "./data_combined.csv";
 /* ===============================
    MAP INIT
 =================================*/
-window.map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
+window.map = L.map("map", {
+  fullscreenControl: true,
+  // Keep fullscreen away from the top-right Filters button
+  fullscreenControlOptions: { position: "topleft" }
+}).setView([39.96, -82.99], 10);
 
 window.map.on("enterFullscreen", () => {
   document.body.classList.add("hg-fs");
@@ -31,9 +35,17 @@ function mountLeafletUI() {
   const panel = frag.querySelector("#hgPanel");
   const openBtn = frag.querySelector("#hgOpenBtn");
   const closeBtn = frag.querySelector("#hgCloseBtn");
+  const openStandalone = frag.querySelector("#hgOpenStandalone");
 
-  // Floating open button in the map container (not a Leaflet control)
+  // Set the standalone link to the current page URL (works even if iframe fullscreen is blocked)
+  if (openStandalone) openStandalone.href = window.location.href;
+
+  // Floating open button in the map container
   window.map.getContainer().appendChild(openBtn);
+
+  // ✅ Prevent the open button from triggering map gestures/click handlers
+  L.DomEvent.disableClickPropagation(openBtn);
+  L.DomEvent.disableScrollPropagation(openBtn);
 
   // Leaflet control for the panel (bottom-left is better for mobile)
   const HgControl = L.Control.extend({
@@ -41,10 +53,9 @@ function mountLeafletUI() {
     onAdd: function () {
       const container = L.DomUtil.create("div", "hg-wrap");
       container.classList.add("hg-control");
-
       container.appendChild(panel);
 
-      // Prevent map drag/zoom when interacting with UI
+      // Prevent map drag/zoom when interacting with the panel
       L.DomEvent.disableClickPropagation(container);
       L.DomEvent.disableScrollPropagation(container);
 
@@ -63,14 +74,12 @@ function mountLeafletUI() {
     panel.classList.remove("is-open");
   }
 
-  // Only used on mobile (CSS hides buttons appropriately)
   openBtn.addEventListener("click", (e) => { stop(e); openPanel(); });
   closeBtn.addEventListener("click", (e) => { stop(e); closePanel(); });
 
-  // Close panel when clicking map (mobile quality of life)
+  // Close panel when clicking map (nice on mobile)
   window.map.on("click", () => closePanel());
 
-  // Keep a handle
   return { panel, openBtn };
 }
 
@@ -80,19 +89,16 @@ mountLeafletUI();
 /* ===============================
    BASEMAPS
 =================================*/
-// 1) ESRI World Street Map
 const esriStreet = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19, attribution: "Tiles © Esri" }
 );
 
-// 2) Muted
 const muted = L.tileLayer(
   "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
   { maxZoom: 19, attribution: "© OpenStreetMap contributors" }
 );
 
-// 3) ESRI Dark Gray Canvas + labels
 const esriDark = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 16, attribution: "Tiles © Esri" }
@@ -103,7 +109,6 @@ const esriDarkLabels = L.tileLayer(
 );
 const darkBase = L.layerGroup([esriDark, esriDarkLabels]);
 
-// 4) Satellite + labels
 const esriSatellite = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19, attribution: "Tiles © Esri" }
@@ -114,10 +119,8 @@ const esriLabels = L.tileLayer(
 );
 const satBase = L.layerGroup([esriSatellite, esriLabels]);
 
-// Default basemap
 esriStreet.addTo(window.map);
 
-// Layer toggle
 L.control.layers(
   {
     "Street (Google-like)": esriStreet,
@@ -136,7 +139,7 @@ const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRad
 window.map.addLayer(cluster);
 
 /* ===============================
-   DOM REFS (now that UI is mounted)
+   DOM REFS
 =================================*/
 const els = {
   yearSelect: document.getElementById("yearSelect"),
@@ -293,7 +296,6 @@ function refresh() {
     hasAutoZoomed = true;
   }
 
-  // iframe/resize stability
   setTimeout(() => window.map.invalidateSize(), 0);
 }
 
@@ -338,7 +340,6 @@ function loadData() {
 
       populateYearDropdown();
       refresh();
-
       setTimeout(() => window.map.invalidateSize(), 50);
     },
     error: (err) => {
