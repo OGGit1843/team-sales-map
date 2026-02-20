@@ -3,21 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hance Group | Team Sales Map</title>
+  <title>Hance Group • Team Sales Map</title>
 
+  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- MarkerCluster -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.css" />
-  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- Heatmap -->
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
+  <!-- Papa Parse -->
+  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <link rel="stylesheet" href="./style.css" />
 </head>
+
 <body>
   <div id="topbar">
     <div class="brand">Hance Group • Team Sales Map</div>
 
     <div class="controls">
       <div class="control">
-        <label for="yearSelect">Year</label>
+        <span class="label">Year</span>
         <select id="yearSelect">
           <option value="all">All</option>
         </select>
@@ -25,32 +37,33 @@
 
       <div class="control">
         <span class="label">Property Type</span>
-        <label><input type="checkbox" class="ptype" value="Residential" checked> Residential</label>
-        <label><input type="checkbox" class="ptype" value="Commercial" checked> Commercial</label>
-        <label><input type="checkbox" class="ptype" value="Multi-Family" checked> Multi-Family</label>
-        <label><input type="checkbox" class="ptype" value="Land" checked> Land</label>
+        <label><input class="ptype" type="checkbox" value="Residential" checked /> Residential</label>
+        <label><input class="ptype" type="checkbox" value="Commercial" checked /> Commercial</label>
+        <label><input class="ptype" type="checkbox" value="Multi-Family" checked /> Multi-Family</label>
+        <label><input class="ptype" type="checkbox" value="Land" checked /> Land</label>
       </div>
 
-      <div class="control stats" id="stats">Loading…</div>
-      <div class="kpi" id="kpiVolume">Volume: $0</div>
+      <div id="stats" class="stats">Loading…</div>
+      <div id="kpiVolume" class="kpi">Volume: —</div>
     </div>
   </div>
 
-  <div id="map"></div>
-  <div id="sidePanel">
-  <div class="panelTitle">Stats</div>
-  <div id="panelBody"></div>
-</div>
+  <!-- ✅ Side panel -->
+  <div id="sidePanel" class="panel collapsed">
+    <div class="panelHeader">
+      <div class="panelTitle">Stats</div>
+      <button id="panelToggle" class="panelToggle" type="button" aria-expanded="false">
+        Stats ▾
+      </button>
+    </div>
 
-  <div id="footerHint">
-    Tip: Use the fullscreen button on the map (top right) for the best mobile experience.
+    <div id="panelBody" class="panelBody"></div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.js"></script>
-  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
-<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-  <script src="app.js"></script>
+  <div id="map"></div>
+
+  <div id="footerHint">Tip: Use fullscreen for best mobile experience.</div>
+
+  <script src="./app.js"></script>
 </body>
 </html>
