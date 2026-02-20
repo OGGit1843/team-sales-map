@@ -144,3 +144,60 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
     border-color: rgba(255,255,255,0.18);
   }
 }
+#topbar {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  border-bottom: 0;
+}
+
+.brand {
+  letter-spacing: 0.2px;
+  font-size: 15px;
+}
+
+.control select {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+/* Nicer cluster bubbles */
+.marker-cluster div {
+  border-radius: 999px !important;
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  border: 2px solid rgba(255,255,255,0.9);
+}
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+  background: rgba(80, 170, 90, 0.78) !important;
+}
+.marker {
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.marker:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.28);
+}
+/* Controls: rounded + modern */
+.leaflet-bar a,
+.leaflet-control-layers {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+.leaflet-bar a {
+  width: 38px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+}
+
+.leaflet-control-layers-toggle {
+  width: 38px !important;
+  height: 38px !important;
+}
+@media (max-width: 700px) {
+  #topbar { padding: 10px 10px; }
+  .controls { gap: 10px; }
+  .control { font-size: 13px; }
+  .control select { padding: 6px 8px; }
+}
