@@ -8,11 +8,11 @@ const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 1
 // --- Final Basemaps ---
 
 // 1️⃣ Original OpenStreetMap
-const original = L.tileLayer(
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+const esriStreet = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   {
     maxZoom: 19,
-    attribution: "&copy; OpenStreetMap contributors"
+    attribution: "Tiles &copy; Esri"
   }
 );
 
@@ -49,7 +49,7 @@ original.addTo(map);
 L.control.layers(
   {
     "Original": original,
-    "Muted": muted,
+    "ESRI Street (Darker)": esriStreet,
     "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
   },
   {
