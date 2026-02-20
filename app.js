@@ -1,95 +1,87 @@
 // Hance Group Team Sales Map (Leaflet)
-// Data source: data_combined.csv (same folder as this file)
 
 const DATA_URL = "./data_combined.csv";
 
+/* ===============================
+   MAP INIT
+=================================*/
+
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
+
+/* ===============================
+   AUTO OFFSET (TOPBAR SAFE)
+=================================*/
+
 function setMapTopOffset() {
   const topbar = document.getElementById("topbar");
-  const footer = document.getElementById("footerHint");
-
   if (!topbar) return;
 
-  // Add a little breathing room under the topbar
   const top = topbar.offsetHeight + 10;
-
-  // Set CSS variable used by #map { top: var(--map-top) }
   document.documentElement.style.setProperty("--map-top", `${top}px`);
 
-  // Optional: if you ever want to auto-size the bottom too:
-  // const bottom = (footer ? footer.offsetHeight : 0);
-  // document.documentElement.style.setProperty("--map-bottom", `${bottom}px`);
-
-  // Leaflet needs to recalc after container size changes
   if (map && map.invalidateSize) map.invalidateSize();
 }
 
-// Run once after page loads + whenever screen size changes
 window.addEventListener("load", setMapTopOffset);
 window.addEventListener("resize", setMapTopOffset);
 setTimeout(setMapTopOffset, 0);
-// --- Basemaps ---
-// --- Final Basemaps (Polished Professional Set) ---
 
-// 1️⃣ ESRI World Street Map (Google-like)
+/* ===============================
+   BASEMAPS
+=================================*/
+
 const esriStreet = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
-  {
-    maxZoom: 19,
-    attribution: "Tiles &copy; Esri"
-  }
+  { maxZoom: 19, attribution: "Tiles © Esri" }
 );
 
-// 2️⃣ Muted (softer OSM balance)
 const muted = L.tileLayer(
   "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
-  {
-    maxZoom: 19,
-    attribution: "&copy; OpenStreetMap contributors"
-  }
+  { maxZoom: 19, attribution: "© OpenStreetMap contributors" }
 );
 
-// 3️⃣ ESRI Dark Gray Canvas (clean subtle dark)
 const esriDark = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-  {
-    maxZoom: 16,
-    attribution: "Tiles &copy; Esri"
-  }
+  { maxZoom: 16, attribution: "Tiles © Esri" }
 );
 
-// Dark labels overlay (needed for ESRI dark base)
 const esriDarkLabels = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
-  {
-    maxZoom: 16
-  }
+  { maxZoom: 16 }
 );
 
-// 4️⃣ Satellite imagery
 const esriSatellite = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  {
-    maxZoom: 19,
-    attribution: "Tiles &copy; Esri"
-  }
+  { maxZoom: 19, attribution: "Tiles © Esri" }
 );
 
-// Satellite labels overlay
 const esriLabels = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-  {
-    maxZoom: 19
-  }
+  { maxZoom: 19 }
 );
 
-// ✅ Default map (choose ONE line)
 esriStreet.addTo(map);
-// muted.addTo(map);
-// L.layerGroup([esriDark, esriDarkLabels]).addTo(map);
-// L.layerGroup([esriSatellite, esriLabels]).addTo(map);
 
-// Basemap + overlay control
+/* ===============================
+   CLUSTERS + HEAT
+=================================*/
+
+const cluster = L.markerClusterGroup({
+  showCoverageOnHover: false,
+  maxClusterRadius: 45
+});
+map.addLayer(cluster);
+
+let heatLayer = L.heatLayer([], {
+  radius: 28,
+  blur: 22,
+  maxZoom: 17
+});
+
+/* ===============================
+   LAYER CONTROL
+=================================*/
+
 L.control.layers(
   {
     "Street (Google-like)": esriStreet,
@@ -98,54 +90,57 @@ L.control.layers(
     "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
   },
   {
+    "Heatmap (Density)": heatLayer,
     "Extra Labels (More names)": esriLabels
   },
   { position: "topright" }
 ).addTo(map);
 
-const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
-map.addLayer(cluster);
+/* ===============================
+   DOM REFERENCES
+=================================*/
 
 const els = {
   yearSelect: document.getElementById("yearSelect"),
   stats: document.getElementById("stats"),
-  ptypeChecks: Array.from(document.querySelectorAll(".ptype")),
+  kpiVolume: document.getElementById("kpiVolume"),
+  panelBody: document.getElementById("panelBody"),
+  ptypeChecks: Array.from(document.querySelectorAll(".ptype"))
 };
+
+/* ===============================
+   DATA STATE
+=================================*/
 
 let allRows = [];
 let plottedMarkers = [];
 let availableYears = new Set();
 let hasAutoZoomed = false;
 
+/* ===============================
+   HELPERS
+=================================*/
+
 function parseSoldPrice(raw) {
-  if (raw == null) return null;
+  if (!raw) return null;
   const s = String(raw).replace(/[^0-9.]/g, "");
-  if (!s) return null;
   const n = Number(s);
   return Number.isFinite(n) ? n : null;
 }
 
 function parseDate(raw) {
   if (!raw) return null;
-  const s = String(raw).trim();
-  // YYYY-MM-DD
-  let m = s.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})/);
-  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
-  // MM/DD/YYYY
-  m = s.match(/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})/);
-  if (m) return new Date(Number(m[3]), Number(m[1]) - 1, Number(m[2]));
-  // fallback
-  const d = new Date(s);
+  const d = new Date(raw);
   return isNaN(d.getTime()) ? null : d;
 }
 
 function fmtMoney(n) {
   if (n == null) return "";
-  try {
-    return n.toLocaleString(undefined, { style: "currency", currency: "USD", maximumFractionDigits: 0 });
-  } catch {
-    return `$${Math.round(n).toLocaleString()}`;
-  }
+  return n.toLocaleString(undefined, {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0
+  });
 }
 
 function getActivePropertyTypes() {
@@ -157,17 +152,16 @@ function getActivePropertyTypes() {
 function getActiveYear() {
   return els.yearSelect.value || "all";
 }
+
 function txClass(tx) {
-  const t = (tx || "").toString().toLowerCase();
+  const t = (tx || "").toLowerCase();
   if (t.includes("seller") || t.includes("listing")) return "seller";
   if (t.includes("buyer")) return "buyer";
   return "unknown";
 }
 
 function typeEmoji(ptype) {
-  const p = (ptype || "").toString().toLowerCase();
-
-  // your sheet uses values like: Residential, Commercial, Multi-Family, Land
+  const p = (ptype || "").toLowerCase();
   if (p.includes("res")) return "🏠";
   if (p.includes("comm")) return "🏢";
   if (p.includes("multi")) return "🏘️";
@@ -176,64 +170,64 @@ function typeEmoji(ptype) {
 }
 
 function makeIcon(row) {
-  const tx = row["Transaction Type"];
-  const ptype = row["Property Type"];
-
-  const cls = txClass(tx);
-  const emoji = typeEmoji(ptype);
-
   return L.divIcon({
-    className: "", // keep Leaflet from adding default icon styles
-    html: `<div class="marker ${cls}" title="${ptype || ""}">${emoji}</div>`,
+    className: "",
+    html: `<div class="marker ${txClass(row["Transaction Type"])}">
+            ${typeEmoji(row["Property Type"])}
+           </div>`,
     iconSize: [34, 34],
     iconAnchor: [17, 34],
     popupAnchor: [0, -30]
   });
 }
+
 function buildPopup(row) {
   const price = parseSoldPrice(row["Sold Price"]);
   const dt = parseDate(row["Sold Date"]);
-  const year = dt ? dt.getFullYear() : null;
 
-  const photo = (row["PhotoURL"] || row["Photo Url"] || row["Photo"] || "").toString().trim();
-  const imgHtml = photo ? `<div class="photo"><img src="${photo}" alt="Property photo" loading="lazy" /></div>` : "";
+  const photo = (row["PhotoURL"] || "").trim();
+  const imgHtml = photo
+    ? `<div class="photo"><img src="${photo}" loading="lazy"/></div>`
+    : "";
 
-  const safe = (v) => (v == null ? "" : String(v));
   return `
     <div class="popup">
-      <div class="addr"><strong>${safe(row["Full Address"])}</strong></div>
+      <div class="addr"><strong>${row["Full Address"]}</strong></div>
       ${imgHtml}
       <div class="meta">
-        <div><span>Type:</span> ${safe(row["Transaction Type"])}</div>
-        <div><span>Property:</span> ${safe(row["Property Type"])}</div>
-        <div><span>Sold:</span> ${price != null ? fmtMoney(price) : safe(row["Sold Price"])}</div>
-        <div><span>Date:</span> ${dt ? dt.toLocaleDateString() : safe(row["Sold Date"])}</div>
-        ${year ? `<div><span>Year:</span> ${year}</div>` : ""}
+        <div><span>Type:</span> ${row["Transaction Type"]}</div>
+        <div><span>Property:</span> ${row["Property Type"]}</div>
+        <div><span>Sold:</span> ${fmtMoney(price)}</div>
+        <div><span>Date:</span> ${dt ? dt.toLocaleDateString() : ""}</div>
       </div>
     </div>
   `;
 }
 
+/* ===============================
+   REFRESH (CORE LOGIC)
+=================================*/
+
 function refresh() {
   cluster.clearLayers();
   plottedMarkers = [];
 
+  const heatPoints = [];
+  let volume = 0;
+  let buyerCount = 0, sellerCount = 0, unknownCount = 0;
+
   const activeTypes = getActivePropertyTypes();
   const activeYear = getActiveYear();
 
-  let total = 0;
   let plotted = 0;
   let missing = 0;
 
   for (const row of allRows) {
-    total++;
-
-    const ptype = (row["Property Type"] || "").toString();
+    const ptype = (row["Property Type"] || "");
     if (!activeTypes.has(ptype)) continue;
 
     const lat = Number(row["Latitude"]);
     const lng = Number(row["Longitude"]);
-
     if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
       missing++;
       continue;
@@ -243,42 +237,64 @@ function refresh() {
     const year = dt ? String(dt.getFullYear()) : null;
     if (activeYear !== "all" && year !== activeYear) continue;
 
+    heatPoints.push([lat, lng, 1]);
+
+    const price = parseSoldPrice(row["Sold Price"]);
+    if (price != null) volume += price;
+
+    const cls = txClass(row["Transaction Type"]);
+    if (cls === "buyer") buyerCount++;
+    else if (cls === "seller") sellerCount++;
+    else unknownCount++;
+
     const marker = L.marker([lat, lng], { icon: makeIcon(row) });
     marker.bindPopup(buildPopup(row), { maxWidth: 320 });
+
     cluster.addLayer(marker);
     plottedMarkers.push(marker);
     plotted++;
   }
 
-  els.stats.textContent = `${plotted.toLocaleString()} pinned • ${missing.toLocaleString()} missing coords • ${total.toLocaleString()} total`;
+  els.stats.textContent = `${plotted} pinned • ${missing} missing`;
+
+  if (els.kpiVolume) {
+    const label = activeYear === "all" ? "Volume" : `Volume (${activeYear})`;
+    els.kpiVolume.textContent = `${label}: ${fmtMoney(volume)}`;
+  }
+
+  if (els.panelBody) {
+    els.panelBody.innerHTML = `
+      <div class="row"><span>Buyer</span><b>${buyerCount}</b></div>
+      <div class="row"><span>Seller</span><b>${sellerCount}</b></div>
+      <div class="row"><span>Unknown</span><b>${unknownCount}</b></div>
+    `;
+  }
+
+  heatLayer.setLatLngs(heatPoints);
 
   if (plotted > 0 && !hasAutoZoomed) {
-  const group = L.featureGroup(plottedMarkers);
-  map.fitBounds(group.getBounds().pad(0.12));
-  hasAutoZoomed = true;
+    const group = L.featureGroup(plottedMarkers);
+    map.fitBounds(group.getBounds().pad(0.12));
+    hasAutoZoomed = true;
+  }
 }
-}
+
+/* ===============================
+   LOAD DATA
+=================================*/
 
 function populateYearDropdown() {
-  // preserve current selection if possible
-  const current = els.yearSelect.value || "all";
-  const years = Array.from(availableYears).sort((a,b) => b - a);
-
+  const years = Array.from(availableYears).sort((a,b)=>b-a);
   els.yearSelect.innerHTML = '<option value="all">All</option>';
-  for (const y of years) {
+  years.forEach(y=>{
     const opt = document.createElement("option");
-    opt.value = String(y);
-    opt.textContent = String(y);
+    opt.value = y;
+    opt.textContent = y;
     els.yearSelect.appendChild(opt);
-  }
-  // restore selection
-  const exists = (current === "all") || years.includes(Number(current));
-  els.yearSelect.value = exists ? current : "all";
+  });
 }
 
 function loadData() {
-  els.stats.textContent = "Loading…";
-
   Papa.parse(DATA_URL, {
     download: true,
     header: true,
@@ -287,23 +303,18 @@ function loadData() {
       allRows = results.data || [];
 
       availableYears = new Set();
-      for (const row of allRows) {
+      allRows.forEach(row=>{
         const dt = parseDate(row["Sold Date"]);
         if (dt) availableYears.add(dt.getFullYear());
-      }
+      });
+
       populateYearDropdown();
       refresh();
-    },
-    error: (err) => {
-      console.error(err);
-      els.stats.textContent = "Failed to load data_combined.csv";
     }
   });
 }
 
 els.yearSelect.addEventListener("change", refresh);
 els.ptypeChecks.forEach(c => c.addEventListener("change", refresh));
-
-
 
 loadData();
