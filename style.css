@@ -201,3 +201,14 @@ body.leaflet-fullscreen-on .leaflet-top.leaflet-left,
 body.leaflet-fullscreen-on .leaflet-top.leaflet-right {
   top: 10px !important;
 }
+/* Fix Leaflet Fullscreen icon alignment after resizing leaflet-bar buttons */
+.leaflet-control-fullscreen a {
+  background-position: center !important;
+  background-size: 18px 18px !important;
+}
+
+/* Some versions use this class name */
+.leaflet-control-fullscreen-button {
+  background-position: center !important;
+  background-size: 18px 18px !important;
+}
