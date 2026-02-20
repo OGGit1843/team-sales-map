@@ -5,7 +5,9 @@ const DATA_URL = "./data_combined.csv";
    MAP INIT
 =================================*/
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
-
+// Add a reliable class we control when fullscreen toggles
+map.on("enterFullscreen", () => document.body.classList.add("hg-fs"));
+map.on("exitFullscreen", () => document.body.classList.remove("hg-fs"));
 /* Keep map below topbar */
 function setMapTopOffset() {
   const topbar = document.getElementById("topbar");
