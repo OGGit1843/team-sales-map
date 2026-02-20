@@ -40,7 +40,6 @@ L.control.layers(
   { position: "topright" }
 ).addTo(map);
 
-
 const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
 map.addLayer(cluster);
 
