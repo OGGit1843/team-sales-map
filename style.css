@@ -4,18 +4,16 @@ html, body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-/* ===============================
-   TOPBAR
-=================================*/
+/* Top bar */
 #topbar {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  background: rgba(255,255,255,0.92);
+  background: rgba(60,60,60,0.88);     /* gray-ish */
   backdrop-filter: blur(6px);
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
   padding: 10px 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  color: rgba(255,255,255,0.92);
 }
 
 .brand {
@@ -41,77 +39,60 @@ html, body {
 }
 
 .control .label {
-  font-weight: 700;
+  font-weight: 800;
   margin-right: 6px;
+  color: rgba(255,255,255,0.92);
 }
 
-/* dropdowns always readable */
+/* Dropdown always readable */
 #topbar select {
   padding: 6px 10px;
   border-radius: 10px;
-  border: 1px solid #d0d0d0;
+  border: 1px solid rgba(255,255,255,0.25);
   background: #ffffff;
   color: #222;
   font-weight: 700;
 }
+
 #topbar select option {
   background: #ffffff;
   color: #222;
 }
 
-/* pinned/missing/total */
 .stats {
   margin-left: auto;
-  font-weight: 700;
+  font-weight: 800;
   white-space: nowrap;
+  color: rgba(255,255,255,0.92);
 }
 
-/* KPI (volume) */
-.kpi {
-  margin-left: auto;
-  padding: 6px 10px;
-  border-radius: 12px;
-  font-weight: 900;
-  background: rgba(255,255,255,0.95);
-  border: 1px solid rgba(0,0,0,0.08);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
-  white-space: nowrap;
-}
-
-/* ===============================
-   MAP CONTAINER
-=================================*/
+/* Map + footer */
 #map {
   position: absolute;
   top: var(--map-top, 86px);
-  left: 0;
-  right: 0;
-  bottom: 24px;
+  left: 0; right: 0; bottom: 24px;
 }
 
 #footerHint {
   position: fixed; left: 0; right: 0; bottom: 0;
   z-index: 1000;
-  background: rgba(255,255,255,0.92);
-  border-top: 1px solid #e6e6e6;
+  background: rgba(60,60,60,0.88);
+  border-top: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.92);
   font-size: 12px;
   padding: 6px 10px;
   text-align: center;
 }
 
-/* ===============================
-   LEAFLET CONTROL PLACEMENT
-=================================*/
+/* Responsive */
+@media (max-width: 700px) {
+  .stats { width: 100%; margin-left: 0; white-space: normal; }
+}
+
+/* Push leaflet controls down below topbar */
 .leaflet-top.leaflet-left,
 .leaflet-top.leaflet-right {
   top: calc(var(--map-top, 86px) + 10px) !important;
-}
-
-/* push RIGHT controls left so they don't sit under side panel (desktop) */
-@media (min-width: 901px) {
-  .leaflet-top.leaflet-right {
-    right: 290px !important;
-  }
 }
 
 /* Controls styling */
@@ -121,111 +102,19 @@ html, body {
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0,0,0,0.18);
 }
+
 .leaflet-bar a {
   width: 38px !important;
   height: 38px !important;
   line-height: 38px !important;
 }
+
 .leaflet-control-layers-toggle {
   width: 38px !important;
   height: 38px !important;
 }
 
-/* ===============================
-   SIDE PANEL (DESKTOP)
-=================================*/
-#sidePanel {
-  position: fixed;
-  right: 12px;
-  top: calc(var(--map-top, 86px) + 12px);
-  z-index: 900;
-
-  width: 260px;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0,0,0,0.10);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.18);
-  padding: 10px 12px;
-}
-
-.panelHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-
-.panelTitle {
-  font-weight: 900;
-}
-
-.panelToggle {
-  display: none; /* hidden on desktop */
-  border: 1px solid rgba(0,0,0,0.10);
-  background: rgba(255,255,255,0.9);
-  border-radius: 999px;
-  padding: 6px 10px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.panelBody {
-  font-size: 13px;
-  line-height: 1.35;
-}
-
-.panelBody .row {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-}
-.panelBody .row b { font-weight: 900; }
-
-/* ===============================
-   MOBILE: COLLAPSIBLE PANEL CARD
-=================================*/
-@media (max-width: 900px) {
-  #sidePanel {
-    left: 12px;
-    right: 12px;
-    width: auto;
-
-    /* becomes a card under topbar */
-    top: calc(var(--map-top, 86px) + 8px);
-  }
-
-  .panelToggle { display: inline-flex; }
-
-  /* panel collapse animation */
-  .panelBody {
-    overflow: hidden;
-    max-height: 500px;
-    transition: max-height 200ms ease, opacity 200ms ease;
-    opacity: 1;
-  }
-
-  #sidePanel.collapsed .panelBody {
-    max-height: 0px;
-    opacity: 0;
-  }
-
-  /* make map start below the panel header even when collapsed */
-  #map {
-    top: calc(var(--map-top, 86px) + 62px);
-  }
-}
-
-/* EXTRA small screens: let stats + KPI wrap nicely */
-@media (max-width: 700px) {
-  .stats { width: 100%; margin-left: 0; white-space: normal; }
-  .kpi { width: 100%; margin-left: 0; white-space: normal; }
-}
-
-/* ===============================
-   CUSTOM MARKERS
-=================================*/
+/* Custom marker */
 .marker {
   line-height: 1;
   width: 34px;
@@ -237,12 +126,8 @@ html, body {
   background: rgba(255,255,255,0.96);
   border: 3px solid #333;
   box-shadow: 0 2px 8px rgba(0,0,0,0.35);
-  transition: transform 120ms ease, box-shadow 120ms ease;
 }
-.marker:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.28);
-}
+
 .marker.buyer { border-color: #2e7d32; }
 .marker.seller { border-color: #1565c0; }
 .marker.unknown { border-color: #6d6d6d; }
@@ -258,9 +143,7 @@ html, body {
   overflow: visible !important;
 }
 
-/* ===============================
-   CLUSTERS
-=================================*/
+/* Clusters */
 .marker-cluster div {
   border-radius: 999px !important;
   font-weight: 800;
@@ -273,9 +156,7 @@ html, body {
   background: rgba(80, 170, 90, 0.78) !important;
 }
 
-/* ===============================
-   POPUPS
-=================================*/
+/* Popup styling (keep the nice photo look) */
 .popup { line-height: 1.25; }
 .popup .addr { margin-bottom: 8px; font-size: 14px; font-weight: 750; }
 .popup .meta div { margin: 3px 0; font-size: 13px; }
@@ -297,40 +178,7 @@ html, body {
   width: 100%;
   height: 165px;
   object-fit: cover;
-  transform: scale(1);
-  transition: transform 180ms ease, filter 180ms ease;
-}
-.popup .photo:hover img {
-  transform: scale(1.03);
-  filter: saturate(1.05) contrast(1.03);
 }
 .leaflet-popup-content-wrapper { border-radius: 14px; }
 .leaflet-popup-content { margin: 12px 14px; }
 .leaflet-popup-tip { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18)); }
-
-/* ===============================
-   OPTIONAL: dark UI when .basemap-dark is on body
-=================================*/
-body.basemap-dark #topbar,
-body.basemap-dark #footerHint,
-body.basemap-dark #sidePanel {
-  background: rgba(20, 20, 20, 0.72);
-  border-color: rgba(255,255,255,0.10);
-  color: rgba(255,255,255,0.92);
-}
-body.basemap-dark .control .label,
-body.basemap-dark .stats,
-body.basemap-dark .brand,
-body.basemap-dark .panelTitle {
-  color: rgba(255,255,255,0.92);
-}
-body.basemap-dark .panelToggle {
-  background: rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.18);
-  color: rgba(255,255,255,0.92);
-}
-body.basemap-dark .kpi {
-  background: rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.18);
-  color: rgba(255,255,255,0.92);
-}
