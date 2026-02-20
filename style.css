@@ -1,15 +1,30 @@
+/* =========================================
+   GLOBAL LAYOUT FIX (CRITICAL FOR MOBILE + IFRAME)
+========================================= */
+
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  overflow: hidden; /* prevents iframe shrink bug */
 }
 
-/* Top bar */
+/* Default offsets (JS overrides these dynamically) */
+:root {
+  --map-top: 86px;
+  --map-bottom: 24px;
+}
+
+/* =========================================
+   TOP BAR
+========================================= */
+
 #topbar {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  background: rgba(60,60,60,0.88);     /* gray-ish */
+  background: rgba(60,60,60,0.88);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid rgba(255,255,255,0.12);
   padding: 10px 12px;
@@ -41,10 +56,8 @@ html, body {
 .control .label {
   font-weight: 800;
   margin-right: 6px;
-  color: rgba(255,255,255,0.92);
 }
 
-/* Dropdown always readable */
 #topbar select {
   padding: 6px 10px;
   border-radius: 10px;
@@ -54,27 +67,33 @@ html, body {
   font-weight: 700;
 }
 
-#topbar select option {
-  background: #ffffff;
-  color: #222;
-}
-
 .stats {
   margin-left: auto;
   font-weight: 800;
   white-space: nowrap;
-  color: rgba(255,255,255,0.92);
 }
 
-/* Map + footer */
+/* =========================================
+   MAP (Dynamic height via JS variables)
+========================================= */
+
 #map {
   position: absolute;
-  top: var(--map-top, 86px);
-  left: 0; right: 0; bottom: 24px;
+  top: var(--map-top);
+  left: 0;
+  right: 0;
+  bottom: var(--map-bottom);
 }
 
+/* =========================================
+   FOOTER
+========================================= */
+
 #footerHint {
-  position: fixed; left: 0; right: 0; bottom: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 1000;
   background: rgba(60,60,60,0.88);
   border-top: 1px solid rgba(255,255,255,0.12);
@@ -84,18 +103,31 @@ html, body {
   text-align: center;
 }
 
-/* Responsive */
+/* =========================================
+   RESPONSIVE
+========================================= */
+
 @media (max-width: 700px) {
-  .stats { width: 100%; margin-left: 0; white-space: normal; }
+  .stats {
+    width: 100%;
+    margin-left: 0;
+    white-space: normal;
+  }
 }
 
-/* Push leaflet controls down below topbar */
+/* =========================================
+   LEAFLET CONTROL OFFSET
+========================================= */
+
 .leaflet-top.leaflet-left,
 .leaflet-top.leaflet-right {
-  top: calc(var(--map-top, 86px) + 10px) !important;
+  top: calc(var(--map-top) + 10px) !important;
 }
 
-/* Controls styling */
+/* =========================================
+   LEAFLET CONTROL STYLING
+========================================= */
+
 .leaflet-bar a,
 .leaflet-control-layers {
   border-radius: 12px !important;
@@ -107,14 +139,15 @@ html, body {
   width: 38px !important;
   height: 38px !important;
   line-height: 38px !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 18px 18px !important;
 }
 
-.leaflet-control-layers-toggle {
-  width: 38px !important;
-  height: 38px !important;
-}
+/* =========================================
+   MARKERS
+========================================= */
 
-/* Custom marker */
 .marker {
   line-height: 1;
   width: 34px;
@@ -132,31 +165,27 @@ html, body {
 .marker.seller { border-color: #1565c0; }
 .marker.unknown { border-color: #6d6d6d; }
 
-.leaflet-div-icon { background: transparent; border: none; }
-.leaflet-marker-icon.leaflet-div-icon {
-  background: transparent !important;
-  border: none !important;
-  width: 34px !important;
-  height: 34px !important;
-  margin-left: -17px !important;
-  margin-top: -34px !important;
-  overflow: visible !important;
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
 }
 
-/* Clusters */
+/* =========================================
+   CLUSTERS
+========================================= */
+
 .marker-cluster div {
   border-radius: 999px !important;
   font-weight: 800;
   box-shadow: 0 6px 18px rgba(0,0,0,0.22);
   border: 2px solid rgba(255,255,255,0.9);
-}
-.marker-cluster-small div,
-.marker-cluster-medium div,
-.marker-cluster-large div {
   background: rgba(80, 170, 90, 0.78) !important;
 }
 
-/* Popup styling */
+/* =========================================
+   POPUPS
+========================================= */
+
 .popup { line-height: 1.25; }
 .popup .addr { margin-bottom: 8px; font-size: 14px; font-weight: 750; }
 .popup .meta div { margin: 3px 0; font-size: 13px; }
@@ -171,7 +200,6 @@ html, body {
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0,0,0,0.22);
-  background: #f3f3f3;
 }
 .popup .photo img {
   display: block;
@@ -180,39 +208,11 @@ html, body {
   object-fit: cover;
 }
 .leaflet-popup-content-wrapper { border-radius: 14px; }
-.leaflet-popup-content { margin: 12px 14px; }
-.leaflet-popup-tip { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18)); }
-/* ===== Fullscreen mode fixes (Leaflet.Fullscreen) ===== */
 
-/* When fullscreen is ON, remove the topbar/footer so the map is truly fullscreen */
-body.leaflet-fullscreen-on #topbar,
-body.leaflet-fullscreen-on #footerHint {
-  display: none !important;
-}
+/* =========================================
+   FULLSCREEN MODE
+========================================= */
 
-/* Let the map fill the entire screen in fullscreen */
-body.leaflet-fullscreen-on #map {
-  top: 0 !important;
-  bottom: 0 !important;
-}
-
-/* Put Leaflet controls back at the top in fullscreen */
-body.leaflet-fullscreen-on .leaflet-top.leaflet-left,
-body.leaflet-fullscreen-on .leaflet-top.leaflet-right {
-  top: 10px !important;
-}
-/* Fix Leaflet Fullscreen icon alignment after resizing leaflet-bar buttons */
-.leaflet-control-fullscreen a {
-  background-position: center !important;
-  background-size: 18px 18px !important;
-}
-
-/* Some versions use this class name */
-.leaflet-control-fullscreen-button {
-  background-position: center !important;
-  background-size: 18px 18px !important;
-}
-/* When we are fullscreen, hide fixed UI and let map go edge-to-edge */
 body.hg-fs #topbar,
 body.hg-fs #footerHint {
   display: none !important;
@@ -223,14 +223,7 @@ body.hg-fs #map {
   bottom: 0 !important;
 }
 
-/* Put Leaflet controls at the top in fullscreen */
 body.hg-fs .leaflet-top.leaflet-left,
 body.hg-fs .leaflet-top.leaflet-right {
   top: 10px !important;
-}
-/* Force ALL leaflet-bar icons to be centered (fixes fullscreen misalignment) */
-.leaflet-bar a {
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: 18px 18px !important;
 }
