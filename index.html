@@ -21,54 +21,34 @@
   <!-- Papa Parse -->
   <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
 
-  <link rel="stylesheet" href="./style.css?v=12" />
+  <link rel="stylesheet" href="./style.css?v=13" />
 </head>
 
 <body>
-  <div id="map"></div>
 
-  <!-- Hidden UI template injected into Leaflet control -->
-  <template id="uiTemplate">
-    <div class="hg-panel" id="hgPanel">
-      <div class="hg-panel__header">
-        <div class="hg-title">Filters</div>
-        <button class="hg-close" id="hgCloseBtn" type="button" aria-label="Close filters">✕</button>
-      </div>
+  <!-- Thin Top Filter Bar -->
+  <div class="hg-topstrip">
+    <div class="hg-topstrip-inner">
+      <div class="hg-top-title">Hance Group • Team Sales Map</div>
 
-      <div class="hg-row">
-        <div class="hg-label">Year</div>
+      <div class="hg-filter">
+        <label>Year</label>
         <select id="yearSelect">
           <option value="all">All</option>
         </select>
       </div>
 
-      <div class="hg-row hg-row--stack">
-        <div class="hg-label">Property Type</div>
-        <label class="hg-check">
-          <input class="ptype" type="checkbox" value="Residential" checked />
-          Residential
-        </label>
-        <label class="hg-check">
-          <input class="ptype" type="checkbox" value="Commercial" checked />
-          Commercial
-        </label>
-        <label class="hg-check">
-          <input class="ptype" type="checkbox" value="Multi-Family" checked />
-          Multi-Family
-        </label>
-        <label class="hg-check">
-          <input class="ptype" type="checkbox" value="Land" checked />
-          Land
-        </label>
+      <div class="hg-filter hg-checkgroup">
+        <label><input class="ptype" type="checkbox" value="Residential" checked> Residential</label>
+        <label><input class="ptype" type="checkbox" value="Commercial" checked> Commercial</label>
+        <label><input class="ptype" type="checkbox" value="Multi-Family" checked> Multi-Family</label>
+        <label><input class="ptype" type="checkbox" value="Land" checked> Land</label>
       </div>
     </div>
+  </div>
 
-    <!-- Mobile Topbar -->
-    <div class="hg-topbar" id="hgTopbar">
-      <button class="hg-open" id="hgOpenBtn" type="button">Filters</button>
-    </div>
-  </template>
+  <div id="map"></div>
 
-  <script src="./app.js?v=12"></script>
+  <script src="./app.js?v=13"></script>
 </body>
 </html>
