@@ -7,7 +7,15 @@ const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 1
 // --- Basemaps ---
 // --- Final Basemaps ---
 
-// 1️⃣ Original OpenStreetMap
+// --- Basemaps (Original + Darker ESRI Street + Satellite Labels) ---
+
+// 1) Original OpenStreetMap
+const original = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19,
+  attribution: "&copy; OpenStreetMap contributors"
+});
+
+// 2) ESRI World Street Map (darker / richer)
 const esriStreet = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   {
@@ -16,16 +24,7 @@ const esriStreet = L.tileLayer(
   }
 );
 
-// 2️⃣ Muted (softer color balance)
-const muted = L.tileLayer(
-  "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
-  {
-    maxZoom: 19,
-    attribution: "&copy; OpenStreetMap contributors"
-  }
-);
-
-// 3️⃣ Satellite base
+// 3) Satellite imagery
 const esriSatellite = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   {
@@ -34,22 +33,22 @@ const esriSatellite = L.tileLayer(
   }
 );
 
-// Satellite labels overlay
+// Labels overlay (works on satellite, and can be toggled on other basemaps too)
 const esriLabels = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-  {
-    maxZoom: 19
-  }
+  { maxZoom: 19 }
 );
 
-// Default map (change to muted.addTo(map) if you prefer that default)
-original.addTo(map);
+// ✅ Pick your default basemap (choose ONE line)
+// original.addTo(map);
+esriStreet.addTo(map);
+// L.layerGroup([esriSatellite, esriLabels]).addTo(map); // (if you ever want satellite default)
 
-// Toggle control
+// Basemap toggle (left) + overlays (right)
 L.control.layers(
   {
-    "Original": original,
-    "ESRI Street (Darker)": esriStreet,
+    "Original (OSM)": original,
+    "Street (Darker)": esriStreet,
     "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
   },
   {
@@ -57,9 +56,6 @@ L.control.layers(
   },
   { position: "topright" }
 ).addTo(map);
-
-
-
 
 const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
 map.addLayer(cluster);
