@@ -278,14 +278,6 @@ function loadData() {
 els.yearSelect.addEventListener("change", refresh);
 els.ptypeChecks.forEach(c => c.addEventListener("change", refresh));
 
-// Add minimal popup styling
-const style = document.createElement("style");
-style.textContent = `
-.popup .addr { margin-bottom: 6px; }
-.popup .meta div { margin: 2px 0; }
-.popup .meta span { color: #555; display: inline-block; width: 78px; }
-.popup .photo img { width: 100%; border-radius: 10px; margin: 6px 0; }
-`;
-document.head.appendChild(style);
+
 
 loadData();
