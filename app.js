@@ -1,4 +1,4 @@
-// Hance Group Team Sales Map (Leaflet)
+// Hance Group Team Sales Map (Leaflet) — NO CLUSTERING
 const DATA_URL = "./data_combined.csv";
 
 /* ===============================
@@ -133,12 +133,6 @@ L.control.layers(
 ).addTo(window.map);
 
 /* ===============================
-   CLUSTER
-=================================*/
-const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
-window.map.addLayer(cluster);
-
-/* ===============================
    DOM REFS
 =================================*/
 const els = {
@@ -249,7 +243,10 @@ function buildPopup(row) {
    REFRESH
 =================================*/
 function refresh() {
-  cluster.clearLayers();
+  // Remove any previously plotted markers from the map
+  for (const m of plottedMarkers) {
+    window.map.removeLayer(m);
+  }
   plottedMarkers = [];
 
   const activeTypes = getActivePropertyTypes();
@@ -279,8 +276,8 @@ function refresh() {
 
     const marker = L.marker([lat, lng], { icon: makeIcon(row) });
     marker.bindPopup(buildPopup(row), { maxWidth: 320 });
-    cluster.addLayer(marker);
 
+    marker.addTo(window.map);
     plottedMarkers.push(marker);
     plotted++;
   }
