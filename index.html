@@ -21,7 +21,7 @@
   <!-- Papa Parse -->
   <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
 
-  <link rel="stylesheet" href="./style.css?v=13" />
+  <link rel="stylesheet" href="./style.css?v=14" />
 </head>
 
 <body>
@@ -31,24 +31,32 @@
     <div class="hg-topstrip-inner">
       <div class="hg-top-title">Hance Group • Team Sales Map</div>
 
-      <div class="hg-filter">
-        <label>Year</label>
+      <div class="hg-filter hg-year">
+        <label for="yearSelect">Year</label>
         <select id="yearSelect">
           <option value="all">All</option>
         </select>
       </div>
 
-      <div class="hg-filter hg-checkgroup">
+      <div class="hg-filter hg-checkgroup" aria-label="Property Types">
         <label><input class="ptype" type="checkbox" value="Residential" checked> Residential</label>
         <label><input class="ptype" type="checkbox" value="Commercial" checked> Commercial</label>
         <label><input class="ptype" type="checkbox" value="Multi-Family" checked> Multi-Family</label>
         <label><input class="ptype" type="checkbox" value="Land" checked> Land</label>
+      </div>
+
+      <!-- Search (mobile: moves below property types) -->
+      <div class="hg-filter hg-search">
+        <label for="searchInput">Search</label>
+        <input id="searchInput" type="search" placeholder="Address… (ex: 123 Main)" autocomplete="off" />
+        <button id="searchNext" type="button" class="hg-btn">Next</button>
+        <span id="searchCount" class="hg-count" aria-live="polite"></span>
       </div>
     </div>
   </div>
 
   <div id="map"></div>
 
-  <script src="./app.js?v=13"></script>
+  <script src="./app.js?v=14"></script>
 </body>
 </html>
