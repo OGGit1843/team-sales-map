@@ -35,7 +35,7 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
   display: grid;
   place-items: center;
   font-size: 18px;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.96);
   border: 3px solid #333;
   box-shadow: 0 2px 8px rgba(0,0,0,0.35);
 }
@@ -68,10 +68,6 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 .popup .meta div {
   margin: 3px 0;
   font-size: 13px;
-}
-
-.popup .meta span {
-  color: rgba(255, 255, 255, 0.0); /* placeholder if you want labels hidden */
 }
 
 /* Make the label/value layout clean */
@@ -118,4 +114,19 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 
 .leaflet-popup-tip {
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));
+}
+/* Make topbar/footer slightly darker when user is on a dark basemap */
+@media (prefers-color-scheme: dark) {
+  #topbar, #footerHint {
+    background: rgba(20, 20, 20, 0.72);
+    border-color: rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.92);
+  }
+
+  .control .label, .stats, .brand { color: rgba(255,255,255,0.92); }
+  #topbar select {
+    background: rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.92);
+    border-color: rgba(255,255,255,0.18);
+  }
 }
