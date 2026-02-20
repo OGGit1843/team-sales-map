@@ -48,3 +48,74 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
   background: transparent;
   border: none;
 }
+/* ---------- Popup styling (premium) ---------- */
+
+.popup {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.25;
+}
+
+.popup .addr {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.popup .meta {
+  margin-top: 6px;
+}
+
+.popup .meta div {
+  margin: 3px 0;
+  font-size: 13px;
+}
+
+.popup .meta span {
+  color: rgba(255, 255, 255, 0.0); /* placeholder if you want labels hidden */
+}
+
+/* Make the label/value layout clean */
+.popup .meta div span {
+  color: #666;
+  display: inline-block;
+  width: 88px;
+  font-weight: 600;
+}
+
+/* Photo container */
+.popup .photo {
+  margin: 8px 0 6px 0;
+  border-radius: 14px;              /* rounded corners */
+  overflow: hidden;                 /* ensures rounded corners clip image */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22); /* subtle shadow */
+  background: #f3f3f3;
+}
+
+/* Fixed-height image crop (no stretching) */
+.popup .photo img {
+  display: block;
+  width: 100%;
+  height: 165px;        /* ✅ fixed height */
+  object-fit: cover;    /* ✅ keeps it pretty */
+  transform: scale(1);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+/* Hover animation */
+.popup .photo:hover img {
+  transform: scale(1.03);
+  filter: saturate(1.05) contrast(1.03);
+}
+
+/* Optional: make Leaflet popup itself feel nicer */
+.leaflet-popup-content-wrapper {
+  border-radius: 14px;
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px;
+}
+
+.leaflet-popup-tip {
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));
+}
