@@ -4,10 +4,42 @@
 const DATA_URL = "./data_combined.csv";
 
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+// --- Basemaps ---
+const standard = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
+});
+
+const satellite = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  {
+    maxZoom: 19,
+    attribution: "Tiles &copy; Esri"
+  }
+);
+
+const dark = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+  {
+    maxZoom: 19,
+    attribution: "&copy; CARTO"
+  }
+);
+
+// Add default layer
+standard.addTo(map);
+
+// Layer toggle control
+L.control.layers(
+  {
+    "Standard": standard,
+    "Satellite": satellite,
+    "Dark": dark
+  },
+  null,
+  { position: "topright" }
+).addTo(map);
+
 
 const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
 map.addLayer(cluster);
