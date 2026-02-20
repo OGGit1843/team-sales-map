@@ -28,7 +28,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "151 N Chase Avenue, Columbus, OH 43204",39.957937,-83.077318,Buyer,"117,000",11/11/2021,Residential
 "3976 Thims Court, Hilliard, OH 43026",40.054460,-83.123625,Seller/Listing,"415,000",11/15/2021,Residential
 "383 Galloway Ridge Drive, Columbus, OH 43119",39.957545,-83.155440,Buyer,"249,000",11/15/2021,Residential
-"5958 Sebring Drive, Columbus, OH 43081",40.09773,-82.855093,Buyer,"438,000",11/16/2021,Residential
+"5958 Sebring Drive, Columbus, OH 43081",40.103161,-82.846449,Buyer,"438,000",11/16/2021,Residential
 "7403 Summerfield Drive, OH 43035",40.175128,-82.994996,Seller/Listing,"476,014",11/18/2021,Residential
 "459 W William Street, Delaware, OH 43015",40.299534,-83.085123,Buyer,"345,000",11/19/2021,Residential
 "864 Hanover Road, OH 43015",40.351078,-83.054777,Seller/Listing,"565,000",11/19/2021,Residential
@@ -357,6 +357,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "0 S Riverside Drive, Powell, OH 43065",40.134531,-83.113877,Buyer,205000,03/09/2022,Land
 "5177 Carters Corner Road, Sunbury, OH 43074",40.32185,-82.885062,Seller/Listing,210000,03/28/2023,Land
 "6233 Tussic Street Road, Westerville, OH 43082",40.158761,-82.899843,Buyer,195000,03/21/2022,Land
+
 
 
 
