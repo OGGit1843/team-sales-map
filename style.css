@@ -13,19 +13,21 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 .control .label { font-weight: 600; margin-right: 6px; }
 .control select { padding: 6px 8px; border: 1px solid #d0d0d0; border-radius: 10px; }
 .stats { margin-left: auto; font-weight: 600; }
-#map { position: absolute; top: 86px; left: 0; right: 0; bottom: 24px; }
-#footerHint {
-  position: fixed; left: 0; right: 0; bottom: 0;
-  z-index: 1000;
-  background: rgba(255,255,255,0.92);
-  border-top: 1px solid #e6e6e6;
-  font-size: 12px;
-  padding: 6px 10px;
-  text-align: center;
+#map { 
+  position: absolute; 
+  top: var(--map-top, 86px); 
+  left: 0; right: 0; bottom: 24px; 
 }
+
 @media (max-width: 700px) {
-  #map { top: 126px; }
   .stats { width: 100%; margin-left: 0; }
+}
+
+/* Keep controls a little off the very top INSIDE the map */
+.leaflet-top.leaflet-left,
+.leaflet-top.leaflet-right {
+  top: 12px !important;
+}
 }
 /* Custom marker */
 .marker {
