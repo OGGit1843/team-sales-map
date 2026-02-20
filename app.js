@@ -68,50 +68,59 @@ mountLeafletUI();
 /* ===============================
    BASEMAPS
 =================================*/
-
-const voyager = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-  {
-    maxZoom: 19,
-    attribution: "© CARTO © OpenStreetMap contributors"
-  }
+const esriStreet = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+  { maxZoom: 19, attribution: "Tiles © Esri" }
 );
 
-const voyagerLabels = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png",
+const muted = L.tileLayer(
+  "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+  { maxZoom: 19, attribution: "© OpenStreetMap contributors" }
+);
+
+// Outdoors (terrain-ish)
+const outdoors = L.tileLayer(
+  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+  { maxZoom: 17, attribution: "© OpenTopoMap © OpenStreetMap contributors" }
+);
+
+const esriDark = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+  { maxZoom: 16, attribution: "Tiles © Esri" }
+);
+const esriDarkLabels = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+  { maxZoom: 16 }
+);
+const darkBase = L.layerGroup([esriDark, esriDarkLabels]);
+
+const esriSatellite = L.tileLayer(
+  "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  { maxZoom: 19, attribution: "Tiles © Esri" }
+);
+const esriLabels = L.tileLayer(
+  "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19 }
 );
+const satBase = L.layerGroup([esriSatellite, esriLabels]);
 
-const voyagerBase = L.layerGroup([voyager]);
-
-const dark = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-  {
-    maxZoom: 19,
-    attribution: "© CARTO © OpenStreetMap contributors"
-  }
-);
-
-voyagerBase.addTo(window.map);
+// Default
+esriStreet.addTo(window.map);
 
 L.control.layers(
   {
-    "Voyager (Google-like)": voyagerBase,
-    "Dark": dark
+    "Street (Google-like)": esriStreet,
+    "Outdoors": outdoors,
+    "Muted": muted,
+    "Satellite + Labels": satBase
   },
   {},
   { position: "topright" }
 ).addTo(window.map);
-
 /* ===============================
    CLUSTER
 =================================*/
-const cluster = L.markerClusterGroup({
-  showCoverageOnHover: false,
-  maxClusterRadius: 28,
-  disableClusteringAtZoom: 14,
-  spiderfyOnMaxZoom: true
-});
+const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
 window.map.addLayer(cluster);
 
 /* ===============================
