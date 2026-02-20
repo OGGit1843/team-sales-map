@@ -212,3 +212,19 @@ body.leaflet-fullscreen-on .leaflet-top.leaflet-right {
   background-position: center !important;
   background-size: 18px 18px !important;
 }
+/* When we are fullscreen, hide fixed UI and let map go edge-to-edge */
+body.hg-fs #topbar,
+body.hg-fs #footerHint {
+  display: none !important;
+}
+
+body.hg-fs #map {
+  top: 0 !important;
+  bottom: 0 !important;
+}
+
+/* Put Leaflet controls at the top in fullscreen */
+body.hg-fs .leaflet-top.leaflet-left,
+body.hg-fs .leaflet-top.leaflet-right {
+  top: 10px !important;
+}
