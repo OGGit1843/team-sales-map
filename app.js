@@ -69,34 +69,35 @@ mountLeafletUI();
    BASEMAPS
 =================================*/
 
-const esriTopo = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
-  { maxZoom: 19, attribution: "Tiles © Esri" }
+const voyager = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+  {
+    maxZoom: 19,
+    attribution: "© CARTO © OpenStreetMap contributors"
+  }
 );
 
-const esriStreet = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
-  { maxZoom: 19, attribution: "Tiles © Esri" }
+const voyagerLabels = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png",
+  { maxZoom: 19 }
 );
 
-const satBase = L.layerGroup([
-  L.tileLayer(
-    "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    { maxZoom: 19 }
-  ),
-  L.tileLayer(
-    "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-    { maxZoom: 19 }
-  )
-]);
+const voyagerBase = L.layerGroup([voyager]);
 
-esriTopo.addTo(window.map);
+const dark = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+  {
+    maxZoom: 19,
+    attribution: "© CARTO © OpenStreetMap contributors"
+  }
+);
+
+voyagerBase.addTo(window.map);
 
 L.control.layers(
   {
-    "Topo (Google-like Terrain)": esriTopo,
-    "Street": esriStreet,
-    "Satellite": satBase
+    "Voyager (Google-like)": voyagerBase,
+    "Dark": dark
   },
   {},
   { position: "topright" }
