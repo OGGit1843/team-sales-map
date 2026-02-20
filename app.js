@@ -5,7 +5,7 @@ const DATA_URL = "./data_combined.csv";
 
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
 // --- Basemaps ---
-// --- Basemaps (No API Keys Needed) ---
+// --- Basemaps (Polished 4-pack, No API Keys) ---
 
 // 1️⃣ ESRI World Street Map (Google-like, slightly darker)
 const esriStreet = L.tileLayer(
@@ -25,7 +25,16 @@ const topo = L.tileLayer(
   }
 );
 
-// 3️⃣ Satellite imagery
+// 3️⃣ CARTO Dark Matter (modern dark)
+const cartoDark = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+  {
+    maxZoom: 19,
+    attribution: "&copy; CARTO &copy; OpenStreetMap contributors"
+  }
+);
+
+// 4️⃣ Satellite imagery
 const esriSatellite = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   {
@@ -34,16 +43,15 @@ const esriSatellite = L.tileLayer(
   }
 );
 
-// Satellite labels overlay
+// Labels overlay (works for Satellite; can also be toggled as an overlay)
 const esriLabels = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-  {
-    maxZoom: 19
-  }
+  { maxZoom: 19 }
 );
 
-// ✅ Default map (choose ONE — currently ESRI Street)
+// ✅ Default map (choose ONE line)
 esriStreet.addTo(map);
+// cartoDark.addTo(map);
 // topo.addTo(map);
 // L.layerGroup([esriSatellite, esriLabels]).addTo(map);
 
@@ -52,6 +60,7 @@ L.control.layers(
   {
     "Street (Google-like)": esriStreet,
     "Terrain (OpenTopo)": topo,
+    "Dark (Modern)": cartoDark,
     "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
   },
   {
