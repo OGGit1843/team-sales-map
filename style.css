@@ -89,7 +89,6 @@ html, body {
   bottom: 24px;
 }
 
-/* footer hint if you use it */
 #footerHint {
   position: fixed; left: 0; right: 0; bottom: 0;
   z-index: 1000;
@@ -102,22 +101,20 @@ html, body {
 
 /* ===============================
    LEAFLET CONTROL PLACEMENT
-   - push down below topbar
-   - keep away from side panel (desktop)
 =================================*/
 .leaflet-top.leaflet-left,
 .leaflet-top.leaflet-right {
   top: calc(var(--map-top, 86px) + 10px) !important;
 }
 
-/* push RIGHT controls left a bit so they don't sit under the side panel */
+/* push RIGHT controls left so they don't sit under side panel (desktop) */
 @media (min-width: 901px) {
   .leaflet-top.leaflet-right {
-    right: 290px !important; /* side panel width (260) + padding */
+    right: 290px !important;
   }
 }
 
-/* Make controls rounded/modern */
+/* Controls styling */
 .leaflet-bar a,
 .leaflet-control-layers {
   border-radius: 12px !important;
@@ -135,15 +132,14 @@ html, body {
 }
 
 /* ===============================
-   SIDE STATS PANEL
-   Desktop: fixed right
-   Mobile: becomes full-width card below topbar
+   SIDE PANEL (DESKTOP)
 =================================*/
 #sidePanel {
   position: fixed;
   right: 12px;
   top: calc(var(--map-top, 86px) + 12px);
   z-index: 900;
+
   width: 260px;
   border-radius: 16px;
   background: rgba(255,255,255,0.92);
@@ -153,38 +149,78 @@ html, body {
   padding: 10px 12px;
 }
 
-.panelTitle { font-weight: 900; margin-bottom: 8px; }
-#panelBody { font-size: 13px; line-height: 1.35; }
-#panelBody .row { display:flex; justify-content:space-between; padding: 4px 0; }
-#panelBody .row b { font-weight: 900; }
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
 
-/* MOBILE panel: show as a card under topbar */
+.panelTitle {
+  font-weight: 900;
+}
+
+.panelToggle {
+  display: none; /* hidden on desktop */
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(255,255,255,0.9);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.panelBody {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.panelBody .row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+.panelBody .row b { font-weight: 900; }
+
+/* ===============================
+   MOBILE: COLLAPSIBLE PANEL CARD
+=================================*/
 @media (max-width: 900px) {
   #sidePanel {
     left: 12px;
     right: 12px;
     width: auto;
+
+    /* becomes a card under topbar */
     top: calc(var(--map-top, 86px) + 8px);
+  }
+
+  .panelToggle { display: inline-flex; }
+
+  /* panel collapse animation */
+  .panelBody {
+    overflow: hidden;
+    max-height: 500px;
+    transition: max-height 200ms ease, opacity 200ms ease;
+    opacity: 1;
+  }
+
+  #sidePanel.collapsed .panelBody {
+    max-height: 0px;
+    opacity: 0;
+  }
+
+  /* make map start below the panel header even when collapsed */
+  #map {
+    top: calc(var(--map-top, 86px) + 62px);
   }
 }
 
-/* ===============================
-   MOBILE TOPBAR LAYOUT FIXES
-   - ensure stats + kpi don't disappear
-=================================*/
+/* EXTRA small screens: let stats + KPI wrap nicely */
 @media (max-width: 700px) {
-  #topbar { padding: 10px 10px; }
-  .controls { gap: 10px; }
-  .control { font-size: 13px; }
-
-  /* stats + kpi become full width rows */
   .stats { width: 100%; margin-left: 0; white-space: normal; }
   .kpi { width: 100%; margin-left: 0; white-space: normal; }
-
-  /* give map more room since mobile panel is now visible */
-  #map {
-    top: calc(var(--map-top, 86px) + 120px);
-  }
 }
 
 /* ===============================
@@ -211,10 +247,7 @@ html, body {
 .marker.seller { border-color: #1565c0; }
 .marker.unknown { border-color: #6d6d6d; }
 
-.leaflet-div-icon {
-  background: transparent;
-  border: none;
-}
+.leaflet-div-icon { background: transparent; border: none; }
 .leaflet-marker-icon.leaflet-div-icon {
   background: transparent !important;
   border: none !important;
@@ -226,7 +259,7 @@ html, body {
 }
 
 /* ===============================
-   CLUSTER BUBBLES
+   CLUSTERS
 =================================*/
 .marker-cluster div {
   border-radius: 999px !important;
@@ -241,7 +274,7 @@ html, body {
 }
 
 /* ===============================
-   POPUPS (PREMIUM)
+   POPUPS
 =================================*/
 .popup { line-height: 1.25; }
 .popup .addr { margin-bottom: 8px; font-size: 14px; font-weight: 750; }
@@ -276,7 +309,7 @@ html, body {
 .leaflet-popup-tip { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18)); }
 
 /* ===============================
-   OPTIONAL: dark UI when .basemap-dark class is on body
+   OPTIONAL: dark UI when .basemap-dark is on body
 =================================*/
 body.basemap-dark #topbar,
 body.basemap-dark #footerHint,
@@ -285,14 +318,17 @@ body.basemap-dark #sidePanel {
   border-color: rgba(255,255,255,0.10);
   color: rgba(255,255,255,0.92);
 }
-
 body.basemap-dark .control .label,
 body.basemap-dark .stats,
 body.basemap-dark .brand,
 body.basemap-dark .panelTitle {
   color: rgba(255,255,255,0.92);
 }
-
+body.basemap-dark .panelToggle {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.92);
+}
 body.basemap-dark .kpi {
   background: rgba(255,255,255,0.12);
   border-color: rgba(255,255,255,0.18);
