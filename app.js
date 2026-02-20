@@ -63,7 +63,7 @@ const esriLabels = L.tileLayer(
 const satBase = L.layerGroup([esriSatellite, esriLabels]);
 
 // Default
-esriStreet.addTo(window.map);
+mtHybrid.addTo(window.map);
 
 // Layer order
 L.control.layers(
