@@ -182,3 +182,22 @@ html, body {
 .leaflet-popup-content-wrapper { border-radius: 14px; }
 .leaflet-popup-content { margin: 12px 14px; }
 .leaflet-popup-tip { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18)); }
+/* ===== Fullscreen mode fixes (Leaflet.Fullscreen) ===== */
+
+/* When fullscreen is ON, remove the topbar/footer so the map is truly fullscreen */
+body.leaflet-fullscreen-on #topbar,
+body.leaflet-fullscreen-on #footerHint {
+  display: none !important;
+}
+
+/* Let the map fill the entire screen in fullscreen */
+body.leaflet-fullscreen-on #map {
+  top: 0 !important;
+  bottom: 0 !important;
+}
+
+/* Put Leaflet controls back at the top in fullscreen */
+body.leaflet-fullscreen-on .leaflet-top.leaflet-left,
+body.leaflet-fullscreen-on .leaflet-top.leaflet-right {
+  top: 10px !important;
+}
