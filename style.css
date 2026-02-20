@@ -133,13 +133,13 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 /* ---------- Keep Leaflet controls below the fixed topbar ---------- */
 
 /* Desktop/tablet default offset */
-.leaflet-top.leaflet-right { top: 96px; }  /* layers + fullscreen usually here */
-.leaflet-top.leaflet-left  { top: 96px; }  /* zoom usually here */
+.leaflet-top.leaflet-right { top: 110px; }  /* layers + fullscreen usually here */
+.leaflet-top.leaflet-left  { top: 110px; }  /* zoom usually here */
 
 /* Your mobile topbar is taller (you set #map top to 126px) */
 @media (max-width: 700px) {
-  .leaflet-top.leaflet-right { top: 136px; }
-  .leaflet-top.leaflet-left  { top: 136px; }
+  .leaflet-top.leaflet-right { top: 150px; }
+  .leaflet-top.leaflet-left  { top: 150px; }
 }
 
 /* Optional: add a little breathing room so buttons aren't glued to the edge */
