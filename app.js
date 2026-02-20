@@ -1,4 +1,4 @@
-// Hance Group Team Sales Map (Leaflet) — NO CLUSTERING
+// Hance Group Team Sales Map (Leaflet)
 const DATA_URL = "./data_combined.csv";
 
 /* ===============================
@@ -37,17 +37,13 @@ function mountLeafletUI() {
   const closeBtn = frag.querySelector("#hgCloseBtn");
   const openStandalone = frag.querySelector("#hgOpenStandalone");
 
-  // Set the standalone link to the current page URL (works even if iframe fullscreen is blocked)
   if (openStandalone) openStandalone.href = window.location.href;
 
-  // Floating open button in the map container
   window.map.getContainer().appendChild(openBtn);
 
-  // ✅ Prevent the open button from triggering map gestures/click handlers
   L.DomEvent.disableClickPropagation(openBtn);
   L.DomEvent.disableScrollPropagation(openBtn);
 
-  // Leaflet control for the panel (bottom-left is better for mobile)
   const HgControl = L.Control.extend({
     options: { position: "bottomleft" },
     onAdd: function () {
@@ -55,7 +51,6 @@ function mountLeafletUI() {
       container.classList.add("hg-control");
       container.appendChild(panel);
 
-      // Prevent map drag/zoom when interacting with the panel
       L.DomEvent.disableClickPropagation(container);
       L.DomEvent.disableScrollPropagation(container);
 
@@ -66,7 +61,6 @@ function mountLeafletUI() {
   const ctl = new HgControl();
   window.map.addControl(ctl);
 
-  // Toggle logic (mobile)
   function openPanel() {
     panel.classList.add("is-open");
   }
@@ -77,13 +71,11 @@ function mountLeafletUI() {
   openBtn.addEventListener("click", (e) => { stop(e); openPanel(); });
   closeBtn.addEventListener("click", (e) => { stop(e); closePanel(); });
 
-  // Close panel when clicking map (nice on mobile)
   window.map.on("click", () => closePanel());
 
   return { panel, openBtn };
 }
 
-// Mount UI first so DOM refs exist
 mountLeafletUI();
 
 /* ===============================
@@ -131,6 +123,15 @@ L.control.layers(
   {},
   { position: "topright" }
 ).addTo(window.map);
+
+/* ===============================
+   CLUSTER
+=================================*/
+const cluster = L.markerClusterGroup({
+  showCoverageOnHover: false,
+  maxClusterRadius: 45
+});
+window.map.addLayer(cluster);
 
 /* ===============================
    DOM REFS
@@ -243,10 +244,7 @@ function buildPopup(row) {
    REFRESH
 =================================*/
 function refresh() {
-  // Remove any previously plotted markers from the map
-  for (const m of plottedMarkers) {
-    window.map.removeLayer(m);
-  }
+  cluster.clearLayers();
   plottedMarkers = [];
 
   const activeTypes = getActivePropertyTypes();
@@ -276,8 +274,8 @@ function refresh() {
 
     const marker = L.marker([lat, lng], { icon: makeIcon(row) });
     marker.bindPopup(buildPopup(row), { maxWidth: 320 });
+    cluster.addLayer(marker);
 
-    marker.addTo(window.map);
     plottedMarkers.push(marker);
     plotted++;
   }
