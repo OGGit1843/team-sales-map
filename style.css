@@ -28,7 +28,6 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 .leaflet-top.leaflet-right {
   top: 12px !important;
 }
-}
 /* Custom marker */
 .marker {
   width: 34px;
@@ -49,6 +48,10 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
 .leaflet-div-icon {
   background: transparent;
   border: none;
+}
+.leaflet-marker-icon.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
 }
 /* ---------- Popup styling (premium) ---------- */
 
@@ -132,17 +135,3 @@ html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Seg
     border-color: rgba(255,255,255,0.18);
   }
 }
-/* ---------- Keep Leaflet controls below the fixed topbar ---------- */
-
-/* Desktop/tablet default offset */
-.leaflet-top.leaflet-right { top: 110px; }  /* layers + fullscreen usually here */
-.leaflet-top.leaflet-left  { top: 110px; }  /* zoom usually here */
-
-/* Your mobile topbar is taller (you set #map top to 126px) */
-@media (max-width: 700px) {
-  .leaflet-top.leaflet-right { top: 150px; }
-  .leaflet-top.leaflet-left  { top: 150px; }
-}
-
-/* Optional: add a little breathing room so buttons aren't glued to the edge */
-.leaflet-control { margin-top: 8px; }
