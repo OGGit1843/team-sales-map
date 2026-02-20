@@ -56,26 +56,18 @@ const esriLabels = L.tileLayer(
   { maxZoom: 19 }
 );
 
-// Group for dark base (so we can detect it)
 const darkBase = L.layerGroup([esriDark, esriDarkLabels]);
 
-// Default basemap
+// default basemap
 esriStreet.addTo(map);
 
 /* ===============================
-   CLUSTERS + HEAT
+   CLUSTER + HEAT
 =================================*/
-const cluster = L.markerClusterGroup({
-  showCoverageOnHover: false,
-  maxClusterRadius: 45
-});
+const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
 map.addLayer(cluster);
 
-const heatLayer = L.heatLayer([], {
-  radius: 28,
-  blur: 22,
-  maxZoom: 17
-});
+const heatLayer = L.heatLayer([], { radius: 28, blur: 22, maxZoom: 17 });
 
 /* ===============================
    LAYER CONTROL
@@ -95,7 +87,7 @@ L.control.layers(
 ).addTo(map);
 
 /* ===============================
-   DARK UI TOGGLE (optional)
+   DARK UI toggle when dark basemap active
 =================================*/
 function setBasemapUI(isDark) {
   document.body.classList.toggle("basemap-dark", !!isDark);
@@ -106,7 +98,55 @@ map.on("baselayerchange", (e) => {
 setBasemapUI(false);
 
 /* ===============================
-   DOM REFERENCES
+   SIDE PANEL TOGGLE (MOBILE)
+=================================*/
+const sidePanel = document.getElementById("sidePanel");
+const panelToggle = document.getElementById("panelToggle");
+
+function setPanelCollapsed(collapsed) {
+  if (!sidePanel || !panelToggle) return;
+
+  sidePanel.classList.toggle("collapsed", collapsed);
+  panelToggle.setAttribute("aria-expanded", (!collapsed).toString());
+  panelToggle.textContent = collapsed ? "Stats ▾" : "Stats ▴";
+
+  // Store state so it stays the way you left it
+  try { localStorage.setItem("panelCollapsed", collapsed ? "1" : "0"); } catch {}
+
+  // Leaflet needs a resize recalc after layout shifts
+  setTimeout(() => map.invalidateSize(), 50);
+}
+
+if (sidePanel && panelToggle) {
+  // default: collapsed on mobile, open on desktop
+  let collapsed = window.matchMedia("(max-width: 900px)").matches;
+
+  // restore saved preference
+  try {
+    const saved = localStorage.getItem("panelCollapsed");
+    if (saved === "1") collapsed = true;
+    if (saved === "0") collapsed = false;
+  } catch {}
+
+  setPanelCollapsed(collapsed);
+
+  panelToggle.addEventListener("click", () => {
+    const nowCollapsed = !sidePanel.classList.contains("collapsed") ? true : false;
+    setPanelCollapsed(nowCollapsed);
+  });
+
+  // when switching between desktop/mobile widths, keep it sane
+  window.addEventListener("resize", () => {
+    const isMobile = window.matchMedia("(max-width: 900px)").matches;
+    if (!isMobile) {
+      // desktop: keep open
+      setPanelCollapsed(false);
+    }
+  });
+}
+
+/* ===============================
+   DOM REFS
 =================================*/
 const els = {
   yearSelect: document.getElementById("yearSelect"),
@@ -227,16 +267,12 @@ function refresh() {
   const heatPoints = [];
   let volume = 0;
 
-  let buyerCount = 0,
-    sellerCount = 0,
-    unknownCount = 0;
+  let buyerCount = 0, sellerCount = 0, unknownCount = 0;
 
   const activeTypes = getActivePropertyTypes();
   const activeYear = getActiveYear();
 
-  let total = 0;
-  let plotted = 0;
-  let missing = 0;
+  let total = 0, plotted = 0, missing = 0;
 
   for (const row of allRows) {
     total++;
@@ -246,10 +282,7 @@ function refresh() {
 
     const lat = Number(row["Latitude"]);
     const lng = Number(row["Longitude"]);
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-      missing++;
-      continue;
-    }
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) { missing++; continue; }
 
     const dt = parseDate(row["Sold Date"]);
     const year = dt ? String(dt.getFullYear()) : null;
@@ -273,18 +306,15 @@ function refresh() {
     plotted++;
   }
 
-  // top right stat line
   if (els.stats) {
     els.stats.textContent = `${plotted.toLocaleString()} pinned • ${missing.toLocaleString()} missing coords • ${total.toLocaleString()} total`;
   }
 
-  // KPI volume box
   if (els.kpiVolume) {
     const label = activeYear === "all" ? "Volume" : `Volume (${activeYear})`;
     els.kpiVolume.textContent = `${label}: ${fmtMoney(volume)}`;
   }
 
-  // Side panel
   if (els.panelBody) {
     els.panelBody.innerHTML = `
       <div class="row"><span>Buyer</span><b>${buyerCount.toLocaleString()}</b></div>
@@ -293,10 +323,8 @@ function refresh() {
     `;
   }
 
-  // Heatmap points
   heatLayer.setLatLngs(heatPoints);
 
-  // Auto zoom ONCE on first load so it doesn't fight the user
   if (plotted > 0 && !hasAutoZoomed) {
     const group = L.featureGroup(plottedMarkers);
     map.fitBounds(group.getBounds().pad(0.12));
@@ -309,11 +337,11 @@ function refresh() {
 =================================*/
 function populateYearDropdown() {
   const years = Array.from(availableYears).sort((a, b) => b - a);
-
   if (!els.yearSelect) return;
-  const current = els.yearSelect.value || "all";
 
+  const current = els.yearSelect.value || "all";
   els.yearSelect.innerHTML = '<option value="all">All</option>';
+
   years.forEach((y) => {
     const opt = document.createElement("option");
     opt.value = String(y);
@@ -321,12 +349,8 @@ function populateYearDropdown() {
     els.yearSelect.appendChild(opt);
   });
 
-  // restore selection
-  if (current === "all" || years.includes(Number(current))) {
-    els.yearSelect.value = current;
-  } else {
-    els.yearSelect.value = "all";
-  }
+  if (current === "all" || years.includes(Number(current))) els.yearSelect.value = current;
+  else els.yearSelect.value = "all";
 }
 
 function loadData() {
@@ -347,7 +371,7 @@ function loadData() {
 
       populateYearDropdown();
       refresh();
-      setTimeout(setMapTopOffset, 0); // recalc after everything renders
+      setTimeout(setMapTopOffset, 0);
     },
     error: (err) => {
       console.error(err);
