@@ -1,140 +1,88 @@
 /* =========================================
-   GLOBAL / MAP SIZING (works well in iframes)
+   GLOBAL
 ========================================= */
 html, body {
-  height: 100%;
-  width: 100%;
   margin: 0;
+  height: 100%;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-#map {
-  height: 100vh;
-  width: 100vw;
+/* =========================================
+   TOP STRIP FILTER BAR
+========================================= */
+.hg-topstrip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  background: rgba(40, 40, 40, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+}
+
+.hg-topstrip-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 18px;
+}
+
+.hg-top-title {
+  font-weight: 900;
+  font-size: 14px;
+  color: white;
+  white-space: nowrap;
+}
+
+.hg-filter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  font-size: 13px;
+}
+
+.hg-filter select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 700;
+}
+
+.hg-checkgroup {
+  gap: 14px;
+}
+
+.hg-checkgroup label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
 }
 
 /* =========================================
-   LEAFLET CONTROL: PANEL + TOPBAR
+   MAP
 ========================================= */
-.hg-wrap {
-  position: relative;
+#map {
+  position: absolute;
+  top: 52px;   /* push map below top bar */
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-/* Mobile topbar container (hidden on desktop) */
-.hg-topbar {
-  display: none;
-}
-
-/* Panel */
-.hg-panel {
-  width: min(380px, calc(100vw - 24px));
-  background: rgba(60, 60, 60, 0.92);
-  color: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 14px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.28);
-  padding: 12px;
-}
-
-.hg-panel__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.hg-title {
-  font-weight: 900;
-  letter-spacing: 0.2px;
-  font-size: 14px;
-}
-
-.hg-close {
-  display: none; /* mobile only */
-  border: 0;
-  background: rgba(255,255,255,0.14);
-  color: rgba(255,255,255,0.95);
-  border-radius: 10px;
-  padding: 6px 10px;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.hg-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 10px 0;
-}
-
-.hg-row--stack {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.hg-label {
-  font-weight: 900;
-  font-size: 13px;
-  color: rgba(255,255,255,0.92);
-}
-
-.hg-check {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  user-select: none;
-}
-
-.hg-panel select {
-  padding: 6px 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.25);
-  background: #ffffff;
-  color: #222;
-  font-weight: 800;
-}
-
-/* Filters button (base style) */
-.hg-open {
-  border: 0;
-  border-radius: 999px;
-  padding: 10px 14px;
-  font-weight: 900;
-  cursor: pointer;
-
-  background: rgba(60, 60, 60, 0.92);
-  color: rgba(255,255,255,0.96);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.28);
-  border: 1px solid rgba(255,255,255,0.14);
-  backdrop-filter: blur(8px);
-}
-
-/* Desktop panel control position */
-.leaflet-control.hg-control {
-  margin-top: 12px !important;
-  margin-left: 12px !important;
-}
-
-/* Nicer leaflet controls */
-.leaflet-bar a,
-.leaflet-control-layers {
-  border-radius: 12px !important;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-}
-
+/* =========================================
+   LEAFLET CONTROLS
+========================================= */
+.leaflet-control-layers,
 .leaflet-bar a {
-  width: 38px !important;
-  height: 38px !important;
-  line-height: 38px !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: 18px 18px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
 }
 
 /* =========================================
@@ -157,110 +105,31 @@ html, body {
 .marker.seller { border-color: #1565c0; }
 .marker.unknown { border-color: #6d6d6d; }
 
-.leaflet-div-icon { background: transparent; border: none; }
-.leaflet-marker-icon.leaflet-div-icon {
+.leaflet-div-icon {
   background: transparent !important;
   border: none !important;
-  width: 34px !important;
-  height: 34px !important;
-  margin-left: -17px !important;
-  margin-top: -34px !important;
-  overflow: visible !important;
-}
-
-/* Clusters */
-.marker-cluster div {
-  border-radius: 999px !important;
-  font-weight: 900;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
-  border: 2px solid rgba(255,255,255,0.9);
-}
-.marker-cluster-small div,
-.marker-cluster-medium div,
-.marker-cluster-large div {
-  background: rgba(80, 170, 90, 0.78) !important;
 }
 
 /* =========================================
-   POPUPS
-========================================= */
-.popup { line-height: 1.25; }
-
-.popup .addr {
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 750;
-}
-
-.popup .meta div {
-  margin: 3px 0;
-  font-size: 13px;
-}
-
-.popup .meta div span {
-  color: #666;
-  display: inline-block;
-  width: 88px;
-  font-weight: 600;
-}
-
-.leaflet-popup-content-wrapper { border-radius: 14px; }
-.leaflet-popup-content { margin: 12px 14px; }
-.leaflet-popup-tip { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18)); }
-
-/* =========================================
-   MOBILE TOPBAR + PANEL DROPDOWN
+   MOBILE TWEAKS
 ========================================= */
 @media (max-width: 700px) {
-  /* Show a fixed topbar */
-  .hg-topbar {
-    display: block;
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    right: 12px;
-    z-index: 9999;
-    pointer-events: none; /* only the button is clickable */
+
+  .hg-topstrip {
+    height: auto;
+    padding: 8px 0;
   }
 
-  /* Button inside topbar */
-  .hg-open {
-    pointer-events: auto;
-    display: inline-block;
+  .hg-topstrip-inner {
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
-  /* Panel becomes a dropdown sheet under the topbar */
-  .leaflet-control.hg-control {
-    margin: 0 !important;
-    position: fixed !important;
-    top: 58px !important;       /* sits under topbar */
-    left: 12px !important;
-    right: 12px !important;
-    bottom: auto !important;
-    z-index: 9999 !important;
-    width: auto !important;
+  #map {
+    top: 80px; /* slightly more space if wrapping */
   }
 
-  .hg-panel {
-    width: 100% !important;
-    max-height: 60vh;
-    overflow: auto;
-    padding: 12px;
-  }
-
-  /* Prevent iOS zoom & make it fit */
-  .hg-panel select {
-    width: 100%;
-    max-width: 100%;
-    font-size: 16px;
-  }
-
-  .hg-close { display: inline-block; }
-
-  .hg-panel { display: none; }
-  .hg-panel.is-open { display: block; }
-
-  /* ✅ Hide fullscreen control on mobile ONLY */
+  /* Hide fullscreen button on mobile only */
   .leaflet-control-fullscreen {
     display: none !important;
   }
