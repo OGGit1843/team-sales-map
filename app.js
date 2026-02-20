@@ -120,13 +120,12 @@ esriStreet.addTo(window.map);
 // Layer switcher
 L.control.layers(
   {
+    "MapTiler Street": mtStreet,
     "Street (Google-like)": esriStreet,
     "Muted": muted,
-    "Satellite + Labels": satBase,
-
-    "MapTiler Street": mtStreet,
     "MapTiler Winter": mtWinter,
-    "MapTiler Hybrid": mtHybrid
+    "MapTiler Hybrid": mtHybrid,
+    "Satellite + Labels": satBase
   },
   {},
   { position: "topright" }
