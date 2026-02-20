@@ -4,6 +4,30 @@
 const DATA_URL = "./data_combined.csv";
 
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
+function setMapTopOffset() {
+  const topbar = document.getElementById("topbar");
+  const footer = document.getElementById("footerHint");
+
+  if (!topbar) return;
+
+  // Add a little breathing room under the topbar
+  const top = topbar.offsetHeight + 10;
+
+  // Set CSS variable used by #map { top: var(--map-top) }
+  document.documentElement.style.setProperty("--map-top", `${top}px`);
+
+  // Optional: if you ever want to auto-size the bottom too:
+  // const bottom = (footer ? footer.offsetHeight : 0);
+  // document.documentElement.style.setProperty("--map-bottom", `${bottom}px`);
+
+  // Leaflet needs to recalc after container size changes
+  if (map && map.invalidateSize) map.invalidateSize();
+}
+
+// Run once after page loads + whenever screen size changes
+window.addEventListener("load", setMapTopOffset);
+window.addEventListener("resize", setMapTopOffset);
+setTimeout(setMapTopOffset, 0);
 // --- Basemaps ---
 // --- Final Basemaps (Polished Professional Set) ---
 
