@@ -156,7 +156,7 @@ html, body {
   background: rgba(80, 170, 90, 0.78) !important;
 }
 
-/* Popup styling (keep the nice photo look) */
+/* Popup styling */
 .popup { line-height: 1.25; }
 .popup .addr { margin-bottom: 8px; font-size: 14px; font-weight: 750; }
 .popup .meta div { margin: 3px 0; font-size: 13px; }
@@ -182,37 +182,3 @@ html, body {
 .leaflet-popup-content-wrapper { border-radius: 14px; }
 .leaflet-popup-content { margin: 12px 14px; }
 .leaflet-popup-tip { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18)); }
-/* Fullscreen button (only shows when embedded) */
-#open-fullscreen{
-  position: fixed;
-  right: 14px;
-  top: calc(var(--map-top, 86px) + 10px);
-  z-index: 2000;
-  background: rgba(0,0,0,0.72);
-  color: #fff;
-  padding: 10px 14px;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 13px;
-  text-decoration: none;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.22);
-  backdrop-filter: blur(6px);
-  display: none;
-}
-#open-fullscreen:hover{
-  background: rgba(0,0,0,0.85);
-}
-
-/* Make clusters more neutral professional */
-.marker-cluster-small div,
-.marker-cluster-medium div,
-.marker-cluster-large div {
-  background: rgba(60,60,60,0.78) !important;
-}
-
-/* Slightly tighter mobile layout */
-@media (max-width: 700px) {
-  #topbar { padding: 8px 10px; }
-  .brand { font-size: 14px; margin-bottom: 6px; }
-  .control { font-size: 13px; }
-}
