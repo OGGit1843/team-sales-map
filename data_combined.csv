@@ -1,0 +1,359 @@
+Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property Type
+"9103 Longstone Drive, Columbus, OH 43035",40.151342,-83.003197,Buyer,"362,000",07/12/2021,Residential
+"7169 Steel Dust Drive 27-716, Columbus, OH 43054",40.106632,-82.823967,Buyer,"215,000",07/12/2021,Residential
+"1992 Big Tree Drive, Columbus, OH 43223",39.924571,-83.050200,Seller/Listing,"251,700",07/16/2021,Residential
+"5142 Doral Avenue, Whitehall, OH 43213",39.962797,-82.861384,Buyer,"265,000",07/19/2021,Residential
+"2710 Regina Avenue, Columbus, OH 43204",39.935877,-83.069795,Buyer,"196,000",07/23/2021,Residential
+"2596 E Livingston Avenue, Bexley, OH 43209",39.947571,-82.927264,Buyer,"265,000",08/11/2021,Residential
+"7278 Colonial Affair Drive 11-727, Columbus, OH 43054",40.107835,-82.821916,Buyer,"215,000",08/16/2021,Residential
+"109 N Westgate Avenue, Columbus, OH 43204",39.956574,-83.083429,Buyer,"115,000",08/16/2021,Residential
+"119 Flint Rock Drive, Delaware, OH 43015",40.301860,-83.101686,Seller/Listing,"225,000",08/19/2021,Residential
+"5947 Pine Rise Court 5947, Columbus, OH 43231",40.095906,-82.937146,Seller/Listing,"129,900",08/27/2021,Residential
+"4475 Millwater Drive, OH 43065",40.179569,-83.110686,Buyer,"510,000",08/31/2021,Residential
+"8071 Cranes Crossing Drive S, OH 43035",40.170333,-83.010579,Seller/Listing,"168,000",09/10/2021,Residential
+"334 Amesbury Drive, Gahanna, OH 43230",40.027590,-82.901725,Seller/Listing,"225,000",09/17/2021,Residential
+"8443 Gardenia Drive Lot 1053, OH 43064",,,Buyer,"547,220",09/20/2021,Residential
+"5746 Braymoore Drive, OH 43021",40.184628,-82.935297,Buyer,"495,000",09/21/2021,Residential
+"8734 Renfrew Street, Columbus, OH 43065",40.134174,-83.083561,Seller/Listing,"426,500",09/24/2021,Residential
+"6125 Paris Boulevard N, OH 43081",40.094304,-82.913730,Seller/Listing,"210,000",09/24/2021,Residential
+"4837 Fosterson Drive, Columbus, OH 43137",39.861803,-82.996065,Seller/Listing,"225,000",09/30/2021,Residential
+"2710 Bernadette Road, Columbus, OH 43204",39.936608,-83.069732,Buyer,"155,000",10/05/2021,Residential
+"1643 Marigold Street, OH 43035",40.180979,-83.002629,Seller/Listing,"372,000",10/12/2021,Residential
+"3152 Rivermill Drive, Columbus, OH 43220",40.063903,-83.100940,Buyer,"250,000",10/15/2021,Residential
+"6100 Dajana Drive, Columbus, OH 43081",40.105857,-82.856565,Buyer,"389,900",10/22/2021,Residential
+"3110 Jetstream Drive, Columbus, OH 43231",40.072131,-82.937593,Buyer,"220,000",10/29/2021,Residential
+"7423 Spruce Court, OH 43064",40.169726,-83.180602,Buyer,"682,000",11/04/2021,Residential
+"635 N Main Street, Utica, OH 43080",40.242493,-82.452248,Buyer,"146,000",11/08/2021,Residential
+"4683 Cadmus Drive, Columbus, OH 43228",39.913428,-83.116308,Buyer,"134,000",11/08/2021,Residential
+"151 N Chase Avenue, Columbus, OH 43204",39.957937,-83.077318,Buyer,"117,000",11/11/2021,Residential
+"3976 Thims Court, Hilliard, OH 43026",40.054460,-83.123625,Seller/Listing,"415,000",11/15/2021,Residential
+"383 Galloway Ridge Drive, Columbus, OH 43119",39.957545,-83.155440,Buyer,"249,000",11/15/2021,Residential
+"5958 Sebring Drive, Columbus, OH 43081",,,Buyer,"438,000",11/16/2021,Residential
+"7403 Summerfield Drive, OH 43035",40.175128,-82.994996,Seller/Listing,"476,014",11/18/2021,Residential
+"459 W William Street, Delaware, OH 43015",40.299534,-83.085123,Buyer,"345,000",11/19/2021,Residential
+"864 Hanover Road, OH 43015",40.351078,-83.054777,Seller/Listing,"565,000",11/19/2021,Residential
+"9127 Pleasant Chapel Road, OH 43056",39.968483,-82.335003,Seller/Listing,"389,900",11/19/2021,Residential
+"106 N High Street 603, Columbus, OH 43215",39.964439,-83.000997,Buyer,"210,000",11/22/2021,Residential
+"8763 Arrowtip Lane, Columbus, OH 43035",40.142760,-83.014916,Buyer,"285,000",11/22/2021,Residential
+"5159 Strawberry Farms Boulevard, Columbus, OH 43230",40.077276,-82.915872,Buyer,"237,000",11/26/2021,Residential
+"256 E Schreyer Place, Columbus, OH 43214",40.052266,-83.012966,Buyer,"330,000",11/30/2021,Residential
+"417 Equality Way, Columbus, OH 43119",39.960308,-83.158191,Buyer,"200,000",11/30/2021,Residential
+"1421 Missouri Avenue, Delaware, OH 43015",40.272755,-83.066455,Buyer,"105,000",12/03/2021,Residential
+"1395 Duxberry Avenue, Columbus, OH 43211",40.008853,-82.971797,Buyer,"170,000",12/03/2021,Residential
+"482 State Route 257 S, OH 43061",40.313988,-83.173426,Buyer,"820,000",12/03/2021,Residential
+"737 Swanson Street, Delaware, OH 43015",40.301779,-83.102954,Buyer,"237,000",12/06/2021,Residential
+"6035 Mamie Drive, OH 43147",39.918813,-82.699386,Buyer,"556,500",12/10/2021,Residential
+"264 N 20th Street, Columbus, OH 43203",39.970944,-82.973330,Buyer,"375,000",12/10/2021,Residential
+"305 Parkwood Avenue, Pickerington, OH 43147",39.891100,-82.771698,Buyer,"301,500",12/15/2021,Residential
+"573 Olentangy Woods Drive, Columbus, OH 43235",40.064136,-83.036303,Seller/Listing,"293,000",12/20/2021,Residential
+"2693 Bonne Circle, Columbus, OH 43207",39.887842,-82.923863,Buyer,"188,000",12/23/2021,Residential
+"6807 Erindale Drive, Columbus, OH 43068",39.918799,-82.817375,Buyer,"199,900",12/23/2021,Residential
+"463 Shadow Run Drive, Groveport, OH 43125",39.845256,-82.896092,Buyer,"285,000",12/27/2021,Residential
+"5407 Centner Lane, Columbus, OH 43232",39.916050,-82.850718,Buyer,"160,500",12/27/2021,Residential
+"967 Cypress Ridge Place, Columbus, OH 43228",39.932157,-83.129237,Buyer,"252,000",01/03/2022,Residential
+"1380 E 18th Avenue, Columbus, OH 43211",40.001152,-82.970681,Buyer,"125,000",01/10/2022,Residential
+"1530 Slade Avenue 102, Columbus, OH 43235",40.066741,-83.059879,Buyer,"119,000",01/14/2022,Residential
+"4814 Oakland Ridge Drive, OH 43065",40.195647,-83.122363,Seller/Listing,"395,000",01/18/2022,Residential
+"5744 Summerville Drive, Columbus, OH 43119",39.961290,-83.156199,Seller/Listing,"288,000",01/20/2022,Residential
+"6121 Hazelmere, Columbus, OH 43119",39.926535,-83.158232,Buyer,"240,000",01/20/2022,Residential
+"216 N Granger Street, Granville, OH 43023",40.069143,-82.514594,Buyer,"600,000",01/20/2022,Residential
+"995 Schauer Drive, Columbus, OH 43119",39.930849,-83.157456,Buyer,"272,000",01/25/2022,Residential
+"6209 Nasby Drive, Columbus, OH 43119",39.928304,-83.160062,Buyer,"260,000",01/28/2022,Residential
+"7172 Serenoa Drive, Columbus, OH 43068",39.978203,-82.809493,Seller/Listing,"309,000",01/31/2022,Residential
+"1456 Pinehurst Court, Columbus, OH 43223",39.924104,-83.046292,Buyer,"205,000",01/31/2022,Residential
+"4078 Blendon Way Drive 96B, Columbus, OH 43230",40.068423,-82.869762,Buyer,"204,000",02/04/2022,Residential
+"4863 Northtowne Boulevard, Columbus, OH 43229",40.068167,-82.958837,Seller/Listing,"265,000",02/16/2022,Residential
+"1414 Cordell Avenue, Columbus, OH 43211",40.011445,-82.970590,Buyer,"165,000",02/18/2022,Residential
+"4031 Parkcove Drive 17E, Columbus, OH 43230",40.067653,-82.866744,Buyer,"220,000",02/18/2022,Residential
+"1830 Mcdowell Ridge Drive, Columbus, OH 43223",39.926612,-83.045383,Buyer,"246,300",02/28/2022,Residential
+"760 Oakley Drive, Delaware, OH 43015",40.250215,-83.036352,Seller/Listing,"533,500",02/28/2022,Residential
+"467 Wehrle Avenue, Newark, OH 43055",40.048629,-82.416742,Buyer,"84,900",03/09/2022,Residential
+"7741 Sherridon Drive, OH 43004",39.994987,-82.801618,Buyer,"335,000",03/09/2022,Residential
+"8328 Parori Lane, Columbus, OH 43004",40.002098,-82.782993,Buyer,"280,000",03/09/2022,Residential
+"950 Radbourne Drive, Columbus, OH 43207",39.882946,-82.973350,Buyer,"275,000",03/18/2022,Residential
+"951 Timothy Court, Gahanna, OH 43230",40.044162,-82.892327,Buyer,"380,000",03/21/2022,Residential
+"5381 Winchester Cathedral Drive, Columbus, OH 43110",39.872812,-82.807965,Buyer,"261,000",03/28/2022,Residential
+"2363 Woodland Park Drive, Ontario, OH 44903",40.750457,-82.599372,Seller/Listing,"700,000",03/30/2022,Residential
+"8121 Crossgate Court N, Dublin, OH 43017",40.134567,-83.139956,Buyer,"1,049,900",03/30/2022,Residential
+"1303 E 22nd Avenue, Columbus, OH 43211",40.004754,-82.973897,Seller/Listing,"134,900",04/01/2022,Residential
+"5891 Trail View Crossing, Grove City, OH 43123",,,Buyer,"478,900",04/01/2022,Residential
+"507 Curry Drive, Pataskala, OH 43062",,,Buyer,"346,900",04/07/2022,Residential
+"271 N Oakley Avenue, Columbus, OH 43204",39.960411,-83.063922,Buyer,"152,000",04/08/2022,Residential
+"4733 Arnold Avenue, OH 43228",39.949312,-83.126052,Buyer,"202,000",04/14/2022,Residential
+"6387 Kelsey Court, Columbus, OH 43110",39.877909,-82.832019,Buyer,"275,000",04/19/2022,Residential
+"7380 Bevelhymer Road, New Albany, OH 43054",40.104521,-82.792346,Buyer,"439,000",04/19/2022,Residential
+"4618 Tylar Chase, Grove City, OH 43123",39.869842,-83.096254,Seller/Listing,"385,000",04/22/2022,Residential
+"988 S 22nd Street, Columbus, OH 43206",39.944686,-82.973127,Seller/Listing,"355,000",05/09/2022,Residential
+"220 E High Street, Ashley, OH 43003",40.409029,-82.952649,Buyer,"270,000",05/10/2022,Residential
+"786 Mishey Road, Bellville, OH 44813 ",40.565394,-82.481361,Buyer,"325,000",05/10/2022,Residential
+"2933 Azelda Street, Columbus, OH 43224",40.025482,-82.987164,Seller/Listing,"115,000",05/11/2022,Residential
+"1045 Underwood South Drive, Marion, OH 43302",40.569498,-83.154410,Buyer,"176,000",05/13/2022,Residential
+"14700 Clark State Road SW, Pataskala, OH 43062",40.047001,-82.766127,Buyer,"550,000",05/13/2022,Residential
+"3165 Melbury Drive, Hilliard, OH 43221",40.040737,-83.103247,Buyer,"702,000",05/16/2022,Residential
+"16 King Arthur Court, Westerville, OH 43081",40.107425,-82.925931,Buyer,"130,000",05/20/2022,Residential
+"537 W 3rd Avenue, Columbus, OH 43201",39.983948,-83.019467,Buyer,"330,000",05/24/2022,Residential
+"2737 Steele Avenue, Columbus, OH 43204",39.958518,-83.074115,Buyer,"107,800",06/07/2022,Residential
+"1716 Impatiens Way, OH 43035",40.179877,-83.000993,Seller/Listing,"395,000",06/12/2022,Residential
+"340 Fondriest Road, Johnstown, OH 43031",,,Buyer,"458,900",06/15/2022,Residential
+"2976 Avalon Road, Upper Arlington, OH 43221",40.016706,-83.073934,Buyer,"925,000",06/22/2022,Residential
+"128 Hamilton Avenue, Columbus, OH 43203",39.967135,-82.981621,Buyer,"280,000",07/01/2022,Residential
+"606 Raab Street, Pickerington, OH 43147",39.875476,-82.769923,Buyer,"390,000",07/15/2022,Residential
+"3267 Oaklawn Street, Columbus, OH 43224",40.033997,-82.968223,Buyer,"165,000",07/29/2022,Residential
+"4651 Hobson Drive 12D, Columbus, OH 43228",39.912067,-83.115934,Seller/Listing,"165,000",08/17/2022,Residential
+"375 S Wheatland Avenue, Columbus, OH 43204",39.947645,-83.061503,Buyer,"192,000",08/26/2022,Residential
+"6016 Pennington Creek Drive, Columbus, OH 43016",40.065240,-83.181367,Seller/Listing,"285,000",08/30/2022,Residential
+"322 Rivers End Road, Gahanna, OH 43230",40.011309,-82.873208,Buyer,"310,000",08/31/2022,Residential
+"811 Hillman Road S, Columbus, OH 43207",39.880887,-82.979861,Seller/Listing,"190,000",08/31/2022,Residential
+"41 Burt Avenue, Newark, OH 43055",40.046385,-82.424866,Buyer,"145,000",09/02/2022,Residential
+"6940 London Groveport Road, OH 43123",39.853672,-83.183282,Seller/Listing,"175,000",09/12/2022,Residential
+"1631 Huxley Drive, Columbus, OH 43227",39.942476,-82.868308,Buyer,"160,000",09/22/2022,Residential
+"271 Imperial Drive, Gahanna, OH 43230",40.025507,-82.893072,Buyer,"275,000",09/23/2022,Residential
+"820 Saint Nicholas Avenue, Dayton, OH 45410",39.748686,-84.155657,Seller/Listing,"149,900",09/23/2022,Residential
+"79 Limetree Drive, Delaware, OH 43015",40.299550,-83.099913,Seller/Listing,"295,000",09/27/2022,Residential
+"6072 Pasqual Avenue, Columbus, OH 43213",39.985874,-82.840534,Seller/Listing,"375,000",10/14/2022,Residential
+"6060 McClellon Drive, OH 43021",40.254037,-82.950424,Seller/Listing,"699,900",10/17/2022,Residential
+"10238 State Route 521, OH 43074",40.324314,-82.874625,Buyer,"372,500",10/20/2022,Residential
+"5381 Winchester Cathedral Drive, Columbus, OH 43110",39.872812,-82.807965,Seller/Listing,"265,000",10/28/2022,Residential
+"270 Westwood Road, Columbus, OH 43214",40.047511,-83.027107,Buyer,"415,000",11/07/2022,Residential
+"3838 Township Road 59, OH 43338",40.625189,-82.832128,Seller/Listing,"667,000",11/14/2022,Residential
+"1495 Primrose Avenue, OH 43035",40.175031,-83.002359,Seller/Listing,"420,000",11/17/2022,Residential
+"3512 Chipshot Court, Columbus, OH 43228",39.998772,-83.099555,Buyer,"300,000",11/23/2022,Residential
+"2312 E 5th Avenue, Columbus, OH 43219",39.985807,-82.943031,Buyer,"235,000",11/30/2022,Residential
+"215 Buckeye Circle, OH 43217",39.828760,-82.935828,Buyer,"85,000",11/30/2022,Residential
+"6297 Marengo Street, Columbus, OH 43110",39.871956,-82.827940,Buyer,"230,000",12/05/2022,Residential
+"109 Lake Bluff Drive, Columbus, OH 43235",40.129783,-83.013619,Buyer,"1,175,000",12/07/2022,Residential
+"401 N Elm Street, Prospect, OH 43342",40.454287,-83.189584,Buyer,"129,000",12/12/2022,Residential
+"1100 Brookhouse Lane, Gahanna, OH 43230",40.046450,-82.839945,Buyer,"1,889,000",12/12/2022,Residential
+"3421 Fishinger Mill Drive, Columbus, OH 43026",40.023338,-83.110693,Buyer,"187,500",12/16/2022,Residential
+"1019 Sutton Place Place, Columbus, OH 43068",39.960300,-82.826574,Buyer,"210,000",12/16/2022,Residential
+"2804 Homecomer Drive, Grove City, OH 43123",39.884042,-83.079658,Seller/Listing,"235,000",12/20/2022,Residential
+"723 Parkgrove Way, Columbus, OH 43035",40.150881,-83.000295,Buyer,"225,000",12/22/2022,Residential
+"8071 Cranes Crossing Drive, OH 43035",40.170333,-83.010579,Seller/Listing,"209,000",01/06/2023,Residential
+"480 Fallriver Drive, Reynoldsburg, OH 43068",39.974242,-82.802882,Seller/Listing,"379,000",01/06/2023,Residential
+"2485 Round Rock Drive, Columbus, OH 43219",40.023361,-82.916807,Buyer,"289,990",01/17/2023,Residential
+"6259 Buckman Street, OH 43035",40.186114,-82.979157,Buyer,"599,000",01/23/2023,Residential
+"9274 Auburn Court, OH 43065",40.164365,-83.095352,Buyer,"525,000",01/31/2023,Residential
+"4590 E Johnstown Road, OH 43230",40.050647,-82.850657,Buyer,"330,000",02/06/2023,Residential
+"8661 E Snodgrass Road, OH 45317",40.169904,-84.032132,Seller/Listing,"320,000",02/16/2023,Residential
+"220 Windsor Street, Marion, OH 43302",40.585312,-83.134927,Seller/Listing,"115,000",02/17/2023,Residential
+"3070 Baker Hill Road, Columbus, OH 43207",39.903251,-82.964166,Buyer,"155,000",02/17/2023,Residential
+"2836 Devonshire Drive, OH 43015",40.238898,-82.992029,Seller/Listing,"436,000",02/21/2023,Residential
+"3433 Jessica Lane S, OH 43065",,,Seller/Listing,"484,680",02/22/2023,Residential
+"1690 Co Rd 170, OH 43334",40.414204,-82.787586,Buyer,"515,000",02/22/2023,Residential
+"6326 Wagtail Road #6, Columbus, OH 43230",40.055866,-82.850053,Seller/Listing,"285,000",02/28/2023,Residential
+"1656 S 6th Street, Columbus, OH 43207",39.928875,-82.990563,Seller/Listing,"337,500",03/07/2023,Residential
+"1540 Genessee Avenue, Columbus, OH 43211",40.018933,-82.969547,Buyer,"263,000",03/27/2023,Residential
+"283 E Royal Forest Boulevard, Columbus, OH 43214",40.060305,-83.011826,Buyer,"350,000",04/04/2023,Residential
+"5725 Zinnia Road Lot 81, Columbus, OH 43081",,,Buyer,"473,900",04/14/2023,Residential
+"132 Millfield Avenue, Westerville, OH 43081",40.127418,-82.955181,Buyer,"400,000",05/01/2023,Residential
+"1371 Norma Road, Columbus, OH 43229",40.068713,-82.981492,Buyer,"240,000",05/03/2023,Residential
+"210 Linden Avenue, Newark, OH 43055",40.057119,-82.428625,Buyer,"198,900",05/05/2023,Residential
+"8264 Big Horn Court, Columbus, OH 43065",40.126015,-83.066247,Seller/Listing,"394,350",05/05/2023,Residential
+"3861 Sandstone Circle, OH 43065",40.152017,-83.089657,Buyer,"305,000",05/10/2023,Residential
+"1510 Francisco Road, Columbus, OH 43220",40.058787,-83.059583,Seller/Listing,"407,000",05/12/2023,Residential
+"9663 Arrowwood Drive, OH 43064",40.166071,-83.181930,Buyer,"749,453",05/16/2023,Residential
+"4944 Hilliard Oaks Court, Columbus, OH 43026",40.006020,-83.139901,Buyer,"355,000",05/18/2023,Residential
+"6168 Ryan Woods Way, Hilliard, OH 43026",40.048391,-83.184545,Buyer,"570,000",05/19/2023,Residential
+"881 Mike Court, Westerville, OH 43081",40.128817,-82.900286,Seller/Listing,"415,000",05/22/2023,Residential
+"771 Grandon Avenue, Bexley, OH 43209",39.954145,-82.926540,Buyer,"367,000",05/23/2023,Residential
+"3963 Snowshoe Avenue, Columbus, OH 43123",39.902477,-83.102534,Seller/Listing,"325,000",05/30/2023,Residential
+"2215 Greenlawn Drive, Delaware, OH 43015",40.306370,-83.113481,Seller/Listing,"421,000",05/30/2023,Residential
+"4384 Grand Crossing Boulevard 6-4384, Grove City, OH 43123",39.872618,-83.048315,Buyer,"289,900",05/31/2023,Residential
+"1971 Beauregard Boulevard, Columbus, OH 43123",39.913902,-83.074582,Seller/Listing,"305,000",05/31/2023,Residential
+"1296 Red Bank Drive, Grove City, OH 43123",39.830660,-83.042175,Buyer,"450,000",06/06/2023,Residential
+"2614 Staunton Sugar Grove Road, OH 43160",39.475896,-83.477178,Buyer,"274,900",06/12/2023,Residential
+"7750 Willowcove Court, Columbus, OH 43016",40.124924,-83.085020,Buyer,"218,000",06/16/2023,Residential
+"7395 Summerfield Drive, OH 43035",40.175206,-82.995051,Seller/Listing,"485,000",06/21/2023,Residential
+"60 Savern Place, Gahanna, OH 43230",40.017404,-82.861075,Buyer,"385,000",07/03/2023,Residential
+"410 Woodside Meadows Place, Gahanna, OH 43230",40.043023,-82.890173,Seller/Listing,"425,000",07/13/2023,Residential
+"1347 Kellerman Court, Columbus, OH 43228",39.980551,-83.126143,Buyer,"408,500",07/31/2023,Residential
+"1272 Elmwood Avenue, Grandview Heights, OH 43212",39.982474,-83.051592,Buyer,"540,000",08/15/2023,Residential
+"723 Parkgrove Way, Columbus, OH 43035",40.150881,-83.000295,Seller/Listing,"253,000",08/18/2023,Residential
+"2481 Hotchkiss Street, Columbus, OH 43123",39.901633,-83.116568,Seller/Listing,"284,500",08/23/2023,Residential
+"6496 Highlands Court, OH 43015",40.214407,-83.130549,Seller/Listing,"605,000",08/23/2023,Residential
+"8567 Renford Court, Columbus, OH 43065",40.132058,-83.068820,Buyer,"320,000",08/25/2023,Residential
+"1108 Geneva Avenue, OH 43223",39.935320,-83.047856,Seller/Listing,"50,000",08/27/2023,Residential
+"496 Courtland Lane, Pickerington, OH 43147",39.894506,-82.767248,Seller/Listing,"300,000",08/29/2023,Residential
+"7810 Converse Huff Road, OH 43064",40.089120,-83.261203,Seller/Listing,"550,000",08/29/2023,Residential
+"140 Oak Creek Place, Gahanna, OH 43230",40.020307,-82.863567,Seller/Listing,"224,900",08/30/2023,Residential
+"3861 Sandstone Circle, OH 43065",40.152017,-83.089657,Seller/Listing,"340,000",08/31/2023,Residential
+"4223 Scenic View Drive, OH 43065",40.213349,-83.116908,Buyer,"325,000",09/01/2023,Residential
+"6150 Rackley Way, Columbus, OH 43081",40.103665,-82.852286,Buyer,"390,000",09/08/2023,Residential
+"7521 Liberton Place, Columbus, OH 43085",40.117633,-82.993105,Seller/Listing,"345,000",09/12/2023,Residential
+"4296 Mcnamara Place, OH 43035",40.223134,-83.005968,Buyer,"610,000",09/19/2023,Residential
+"116 Thevintree Drive, Columbus, OH 43119",39.953260,-83.155401,Seller/Listing,"356,600",09/20/2023,Residential
+"550 E Kelso Road, Columbus, OH 43202",40.021108,-82.997793,Seller/Listing,"285,000",09/22/2023,Residential
+"13460 Watson Road, OH 43050",40.300226,-82.514516,Buyer,"550,000",09/27/2023,Residential
+"6190 Nichols Lane, OH 43031",40.143476,-82.651914,Buyer,"415,000",09/29/2023,Residential
+"288 S Warren Avenue, Columbus, OH 43204",39.949169,-83.071137,Buyer,"217,500",10/04/2023,Residential
+"9782 Lynns Road, OH 43062",39.952074,-82.695802,Buyer,"276,500",10/11/2023,Residential
+"336 Karst Circle, South Bloomfield, OH 43103",39.718549,-82.998088,Buyer,"357,900",10/13/2023,Residential
+"874 Bellefontaine Avenue, Marion, OH 43302",40.573305,-83.145104,Seller/Listing,"148,000",10/20/2023,Residential
+"580 Gilbert Street, Columbus, OH 43205",39.952862,-82.973663,Buyer,"289,900",10/20/2023,Residential
+"6494 Larch Court, Reynoldsburg, OH 43068",39.941146,-82.821531,Seller/Listing,"110,000",10/23/2023,Residential
+"8121 Crossgate Court N, Dublin, OH 43017",40.134567,-83.139956,Seller/Listing,"1,024,650",11/03/2023,Residential
+"7331 Holderman Street, OH 43035",40.176484,-83.003092,Seller/Listing,"418,000",11/03/2023,Residential
+"8633 Gavinton Court, Dublin, OH 43017",40.142017,-83.149861,Buyer,"1,550,000",11/03/2023,Residential
+"3857 Glenfield Road, OH 43232",39.899074,-82.865022,Buyer,"206,000",11/14/2023,Residential
+"1210 Westphal Avenue, Columbus, OH 43227",39.949434,-82.882761,Buyer,"268,500",11/17/2023,Residential
+"3494 Manchester Drive, OH 43065",40.142648,-83.079985,Seller/Listing,"450,000",11/27/2023,Residential
+"24 Pleasant Avenue, Westerville, OH 43081",40.126380,-82.918284,Buyer,"300,000",11/29/2023,Residential
+"471 Westport Drive, Groveport, OH 43125",39.849263,-82.899980,Buyer,"235,000",11/30/2023,Residential
+"5285 Highpointe Lakes Drive 3105, Columbus, OH 43081",,,Seller/Listing,"530,000",12/15/2023,Residential
+"2819 Kelley Court, Columbus, OH 43068",39.925339,-82.823900,Buyer,"200,000",12/19/2023,Residential
+"407 Greenland Pass Drive, Delaware, OH 43015",,,Buyer,"419,900",12/21/2023,Residential
+"2021 Belangee Drive, OH 43004",40.023054,-82.800717,Buyer,"449,900",01/26/2024,Residential
+"463 Cherry Road, Gahanna, OH 43230",40.015884,-82.895124,Seller/Listing,"415,000",01/26/2024,Residential
+"448 Park Vista Drive, Delaware, OH 43015",40.296168,-83.084832,Buyer,"424,900",01/26/2024,Residential
+"3348 Shattuck Avenue, Columbus, OH 43221",40.027343,-83.042085,Buyer,"365,000",01/29/2024,Residential
+"2665 Lancaster Kirkersville Road NW, OH 43130",39.763900,-82.617307,Buyer,"269,900",01/29/2024,Residential
+"417 Equality Way, Columbus, OH 43119",39.960308,-83.158191,Seller/Listing,"230,000",02/09/2024,Residential
+"938 Rarig Avenue, Columbus, OH 43219",39.990586,-82.923370,Buyer,"189,000",02/15/2024,Residential
+"3820 Genessee Avenue, OH 43219",40.016872,-82.907594,Buyer,"465,000",02/20/2024,Residential
+"2155 Elder Road NE, OH 43130",39.751001,-82.491356,Buyer,"180,000",02/23/2024,Residential
+"7415 Blacks Road SW, OH 43062",39.998714,-82.625731,Buyer,"449,900",02/29/2024,Residential
+"5310 Royal Arch Cascade Drive, Columbus, OH 43016",40.059852,-83.169256,Seller/Listing,"245,000",03/06/2024,Residential
+"1062 Balmoral Drive, Delaware, OH 43015",40.248735,-83.024459,Buyer,"575,000",03/28/2024,Residential
+"8155 Pacos Court, Columbus, OH 43065",40.123714,-83.067734,Buyer,"315,000",03/29/2024,Residential
+"5672 Burntwood Way, Columbus, OH 43081",40.091327,-82.885416,Seller/Listing,"401,000",04/04/2024,Residential
+"163 E Central Avenue, Delaware, OH 43015",40.301130,-83.059742,Buyer,"300,000",04/08/2024,Residential
+"512 Foxtrail Circle W, Westerville, OH 43081",40.112536,-82.933726,Buyer,"220,000",04/12/2024,Residential
+"465 Newlove Road, OH 45368",39.916231,-83.674776,Buyer,"568,000",05/06/2024,Residential
+"3863 Park Street, Grove City, OH 43123",,,Buyer,"441,375",05/17/2024,Residential
+"5199 Redlands Drive, Columbus, OH 43026",40.012144,-83.149148,Seller/Listing,"290,000",05/17/2024,Residential
+"6717 New Albany Road E, New Albany, OH 43054",40.103129,-82.800787,Seller/Listing,"599,995",06/04/2024,Residential
+"8786 Winding Creek Way, OH 43147",39.918488,-82.750221,Buyer,"680,000",06/05/2024,Residential
+"370 Chittenden Avenue, Columbus, OH 43201",39.995326,-82.997102,Buyer,"449,000",06/07/2024,Residential
+"9281 Cliff Springs Trail, Columbus, OH 43240",40.154611,-82.971972,Buyer,"355,000",06/11/2024,Residential
+"1821 Richmond Road, OH 43223",39.927977,-83.042629,Buyer,"195,000",06/11/2024,Residential
+"5274 Cross River Falls Boulevard, Columbus, OH 43016",,,Buyer,"292,000",06/11/2024,Residential
+"6259 Buckman Street, OH 43035",40.186114,-82.979157,Seller/Listing,"695,000",06/12/2024,Residential
+"891 Dark Star Avenue, Gahanna, OH 43230",40.042793,-82.847765,Buyer,"565,000",06/18/2024,Residential
+"9785 Monteray Drive, OH 43064",40.154285,-83.242934,Seller/Listing,"505,000",06/21/2024,Residential
+"2795 Saint Joseph Avenue, Columbus, OH 43204",39.934605,-83.071905,Seller/Listing,"199,900",07/18/2024,Residential
+"5134 Phillips Run, Groveport, OH 43110",39.872651,-82.871040,Seller/Listing,"385,000",07/26/2024,Residential
+"307 Rivers End Road, Gahanna, OH 43230",40.011463,-82.873404,Buyer,"339,900",07/26/2024,Residential
+"5674 Isaac Road, Columbus, OH 43110",39.864412,-82.817023,Seller/Listing,"295,000",07/26/2024,Residential
+"1649 Franklin Avenue, Columbus, OH 43205",39.961199,-82.955686,Buyer,"630,000",08/02/2024,Residential
+"217 Tar Heel Drive, Delaware, OH 43015",40.312292,-83.105498,Seller/Listing,"404,000",08/05/2024,Residential
+"565 Harding Lane, Delaware, OH 43015",40.316559,-83.086877,Buyer,"245,000",08/05/2024,Residential
+"3766 E Genessee Avenue, OH 43219",40.016917,-82.908526,Buyer,"485,000",08/06/2024,Residential
+"211 Talla Road S, Delaware, OH 43015",,,Buyer,"440,000",08/09/2024,Residential
+"819 Wiltshire Road, Columbus, OH 43204",39.937944,-83.075538,Buyer,"195,000",08/20/2024,Residential
+"6531 Bowery Peak Lane, Columbus, OH 43081",,,Buyer,"616,140",08/21/2024,Residential
+"1602 Windsong Drive, Heath, OH 43056",40.010748,-82.464851,Buyer,"300,000",08/27/2024,Residential
+"619 Palestine Road, OH 45157",39.008395,-84.304916,Seller/Listing,"420,000",08/30/2024,Residential
+"7313 Oliver Winchester Drive, Columbus, OH 43110",39.873029,-82.810159,Buyer,"340,000",08/30/2024,Residential
+"8163 Kingfisher Lane, OH 43147",39.905641,-82.739960,Buyer,"335,000",09/04/2024,Residential
+"2671 Woodsedge Road, Columbus, OH 43224",40.041451,-82.943098,Seller/Listing,"266,000",09/09/2024,Residential
+"11717 Brookwood Court, OH 43147",39.902231,-82.715851,Buyer,"425,000",09/10/2024,Residential
+"2150 Sullivant Avenue, Columbus, OH 43223",39.946777,-83.056446,Buyer,"50,000",09/13/2024,Residential
+"6208 4th Street, OH 43035",40.199154,-83.008360,Seller/Listing,"300,000",09/20/2024,Residential
+"4044 Fitzpatrick Boulevard 131, Columbus, OH 43110",39.895210,-82.849532,Seller/Listing,"233,000",09/26/2024,Residential
+"304 Faye Drive, Gahanna, OH 43230",40.016849,-82.871265,Seller/Listing,"312,000",09/26/2024,Residential
+"477 Meadows Boulevard, Pickerington, OH 43147",39.890741,-82.751831,Seller/Listing,"280,000",10/07/2024,Residential
+"895 Manor Lane D, Columbus, OH 43221",40.020762,-83.037021,Seller/Listing,"170,000",10/08/2024,Residential
+"6305 Chetti Drive, Columbus, OH 43213",39.987126,-82.834410,Buyer,"329,900",10/11/2024,Residential
+"8584 Copperview Drive, Columbus, OH 43016",40.131637,-83.087272,Seller/Listing,"475,000",10/11/2024,Residential
+"320 Ben Curtis Drive, Ostrander, OH 43061",40.270257,-83.203695,Buyer,"570,000",10/15/2024,Residential
+"3251 Royal Dornoch Circle, OH 43015",40.248010,-83.047095,Seller/Listing,"430,000",10/21/2024,Residential
+"7623 Broadwyn Drive, Reynoldsburg, OH 43068",39.953875,-82.794009,Buyer,"275,000",10/29/2024,Residential
+"2965 Pebble Drive, OH 43035",40.205633,-82.988902,Buyer,"695,000",10/29/2024,Residential
+"216 S Terrace Avenue, Columbus, OH 43204",39.950751,-83.066335,Buyer,"142,000",11/01/2024,Residential
+"265 Spelt Street Lot 10, Marysville, OH 43040",,,Buyer,"581,190",11/01/2024,Residential
+"306 Shadbush Drive, Columbus, OH 43004",39.991767,-82.782266,Seller/Listing,"195,000",11/01/2024,Residential
+"8565 Smith Calhoun Road 218, Plain City, OH 43064 ",40.067598,-83.244756,Buyer,"67,500",11/11/2024,Residential
+"97 Potters Shed Drive 9, Columbus, OH 43068",39.980531,-82.815042,Buyer,"280,000",11/12/2024,Residential
+"813 Riva Ridge Boulevard, Gahanna, OH 43230",40.038075,-82.853996,Seller/Listing,"380,000",11/12/2024,Residential
+"1021 Philadelphia Drive 12A, Columbus, OH 43081",40.132146,-82.989767,Seller/Listing,"259,000",12/11/2024,Residential
+"8285 Annandale Lane, Columbus, OH 43235",40.132523,-83.018267,Seller/Listing,"265,000",12/13/2024,Residential
+"202 W Selby Boulevard, Worthington, OH 43085",40.077630,-83.023779,Buyer,"495,000",12/20/2024,Residential
+"1009 W Central Avenue, Delaware, OH 43015",40.307235,-83.096829,Buyer,"418,500",01/02/2025,Residential
+"1203 Deer Path Court, Grove City, OH 43123",39.827220,-83.039046,Seller/Listing,"320,000",01/06/2025,Residential
+"6972 Andrew Hill Place, Columbus, OH 43235",40.106993,-83.038609,Seller/Listing,"680,000",01/24/2025,Residential
+"7947 Harvestmoon Drive S, Reynoldsburg, OH 43068",39.941308,-82.782714,Buyer,"235,000",01/27/2025,Residential
+"66 Minnick Court, Johnstown, OH 43031",40.148645,-82.677431,Buyer,"505,000",02/14/2025,Residential
+"278 Crestview Road, Columbus, OH 43202",40.022227,-83.005419,Buyer,"470,000",02/18/2025,Residential
+"5710 Pittsford Drive, Columbus, OH 43081",40.096692,-82.857598,Buyer,"278,000",03/03/2025,Residential
+"6150 Rackley Way, Columbus, OH 43081",40.103665,-82.852286,Seller/Listing,"410,000",03/03/2025,Residential
+"1543 Clifton Avenue, Columbus, OH 43203",39.971217,-82.960521,Seller/Listing,"201,000",03/19/2025,Residential
+"2765 Royal Dornoch Circle, OH 43015",40.253022,-83.044045,Seller/Listing,"391,000",03/28/2025,Residential
+"1601 Longhill Drive, OH 43015",,,Buyer,"476,890",03/31/2025,Residential
+"328 Beech Street, Green Camp, OH 43322",40.530429,-83.209888,Buyer,"297,000",04/04/2025,Residential
+"538 S Otterbein Avenue 2D, Westerville, OH 43081",40.111710,-82.921924,Buyer,"175,000",04/11/2025,Residential
+"5571 Viningbrook Drive, Columbus, OH 43016",40.066766,-83.153260,Seller/Listing,"295,000",04/18/2025,Residential
+"128 Hamilton Avenue, Columbus, OH 43203",39.967135,-82.981621,Seller/Listing,"287,000",05/01/2025,Residential
+"834 Doherty Road, Columbus, OH 43119",39.964949,-83.159864,Buyer,"359,900",05/05/2025,Residential
+"555 Buena Park Drive, Delaware, OH 43015",40.246163,-83.036612,Seller/Listing,"580,000",05/06/2025,Residential
+"7490 Twin Acorn Court, OH 43035",40.168551,-82.982697,Seller/Listing,"542,400",05/09/2025,Residential
+"617 Executive Boulevard, Delaware, OH 43015 ",40.317192,-83.082101,Buyer,"295,000",05/14/2025,Residential
+"361 Constance Street, Lockbourne, OH 43137 ",39.860938,-82.994408,Buyer,"320,000",06/04/2025,Residential
+"310 S Harris Avenue, Columbus, OH 43204",39.948536,-83.072233,Seller/Listing,"138,400",06/20/2025,Residential
+"13682 Cobblestone Lane, OH 43147",39.933119,-82.746927,Buyer,"399,900",07/02/2025,Residential
+"355 W 7th Avenue, Columbus, OH 43201",39.989445,-83.015832,Buyer,"710,000",07/03/2025,Residential
+"1288 Horseshoe Road, OH 43015",40.315202,-83.051008,Seller/Listing,"320,000",07/14/2025,Residential
+"4382 Holiday Lane, Bellefontaine, OH 43311 ",40.306851,-83.728768,Buyer,"435,000",07/16/2025,Residential
+"1186 Elmore Avenue, Columbus, OH 43224 ",40.042734,-82.983608,Buyer,"222,000",07/28/2025,Residential
+"211 Talla Road S, Delaware, OH 43015",,,Seller/Listing,"445,000",07/28/2025,Residential
+"1252 E 15th Avenue, Columbus, OH 43211 ",39.998472,-82.973655,Buyer,"177,777",07/30/2025,Residential
+"528 E Church St, Urbana, OH 43078",40.109798,-83.743397,Buyer,"257,000",07/31/2025,Residential
+"1006 Hardesty Place W, Columbus, OH 43204 ",39.934994,-83.060755,Buyer,"149,900",07/31/2025,Residential
+"1079 Loring Road, Columbus, OH 43224 ",40.059816,-82.990993,Buyer,"295,000",07/31/2025,Residential
+"11996 Ficus Field Way, Plain City, OH 43064 ",40.190900,-83.172962,Buyer,"569,900",08/12/2025,Residential
+"6666 Sharon Woods Boulevard, Columbus, OH 43229",40.104847,-82.962940,Seller/Listing,"375,000",08/27/2025,Residential
+"68 E Stanton Avenue, Columbus, OH 43214",40.074551,-83.016778,Buyer,"280,000",08/29/2025,Residential
+"3615 Motts Place Court, Columbus, OH 43110",39.909679,-82.814307,Seller/Listing,"325,000",08/29/2025,Residential
+"1596 Fox Chase Drive, Blacklick, OH 43004 ",40.017289,-82.804656,Buyer,"740,000",08/29/2025,Residential
+"21 Lantern Chase Drive, Delaware, OH 43015 ",40.313615,-83.113977,Buyer,"399,000",09/05/2025,Residential
+"370 Chittenden Avenue, Columbus, OH 43201",39.995326,-82.997102,Seller/Listing,"525,000",09/18/2025,Residential
+"8138 Slate Ridge Boulevard, Reynoldsburg, OH 43068 ",39.944391,-82.778677,Buyer,"499,900",09/19/2025,Residential
+"1778 Sotherby Crossing, OH 43035",40.193676,-83.005718,Seller/Listing,"552,000",09/22/2025,Residential
+"8600 Copperview Drive, Columbus, OH 43016",40.131811,-83.087263,Seller/Listing,"430,000",09/24/2025,Residential
+"1490 Stewart Place, OH 43004",40.011705,-82.825888,Seller/Listing,"660,000",10/16/2025,Residential
+"2165 Horseshoe Road, Delaware, OH 43015",40.325638,-83.045154,Seller/Listing,"515,000",10/20/2025,Residential
+"4590 E Johnstown Road, OH 43230",40.050647,-82.850657,Seller/Listing,"420,000",10/23/2025,Residential
+"294 Eastwood Avenue, Delaware, OH 43015",40.315094,-83.088758,Buyer,"275,000",10/24/2025,Residential
+"3600 Whirla Way, Grove City, OH 43123 ",,,Buyer,"564,000",10/30/2025,Residential
+"5212 Dry Creek Drive, Columbus, OH 43016",,,Seller/Listing,"410,000",11/03/2025,Residential
+"299 Lazelle Place Lane, Columbus, OH 43035",40.138891,-83.009029,Seller/Listing,"362,000",11/05/2025,Residential
+"1659 Tremont Road, Upper Arlington, OH 43212",39.993872,-83.052190,Seller/Listing,"709,900",11/17/2025,Residential
+"4143 Hickory Rock Drive, Powell, OH 43065",40.194933,-83.109207,Buyer,"720,000",11/19/2025,Residential
+"2103 Chicory Court, OH 43035",40.178216,-82.995321,Seller/Listing,"500,000",11/25/2025,Residential
+"4525 Norton Road, OH 43066",40.431307,-83.149931,Buyer,"350,000",11/26/2025,Residential
+"1190 Hyatts Road, Delaware, OH 43015 ",40.214900,-83.056452,Buyer,"440,500",11/26/2025,Residential
+"1382 Elmore Avenue, Columbus, OH 43224",40.042511,-82.978226,Buyer,"182,800",12/02/2025,Residential
+"3260 Clark Shaw Road, OH 43065",40.228442,-83.104687,Seller/Listing,"450,000",12/03/2025,Residential
+"507 Curry Drive, Pataskala, OH 43062",,,Seller/Listing,"349,900",12/09/2025,Residential
+"2251 Tucker Trail, Lewis Center, OH 43035 ",40.160101,-82.982249,Buyer,"558,000",12/9/2025,Residential
+"220 Woodland Sky Drive, Pataskala, OH 43062",,,Seller/Listing,"329,900",12/18/2025,Residential
+"2736 Bellero Way 94, Columbus, OH 43219",40.009094,-82.936730,Seller/Listing,"232,000",12/30/2025,Residential
+"2248 Worthingwoods Boulevard, Columbus, OH 43065",40.137706,-83.077439,Seller/Listing,"368,500",01/09/2026,Residential
+"5556 Stockton Way, Dublin, OH 43016",40.078973,-83.162182,Seller/Listing,"571,000",01/09/2026,Residential
+"5550 Westerville Crossing Drive, Columbus, OH 43081",40.086498,-82.923827,Seller/Listing,"372,900",01/12/2026,Residential
+"6626 Red Fox Road, Reynoldsburg, OH 43068",39.963982,-82.822034,Buyer,"239,600",01/14/2026,Residential
+"123 Helen Court, Delaware, OH 43015 ",40.299079,-83.106574,Buyer,"265,000",01/26/2026,Residential
+"2828 Kensington Place W, Columbus, OH 43202",40.021276,-83.000420,Seller/Listing,"470,000",02/05/2026,Residential
+"2718 Proclamation Way, Columbus, OH 43207 ",39.895493,-82.927474,Buyer,207400,02/06/2026,Residential
+"96 Aspen Lane SW, Pataskala, OH 43062",39.986876,-82.673777,Buyer,362000,02/13/2026,Residential
+"131 Dillmont Drive, Columbus, OH 43235",40.134105,-83.012527,Seller/Listing,2200,09/03/2025,Commercial
+"270 S Glenwood Avenue, Columbus, OH 43223",39.953051,-83.029245,Buyer,265000,06/20/2024,Commercial
+10400 Blacklick Eastern Road NW,39.929405,-82.781664,Buyer,2700000,05/30/2025,Commercial
+"909 Lewis Center Road, Lewis Center, OH 43035",40.199982,-83.017085,Buyer,425000,05/26/2023,Commercial
+"1520 Lewis Center Road, Lewis Center, OH 43035",40.199217,-83.009530,Buyer,450000,03/18/2022,Commercial
+"1273-1275 E 18th Avenue, Columbus, OH 43211",40.001176,-82.973382,Buyer,120000,12/31/2025,Multi-Family
+"1328-1330 S Champion Avenue, Columbus, OH 43206",39.937780,-82.970908,Buyer,479900,03/03/2025,Multi-Family
+"1219-1221 Langland Drive, Columbus, OH 43220",40.062055,-83.051467,Buyer,550000,10/03/2022,Multi-Family
+"691-693 S Terrace Avenue, Columbus, OH 43204",39.940884,-83.064790,Buyer,222400,11/28/2022,Multi-Family
+"218 S 3rd Street, Cardington, OH 43315",40.496112,-82.901705,Buyer,55000,02/13/2025,Land
+"6103 Quick Lane, Centerburg, OH 43011",40.25413012,-82.60645773,Buyer,79500,03/03/2022,Land
+"0 Hills Miller Road, Delaware, OH 43015",40.339455,-83.129148,Seller/Listing,350000,09/19/2025,Land
+"3626 N Old State Road, Delaware, OH 43015",40.325292,-82.957722,Buyer,156250,12/29/2023,Land
+"0 Walker Road, Hilliard, OH 43026",40.013145,-83.21849,Buyer,134028,09/07/2022,Land
+"7326 State Route 19 221-222, Mount Gilead, OH 43338",40.620048,-82.772386,Seller/Listing,14000,11/20/2025,Land
+"7326 State Route 19 223-224, Mount Gilead, OH 43338",40.621421,-82.767013,Seller/Listing,13000,11/25/2025,Land
+"7326 State Route 19 221-224, Mount Gilead, OH 43338",40.620245,-82.770744,Buyer,33000,11/12/2024,Land
+"0 Township Rd 59, Mount Gilead, OH 43338",40.625165,-82.831798,Buyer,82500,06/07/2022,Land
+"0 Russell Road, Ostrander, OH 43061",40.25672,-83.179578,Buyer,159152,03/11/2022,Land
+"0 S Riverside Drive, Powell, OH 43065",40.134531,-83.113877,Buyer,205000,03/09/2022,Land
+"5177 Carters Corner Road, Sunbury, OH 43074",40.32185,-82.885062,Seller/Listing,210000,03/28/2023,Land
+"6233 Tussic Street Road, Westerville, OH 43082",40.158761,-82.899843,Buyer,195000,03/21/2022,Land
