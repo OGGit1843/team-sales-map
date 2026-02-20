@@ -52,7 +52,9 @@ L.control.layers(
     "Muted": muted,
     "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
   },
-  null,
+  {
+    "Extra Labels (More names)": esriLabels
+  },
   { position: "topright" }
 ).addTo(map);
 
