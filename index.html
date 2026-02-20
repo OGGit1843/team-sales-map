@@ -14,9 +14,6 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
-  <!-- Heatmap -->
-  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-
   <!-- Papa Parse -->
   <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
 
@@ -44,25 +41,12 @@
       </div>
 
       <div id="stats" class="stats">Loading…</div>
-      <div id="kpiVolume" class="kpi">Volume: —</div>
     </div>
-  </div>
-
-  <!-- ✅ Side panel -->
-  <div id="sidePanel" class="panel collapsed">
-    <div class="panelHeader">
-      <div class="panelTitle">Stats</div>
-      <button id="panelToggle" class="panelToggle" type="button" aria-expanded="false">
-        Stats ▾
-      </button>
-    </div>
-
-    <div id="panelBody" class="panelBody"></div>
   </div>
 
   <div id="map"></div>
 
-  <div id="footerHint">Tip: Use fullscreen for best mobile experience.</div>
+  <div id="footerHint">Tip: Use fullscreen for the best mobile experience.</div>
 
   <script src="./app.js"></script>
 </body>
