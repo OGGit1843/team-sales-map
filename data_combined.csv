@@ -28,7 +28,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "151 N Chase Avenue, Columbus, OH 43204",39.957937,-83.077318,Buyer,"117,000",11/11/2021,Residential
 "3976 Thims Court, Hilliard, OH 43026",40.054460,-83.123625,Seller/Listing,"415,000",11/15/2021,Residential
 "383 Galloway Ridge Drive, Columbus, OH 43119",39.957545,-83.155440,Buyer,"249,000",11/15/2021,Residential
-"5958 Sebring Drive, Columbus, OH 43081",,,Buyer,"438,000",11/16/2021,Residential
+"5958 Sebring Drive, Columbus, OH 43081",40.09773,-82.855093,Buyer,"438,000",11/16/2021,Residential
 "7403 Summerfield Drive, OH 43035",40.175128,-82.994996,Seller/Listing,"476,014",11/18/2021,Residential
 "459 W William Street, Delaware, OH 43015",40.299534,-83.085123,Buyer,"345,000",11/19/2021,Residential
 "864 Hanover Road, OH 43015",40.351078,-83.054777,Seller/Listing,"565,000",11/19/2021,Residential
@@ -76,8 +76,8 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "2363 Woodland Park Drive, Ontario, OH 44903",40.750457,-82.599372,Seller/Listing,"700,000",03/30/2022,Residential
 "8121 Crossgate Court N, Dublin, OH 43017",40.134567,-83.139956,Buyer,"1,049,900",03/30/2022,Residential
 "1303 E 22nd Avenue, Columbus, OH 43211",40.004754,-82.973897,Seller/Listing,"134,900",04/01/2022,Residential
-"5891 Trail View Crossing, Grove City, OH 43123",,,Buyer,"478,900",04/01/2022,Residential
-"507 Curry Drive, Pataskala, OH 43062",,,Buyer,"346,900",04/07/2022,Residential
+"5891 Trail View Crossing, Grove City, OH 43123",39.841311,-83.043686,Buyer,"478,900",04/01/2022,Residential
+"507 Curry Drive, Pataskala, OH 43062",39.986951,-82.739126,Buyer,"346,900",04/07/2022,Residential
 "271 N Oakley Avenue, Columbus, OH 43204",39.960411,-83.063922,Buyer,"152,000",04/08/2022,Residential
 "4733 Arnold Avenue, OH 43228",39.949312,-83.126052,Buyer,"202,000",04/14/2022,Residential
 "6387 Kelsey Court, Columbus, OH 43110",39.877909,-82.832019,Buyer,"275,000",04/19/2022,Residential
@@ -94,7 +94,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "537 W 3rd Avenue, Columbus, OH 43201",39.983948,-83.019467,Buyer,"330,000",05/24/2022,Residential
 "2737 Steele Avenue, Columbus, OH 43204",39.958518,-83.074115,Buyer,"107,800",06/07/2022,Residential
 "1716 Impatiens Way, OH 43035",40.179877,-83.000993,Seller/Listing,"395,000",06/12/2022,Residential
-"340 Fondriest Road, Johnstown, OH 43031",,,Buyer,"458,900",06/15/2022,Residential
+"340 Fondriest Road, Johnstown, OH 43031",40.14949,-82.669949,Buyer,"458,900",06/15/2022,Residential
 "2976 Avalon Road, Upper Arlington, OH 43221",40.016706,-83.073934,Buyer,"925,000",06/22/2022,Residential
 "128 Hamilton Avenue, Columbus, OH 43203",39.967135,-82.981621,Buyer,"280,000",07/01/2022,Residential
 "606 Raab Street, Pickerington, OH 43147",39.875476,-82.769923,Buyer,"390,000",07/15/2022,Residential
@@ -138,13 +138,13 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "220 Windsor Street, Marion, OH 43302",40.585312,-83.134927,Seller/Listing,"115,000",02/17/2023,Residential
 "3070 Baker Hill Road, Columbus, OH 43207",39.903251,-82.964166,Buyer,"155,000",02/17/2023,Residential
 "2836 Devonshire Drive, OH 43015",40.238898,-82.992029,Seller/Listing,"436,000",02/21/2023,Residential
-"3433 Jessica Lane S, OH 43065",,,Seller/Listing,"484,680",02/22/2023,Residential
+"3433 Jessica Lane S, OH 43065",40.224574,-83.105716,Seller/Listing,"484,680",02/22/2023,Residential
 "1690 Co Rd 170, OH 43334",40.414204,-82.787586,Buyer,"515,000",02/22/2023,Residential
 "6326 Wagtail Road #6, Columbus, OH 43230",40.055866,-82.850053,Seller/Listing,"285,000",02/28/2023,Residential
 "1656 S 6th Street, Columbus, OH 43207",39.928875,-82.990563,Seller/Listing,"337,500",03/07/2023,Residential
 "1540 Genessee Avenue, Columbus, OH 43211",40.018933,-82.969547,Buyer,"263,000",03/27/2023,Residential
 "283 E Royal Forest Boulevard, Columbus, OH 43214",40.060305,-83.011826,Buyer,"350,000",04/04/2023,Residential
-"5725 Zinnia Road Lot 81, Columbus, OH 43081",,,Buyer,"473,900",04/14/2023,Residential
+"5725 Zinnia Road Lot 81, Columbus, OH 43081",40.096526,-82.863279,Buyer,"473,900",04/14/2023,Residential
 "132 Millfield Avenue, Westerville, OH 43081",40.127418,-82.955181,Buyer,"400,000",05/01/2023,Residential
 "1371 Norma Road, Columbus, OH 43229",40.068713,-82.981492,Buyer,"240,000",05/03/2023,Residential
 "210 Linden Avenue, Newark, OH 43055",40.057119,-82.428625,Buyer,"198,900",05/05/2023,Residential
@@ -199,9 +199,9 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "3494 Manchester Drive, OH 43065",40.142648,-83.079985,Seller/Listing,"450,000",11/27/2023,Residential
 "24 Pleasant Avenue, Westerville, OH 43081",40.126380,-82.918284,Buyer,"300,000",11/29/2023,Residential
 "471 Westport Drive, Groveport, OH 43125",39.849263,-82.899980,Buyer,"235,000",11/30/2023,Residential
-"5285 Highpointe Lakes Drive 3105, Columbus, OH 43081",,,Seller/Listing,"530,000",12/15/2023,Residential
+"5285 Highpointe Lakes Drive 3105, Columbus, OH 43081",40.086334,-82.875537,Seller/Listing,"530,000",12/15/2023,Residential
 "2819 Kelley Court, Columbus, OH 43068",39.925339,-82.823900,Buyer,"200,000",12/19/2023,Residential
-"407 Greenland Pass Drive, Delaware, OH 43015",,,Buyer,"419,900",12/21/2023,Residential
+"407 Greenland Pass Drive, Delaware, OH 43015",40.318709,-83.096313,Buyer,"419,900",12/21/2023,Residential
 "2021 Belangee Drive, OH 43004",40.023054,-82.800717,Buyer,"449,900",01/26/2024,Residential
 "463 Cherry Road, Gahanna, OH 43230",40.015884,-82.895124,Seller/Listing,"415,000",01/26/2024,Residential
 "448 Park Vista Drive, Delaware, OH 43015",40.296168,-83.084832,Buyer,"424,900",01/26/2024,Residential
@@ -219,14 +219,14 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "163 E Central Avenue, Delaware, OH 43015",40.301130,-83.059742,Buyer,"300,000",04/08/2024,Residential
 "512 Foxtrail Circle W, Westerville, OH 43081",40.112536,-82.933726,Buyer,"220,000",04/12/2024,Residential
 "465 Newlove Road, OH 45368",39.916231,-83.674776,Buyer,"568,000",05/06/2024,Residential
-"3863 Park Street, Grove City, OH 43123",,,Buyer,"441,375",05/17/2024,Residential
+"3863 Park Street, Grove City, OH 43123",39.886333,-83.106080,Buyer,"441,375",05/17/2024,Residential
 "5199 Redlands Drive, Columbus, OH 43026",40.012144,-83.149148,Seller/Listing,"290,000",05/17/2024,Residential
 "6717 New Albany Road E, New Albany, OH 43054",40.103129,-82.800787,Seller/Listing,"599,995",06/04/2024,Residential
 "8786 Winding Creek Way, OH 43147",39.918488,-82.750221,Buyer,"680,000",06/05/2024,Residential
 "370 Chittenden Avenue, Columbus, OH 43201",39.995326,-82.997102,Buyer,"449,000",06/07/2024,Residential
 "9281 Cliff Springs Trail, Columbus, OH 43240",40.154611,-82.971972,Buyer,"355,000",06/11/2024,Residential
 "1821 Richmond Road, OH 43223",39.927977,-83.042629,Buyer,"195,000",06/11/2024,Residential
-"5274 Cross River Falls Boulevard, Columbus, OH 43016",,,Buyer,"292,000",06/11/2024,Residential
+"5274 Cross River Falls Boulevard, Columbus, OH 43016",40.059063,-83.171757,Buyer,"292,000",06/11/2024,Residential
 "6259 Buckman Street, OH 43035",40.186114,-82.979157,Seller/Listing,"695,000",06/12/2024,Residential
 "891 Dark Star Avenue, Gahanna, OH 43230",40.042793,-82.847765,Buyer,"565,000",06/18/2024,Residential
 "9785 Monteray Drive, OH 43064",40.154285,-83.242934,Seller/Listing,"505,000",06/21/2024,Residential
@@ -238,9 +238,9 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "217 Tar Heel Drive, Delaware, OH 43015",40.312292,-83.105498,Seller/Listing,"404,000",08/05/2024,Residential
 "565 Harding Lane, Delaware, OH 43015",40.316559,-83.086877,Buyer,"245,000",08/05/2024,Residential
 "3766 E Genessee Avenue, OH 43219",40.016917,-82.908526,Buyer,"485,000",08/06/2024,Residential
-"211 Talla Road S, Delaware, OH 43015",,,Buyer,"440,000",08/09/2024,Residential
+"211 Talla Road S, Delaware, OH 43015",40.270412,-83.060508,Buyer,"440,000",08/09/2024,Residential
 "819 Wiltshire Road, Columbus, OH 43204",39.937944,-83.075538,Buyer,"195,000",08/20/2024,Residential
-"6531 Bowery Peak Lane, Columbus, OH 43081",,,Buyer,"616,140",08/21/2024,Residential
+"6531 Bowery Peak Lane, Columbus, OH 43081",40.113486,-82.86226,Buyer,"616,140",08/21/2024,Residential
 "1602 Windsong Drive, Heath, OH 43056",40.010748,-82.464851,Buyer,"300,000",08/27/2024,Residential
 "619 Palestine Road, OH 45157",39.008395,-84.304916,Seller/Listing,"420,000",08/30/2024,Residential
 "7313 Oliver Winchester Drive, Columbus, OH 43110",39.873029,-82.810159,Buyer,"340,000",08/30/2024,Residential
@@ -260,7 +260,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "7623 Broadwyn Drive, Reynoldsburg, OH 43068",39.953875,-82.794009,Buyer,"275,000",10/29/2024,Residential
 "2965 Pebble Drive, OH 43035",40.205633,-82.988902,Buyer,"695,000",10/29/2024,Residential
 "216 S Terrace Avenue, Columbus, OH 43204",39.950751,-83.066335,Buyer,"142,000",11/01/2024,Residential
-"265 Spelt Street Lot 10, Marysville, OH 43040",,,Buyer,"581,190",11/01/2024,Residential
+"265 Spelt Street Lot 10, Marysville, OH 43040",40.268494,-83.372298,Buyer,"581,190",11/01/2024,Residential
 "306 Shadbush Drive, Columbus, OH 43004",39.991767,-82.782266,Seller/Listing,"195,000",11/01/2024,Residential
 "8565 Smith Calhoun Road 218, Plain City, OH 43064 ",40.067598,-83.244756,Buyer,"67,500",11/11/2024,Residential
 "97 Potters Shed Drive 9, Columbus, OH 43068",39.980531,-82.815042,Buyer,"280,000",11/12/2024,Residential
@@ -278,7 +278,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "6150 Rackley Way, Columbus, OH 43081",40.103665,-82.852286,Seller/Listing,"410,000",03/03/2025,Residential
 "1543 Clifton Avenue, Columbus, OH 43203",39.971217,-82.960521,Seller/Listing,"201,000",03/19/2025,Residential
 "2765 Royal Dornoch Circle, OH 43015",40.253022,-83.044045,Seller/Listing,"391,000",03/28/2025,Residential
-"1601 Longhill Drive, OH 43015",,,Buyer,"476,890",03/31/2025,Residential
+"1601 Longhill Drive, OH 43015",40.261055,-83.009693,Buyer,"476,890",03/31/2025,Residential
 "328 Beech Street, Green Camp, OH 43322",40.530429,-83.209888,Buyer,"297,000",04/04/2025,Residential
 "538 S Otterbein Avenue 2D, Westerville, OH 43081",40.111710,-82.921924,Buyer,"175,000",04/11/2025,Residential
 "5571 Viningbrook Drive, Columbus, OH 43016",40.066766,-83.153260,Seller/Listing,"295,000",04/18/2025,Residential
@@ -294,7 +294,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "1288 Horseshoe Road, OH 43015",40.315202,-83.051008,Seller/Listing,"320,000",07/14/2025,Residential
 "4382 Holiday Lane, Bellefontaine, OH 43311 ",40.306851,-83.728768,Buyer,"435,000",07/16/2025,Residential
 "1186 Elmore Avenue, Columbus, OH 43224 ",40.042734,-82.983608,Buyer,"222,000",07/28/2025,Residential
-"211 Talla Road S, Delaware, OH 43015",,,Seller/Listing,"445,000",07/28/2025,Residential
+"211 Talla Road S, Delaware, OH 43015",40.270412,-83.060508,Seller/Listing,"445,000",07/28/2025,Residential
 "1252 E 15th Avenue, Columbus, OH 43211 ",39.998472,-82.973655,Buyer,"177,777",07/30/2025,Residential
 "528 E Church St, Urbana, OH 43078",40.109798,-83.743397,Buyer,"257,000",07/31/2025,Residential
 "1006 Hardesty Place W, Columbus, OH 43204 ",39.934994,-83.060755,Buyer,"149,900",07/31/2025,Residential
@@ -313,8 +313,8 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "2165 Horseshoe Road, Delaware, OH 43015",40.325638,-83.045154,Seller/Listing,"515,000",10/20/2025,Residential
 "4590 E Johnstown Road, OH 43230",40.050647,-82.850657,Seller/Listing,"420,000",10/23/2025,Residential
 "294 Eastwood Avenue, Delaware, OH 43015",40.315094,-83.088758,Buyer,"275,000",10/24/2025,Residential
-"3600 Whirla Way, Grove City, OH 43123 ",,,Buyer,"564,000",10/30/2025,Residential
-"5212 Dry Creek Drive, Columbus, OH 43016",,,Seller/Listing,"410,000",11/03/2025,Residential
+"3600 Whirla Way, Grove City, OH 43123 ",39.865758,-83.100146,Buyer,"564,000",10/30/2025,Residential
+"5212 Dry Creek Drive, Columbus, OH 43016",40.058766,-83.161939,Seller/Listing,"410,000",11/03/2025,Residential
 "299 Lazelle Place Lane, Columbus, OH 43035",40.138891,-83.009029,Seller/Listing,"362,000",11/05/2025,Residential
 "1659 Tremont Road, Upper Arlington, OH 43212",39.993872,-83.052190,Seller/Listing,"709,900",11/17/2025,Residential
 "4143 Hickory Rock Drive, Powell, OH 43065",40.194933,-83.109207,Buyer,"720,000",11/19/2025,Residential
@@ -323,9 +323,9 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "1190 Hyatts Road, Delaware, OH 43015 ",40.214900,-83.056452,Buyer,"440,500",11/26/2025,Residential
 "1382 Elmore Avenue, Columbus, OH 43224",40.042511,-82.978226,Buyer,"182,800",12/02/2025,Residential
 "3260 Clark Shaw Road, OH 43065",40.228442,-83.104687,Seller/Listing,"450,000",12/03/2025,Residential
-"507 Curry Drive, Pataskala, OH 43062",,,Seller/Listing,"349,900",12/09/2025,Residential
+"507 Curry Drive, Pataskala, OH 43062",39.986951,-82.739126,Seller/Listing,"349,900",12/09/2025,Residential
 "2251 Tucker Trail, Lewis Center, OH 43035 ",40.160101,-82.982249,Buyer,"558,000",12/9/2025,Residential
-"220 Woodland Sky Drive, Pataskala, OH 43062",,,Seller/Listing,"329,900",12/18/2025,Residential
+"220 Woodland Sky Drive, Pataskala, OH 43062",39.987271,-82.738551,Seller/Listing,"329,900",12/18/2025,Residential
 "2736 Bellero Way 94, Columbus, OH 43219",40.009094,-82.936730,Seller/Listing,"232,000",12/30/2025,Residential
 "2248 Worthingwoods Boulevard, Columbus, OH 43065",40.137706,-83.077439,Seller/Listing,"368,500",01/09/2026,Residential
 "5556 Stockton Way, Dublin, OH 43016",40.078973,-83.162182,Seller/Listing,"571,000",01/09/2026,Residential
@@ -357,6 +357,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "0 S Riverside Drive, Powell, OH 43065",40.134531,-83.113877,Buyer,205000,03/09/2022,Land
 "5177 Carters Corner Road, Sunbury, OH 43074",40.32185,-82.885062,Seller/Listing,210000,03/28/2023,Land
 "6233 Tussic Street Road, Westerville, OH 43082",40.158761,-82.899843,Buyer,195000,03/21/2022,Land
+
 
 
 
