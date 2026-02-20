@@ -76,7 +76,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "2363 Woodland Park Drive, Ontario, OH 44903",40.750457,-82.599372,Seller/Listing,"700,000",03/30/2022,Residential
 "8121 Crossgate Court N, Dublin, OH 43017",40.134567,-83.139956,Buyer,"1,049,900",03/30/2022,Residential
 "1303 E 22nd Avenue, Columbus, OH 43211",40.004754,-82.973897,Seller/Listing,"134,900",04/01/2022,Residential
-"5891 Trail View Crossing, Grove City, OH 43123",39.841311,-83.043686,Buyer,"478,900",04/01/2022,Residential
+"5891 Trail View Crossing, Grove City, OH 43123",39.841352,-83.043806,Buyer,"478,900",04/01/2022,Residential
 "507 Curry Drive, Pataskala, OH 43062",39.986951,-82.739126,Buyer,"346,900",04/07/2022,Residential
 "271 N Oakley Avenue, Columbus, OH 43204",39.960411,-83.063922,Buyer,"152,000",04/08/2022,Residential
 "4733 Arnold Avenue, OH 43228",39.949312,-83.126052,Buyer,"202,000",04/14/2022,Residential
@@ -357,6 +357,7 @@ Full Address,Latitude,Longitude,Transaction Type,Sold Price,Sold Date,Property T
 "0 S Riverside Drive, Powell, OH 43065",40.134531,-83.113877,Buyer,205000,03/09/2022,Land
 "5177 Carters Corner Road, Sunbury, OH 43074",40.32185,-82.885062,Seller/Listing,210000,03/28/2023,Land
 "6233 Tussic Street Road, Westerville, OH 43082",40.158761,-82.899843,Buyer,195000,03/21/2022,Land
+
 
 
 
