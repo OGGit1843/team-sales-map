@@ -60,6 +60,10 @@ const esriLabels = L.tileLayer(
   { maxZoom: 19 }
 );
 
+// Layer group for dark basemap (so we can detect it reliably)
+const darkBase = L.layerGroup([esriDark, esriDarkLabels]);
+
+// Default basemap
 esriStreet.addTo(map);
 
 /* ===============================
@@ -86,7 +90,7 @@ L.control.layers(
   {
     "Street (Google-like)": esriStreet,
     "Muted": muted,
-    "Dark Gray (Subtle)": L.layerGroup([esriDark, esriDarkLabels]),
+    "Dark Gray (Subtle)": darkBase,
     "Satellite + Labels": L.layerGroup([esriSatellite, esriLabels])
   },
   {
@@ -95,6 +99,22 @@ L.control.layers(
   },
   { position: "topright" }
 ).addTo(map);
+
+/* ===============================
+   DARK UI TOGGLE BASED ON BASEMAP
+=================================*/
+
+function setBasemapUI(isDark) {
+  document.body.classList.toggle("basemap-dark", !!isDark);
+}
+
+// Fires when the BASE layer changes
+map.on("baselayerchange", (e) => {
+  setBasemapUI(e.layer === darkBase);
+});
+
+// On first load we default to Street (light)
+setBasemapUI(false);
 
 /* ===============================
    DOM REFERENCES
@@ -130,7 +150,17 @@ function parseSoldPrice(raw) {
 
 function parseDate(raw) {
   if (!raw) return null;
-  const d = new Date(raw);
+
+  // Handles: YYYY-MM-DD, MM/DD/YYYY, etc.
+  const s = String(raw).trim();
+
+  let m = s.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})/);
+  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+
+  m = s.match(/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})/);
+  if (m) return new Date(Number(m[3]), Number(m[1]) - 1, Number(m[2]));
+
+  const d = new Date(s);
   return isNaN(d.getTime()) ? null : d;
 }
 
@@ -145,7 +175,7 @@ function fmtMoney(n) {
 
 function getActivePropertyTypes() {
   return new Set(
-    els.ptypeChecks.filter(c => c.checked).map(c => c.value)
+    els.ptypeChecks.filter((c) => c.checked).map((c) => c.value)
   );
 }
 
@@ -154,14 +184,14 @@ function getActiveYear() {
 }
 
 function txClass(tx) {
-  const t = (tx || "").toLowerCase();
+  const t = (tx || "").toString().toLowerCase();
   if (t.includes("seller") || t.includes("listing")) return "seller";
   if (t.includes("buyer")) return "buyer";
   return "unknown";
 }
 
 function typeEmoji(ptype) {
-  const p = (ptype || "").toLowerCase();
+  const p = (ptype || "").toString().toLowerCase();
   if (p.includes("res")) return "🏠";
   if (p.includes("comm")) return "🏢";
   if (p.includes("multi")) return "🏘️";
@@ -172,9 +202,9 @@ function typeEmoji(ptype) {
 function makeIcon(row) {
   return L.divIcon({
     className: "",
-    html: `<div class="marker ${txClass(row["Transaction Type"])}">
+    html: `<div class="marker ${txClass(row["Transaction Type"])}" title="${row["Property Type"] || ""}">
             ${typeEmoji(row["Property Type"])}
-           </div>`,
+          </div>`,
     iconSize: [34, 34],
     iconAnchor: [17, 34],
     popupAnchor: [0, -30]
@@ -185,20 +215,22 @@ function buildPopup(row) {
   const price = parseSoldPrice(row["Sold Price"]);
   const dt = parseDate(row["Sold Date"]);
 
-  const photo = (row["PhotoURL"] || "").trim();
+  const photo = (row["PhotoURL"] || row["Photo Url"] || row["Photo"] || "").toString().trim();
   const imgHtml = photo
-    ? `<div class="photo"><img src="${photo}" loading="lazy"/></div>`
+    ? `<div class="photo"><img src="${photo}" alt="Property photo" loading="lazy"/></div>`
     : "";
+
+  const safe = (v) => (v == null ? "" : String(v));
 
   return `
     <div class="popup">
-      <div class="addr"><strong>${row["Full Address"]}</strong></div>
+      <div class="addr"><strong>${safe(row["Full Address"])}</strong></div>
       ${imgHtml}
       <div class="meta">
-        <div><span>Type:</span> ${row["Transaction Type"]}</div>
-        <div><span>Property:</span> ${row["Property Type"]}</div>
-        <div><span>Sold:</span> ${fmtMoney(price)}</div>
-        <div><span>Date:</span> ${dt ? dt.toLocaleDateString() : ""}</div>
+        <div><span>Type:</span> ${safe(row["Transaction Type"])}</div>
+        <div><span>Property:</span> ${safe(row["Property Type"])}</div>
+        <div><span>Sold:</span> ${price != null ? fmtMoney(price) : safe(row["Sold Price"])}</div>
+        <div><span>Date:</span> ${dt ? dt.toLocaleDateString() : safe(row["Sold Date"])}</div>
       </div>
     </div>
   `;
@@ -214,16 +246,22 @@ function refresh() {
 
   const heatPoints = [];
   let volume = 0;
-  let buyerCount = 0, sellerCount = 0, unknownCount = 0;
+
+  let buyerCount = 0,
+    sellerCount = 0,
+    unknownCount = 0;
 
   const activeTypes = getActivePropertyTypes();
   const activeYear = getActiveYear();
 
+  let total = 0;
   let plotted = 0;
   let missing = 0;
 
   for (const row of allRows) {
-    const ptype = (row["Property Type"] || "");
+    total++;
+
+    const ptype = (row["Property Type"] || "").toString();
     if (!activeTypes.has(ptype)) continue;
 
     const lat = Number(row["Latitude"]);
@@ -255,7 +293,7 @@ function refresh() {
     plotted++;
   }
 
-  els.stats.textContent = `${plotted} pinned • ${missing} missing`;
+  els.stats.textContent = `${plotted.toLocaleString()} pinned • ${missing.toLocaleString()} missing coords • ${total.toLocaleString()} total`;
 
   if (els.kpiVolume) {
     const label = activeYear === "all" ? "Volume" : `Volume (${activeYear})`;
@@ -264,9 +302,9 @@ function refresh() {
 
   if (els.panelBody) {
     els.panelBody.innerHTML = `
-      <div class="row"><span>Buyer</span><b>${buyerCount}</b></div>
-      <div class="row"><span>Seller</span><b>${sellerCount}</b></div>
-      <div class="row"><span>Unknown</span><b>${unknownCount}</b></div>
+      <div class="row"><span>Buyer</span><b>${buyerCount.toLocaleString()}</b></div>
+      <div class="row"><span>Seller</span><b>${sellerCount.toLocaleString()}</b></div>
+      <div class="row"><span>Unknown</span><b>${unknownCount.toLocaleString()}</b></div>
     `;
   }
 
@@ -284,17 +322,20 @@ function refresh() {
 =================================*/
 
 function populateYearDropdown() {
-  const years = Array.from(availableYears).sort((a,b)=>b-a);
+  const years = Array.from(availableYears).sort((a, b) => b - a);
   els.yearSelect.innerHTML = '<option value="all">All</option>';
-  years.forEach(y=>{
+
+  years.forEach((y) => {
     const opt = document.createElement("option");
-    opt.value = y;
-    opt.textContent = y;
+    opt.value = String(y);
+    opt.textContent = String(y);
     els.yearSelect.appendChild(opt);
   });
 }
 
 function loadData() {
+  if (els.stats) els.stats.textContent = "Loading…";
+
   Papa.parse(DATA_URL, {
     download: true,
     header: true,
@@ -303,18 +344,22 @@ function loadData() {
       allRows = results.data || [];
 
       availableYears = new Set();
-      allRows.forEach(row=>{
+      allRows.forEach((row) => {
         const dt = parseDate(row["Sold Date"]);
         if (dt) availableYears.add(dt.getFullYear());
       });
 
       populateYearDropdown();
       refresh();
+    },
+    error: (err) => {
+      console.error(err);
+      if (els.stats) els.stats.textContent = "Failed to load data_combined.csv";
     }
   });
 }
 
-els.yearSelect.addEventListener("change", refresh);
-els.ptypeChecks.forEach(c => c.addEventListener("change", refresh));
+if (els.yearSelect) els.yearSelect.addEventListener("change", refresh);
+els.ptypeChecks.forEach((c) => c.addEventListener("change", refresh));
 
 loadData();
