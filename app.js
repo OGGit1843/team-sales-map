@@ -68,6 +68,30 @@ mountLeafletUI();
 /* ===============================
    BASEMAPS
 =================================*/
+
+// --- MapTiler
+const MAPTILER_KEY = "PlAce3rug9We1IN6yy2W";
+
+const MAPTILER_ATTR =
+  '&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> ' +
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>';
+
+function maptilerLayer(mapId) {
+  return L.tileLayer(
+    `https://api.maptiler.com/maps/${mapId}/256/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`,
+    {
+      maxZoom: 20,
+      attribution: MAPTILER_ATTR
+    }
+  );
+}
+
+// MapTiler styles
+const mtStreet = maptilerLayer("streets-v2");
+const mtWinter = maptilerLayer("winter-v2");
+const mtHybrid = maptilerLayer("hybrid");
+
+// Existing basemaps
 const esriStreet = L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19, attribution: "Tiles © Esri" }
@@ -78,41 +102,31 @@ const muted = L.tileLayer(
   { maxZoom: 19, attribution: "© OpenStreetMap contributors" }
 );
 
-// Outdoors (terrain-ish)
-const outdoors = L.tileLayer(
-  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-  { maxZoom: 17, attribution: "© OpenTopoMap © OpenStreetMap contributors" }
-);
-
-const esriDark = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-  { maxZoom: 16, attribution: "Tiles © Esri" }
-);
-const esriDarkLabels = L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
-  { maxZoom: 16 }
-);
-const darkBase = L.layerGroup([esriDark, esriDarkLabels]);
-
 const esriSatellite = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19, attribution: "Tiles © Esri" }
 );
+
 const esriLabels = L.tileLayer(
   "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
   { maxZoom: 19 }
 );
+
 const satBase = L.layerGroup([esriSatellite, esriLabels]);
 
-// Default
+// Default layer (keep your Google-like street as default)
 esriStreet.addTo(window.map);
 
+// Layer switcher
 L.control.layers(
   {
     "Street (Google-like)": esriStreet,
-    "Outdoors": outdoors,
     "Muted": muted,
-    "Satellite + Labels": satBase
+    "Satellite + Labels": satBase,
+
+    "MapTiler Street": mtStreet,
+    "MapTiler Winter": mtWinter,
+    "MapTiler Hybrid": mtHybrid
   },
   {},
   { position: "topright" }
