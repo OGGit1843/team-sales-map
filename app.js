@@ -32,9 +32,6 @@ function mountLeafletUI() {
   const panel = frag.querySelector("#hgPanel");
   const openBtn = frag.querySelector("#hgOpenBtn");
   const closeBtn = frag.querySelector("#hgCloseBtn");
-  const openStandalone = frag.querySelector("#hgOpenStandalone");
-
-  if (openStandalone) openStandalone.href = window.location.href;
 
   window.map.getContainer().appendChild(openBtn);
 
@@ -114,10 +111,10 @@ const esriLabels = L.tileLayer(
 
 const satBase = L.layerGroup([esriSatellite, esriLabels]);
 
-// Default layer (keep your Google-like street as default)
+// Default layer
 esriStreet.addTo(window.map);
 
-// Layer switcher
+// Layer switcher (ordered)
 L.control.layers(
   {
     "MapTiler Street": mtStreet,
@@ -130,10 +127,14 @@ L.control.layers(
   {},
   { position: "topleft" }
 ).addTo(window.map);
+
 /* ===============================
    CLUSTER
 =================================*/
-const cluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 });
+const cluster = L.markerClusterGroup({
+  showCoverageOnHover: false,
+  maxClusterRadius: 45
+});
 window.map.addLayer(cluster);
 
 /* ===============================
@@ -142,7 +143,6 @@ window.map.addLayer(cluster);
 
 const els = {
   yearSelect: document.getElementById("yearSelect"),
-  stats: document.getElementById("stats"),
   ptypeChecks: Array.from(document.querySelectorAll(".ptype"))
 };
 
@@ -202,19 +202,13 @@ function refresh() {
   const activeTypes = getActivePropertyTypes();
   const activeYear = els.yearSelect.value;
 
-  let total = 0, plotted = 0, missing = 0;
-
   for (const row of allRows) {
-    total++;
 
     if (!activeTypes.has(row["Property Type"])) continue;
 
     const lat = Number(row["Latitude"]);
     const lng = Number(row["Longitude"]);
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-      missing++;
-      continue;
-    }
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
 
     const dt = parseDate(row["Sold Date"]);
     const year = dt ? String(dt.getFullYear()) : null;
@@ -225,13 +219,9 @@ function refresh() {
     cluster.addLayer(marker);
 
     plottedMarkers.push(marker);
-    plotted++;
   }
 
-  els.stats.textContent =
-    `${plotted} pinned • ${missing} missing coords • ${total} total`;
-
-  if (plotted > 0 && !hasAutoZoomed) {
+  if (plottedMarkers.length > 0 && !hasAutoZoomed) {
     const group = L.featureGroup(plottedMarkers);
     window.map.fitBounds(group.getBounds().pad(0.12));
     hasAutoZoomed = true;
