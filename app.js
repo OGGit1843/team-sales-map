@@ -5,19 +5,7 @@ const DATA_URL = "./data_combined.csv";
    MAP INIT
 =================================*/
 const map = L.map("map", { fullscreenControl: true }).setView([39.96, -82.99], 10);
-/* ===============================
-   EMBED DETECTION
-=================================*/
-(function () {
-  const btn = document.getElementById("open-fullscreen");
-  const hint = document.getElementById("footerHint");
 
-  let embedded = false;
-  try { embedded = window.self !== window.top; } catch { embedded = true; }
-
-  if (btn) btn.style.display = embedded ? "inline-flex" : "none";
-  if (hint) hint.style.display = embedded ? "block" : "none";
-})();
 /* Keep map below topbar */
 function setMapTopOffset() {
   const topbar = document.getElementById("topbar");
@@ -41,7 +29,7 @@ const esriStreet = L.tileLayer(
   { maxZoom: 19, attribution: "Tiles © Esri" }
 );
 
-// 2) Muted (OSM HOT style you liked as “muted-ish”)
+// 2) Muted
 const muted = L.tileLayer(
   "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
   { maxZoom: 19, attribution: "© OpenStreetMap contributors" }
