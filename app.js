@@ -115,6 +115,7 @@ const els = {
 let allRows = [];
 let plottedMarkers = [];
 let availableYears = new Set();
+let hasAutoZoomed = false;
 
 function parseSoldPrice(raw) {
   if (raw == null) return null;
@@ -251,10 +252,11 @@ function refresh() {
 
   els.stats.textContent = `${plotted.toLocaleString()} pinned • ${missing.toLocaleString()} missing coords • ${total.toLocaleString()} total`;
 
-  if (plotted > 0) {
-    const group = L.featureGroup(plottedMarkers);
-    map.fitBounds(group.getBounds().pad(0.12));
-  }
+  if (plotted > 0 && !hasAutoZoomed) {
+  const group = L.featureGroup(plottedMarkers);
+  map.fitBounds(group.getBounds().pad(0.12));
+  hasAutoZoomed = true;
+}
 }
 
 function populateYearDropdown() {
