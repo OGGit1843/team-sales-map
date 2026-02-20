@@ -114,7 +114,39 @@ function getActivePropertyTypes() {
 function getActiveYear() {
   return els.yearSelect.value || "all";
 }
+function txClass(tx) {
+  const t = (tx || "").toString().toLowerCase();
+  if (t.includes("seller") || t.includes("listing")) return "seller";
+  if (t.includes("buyer")) return "buyer";
+  return "unknown";
+}
 
+function typeEmoji(ptype) {
+  const p = (ptype || "").toString().toLowerCase();
+
+  // your sheet uses values like: Residential, Commercial, Multi-Family, Land
+  if (p.includes("res")) return "🏠";
+  if (p.includes("comm")) return "🏢";
+  if (p.includes("multi")) return "🏘️";
+  if (p.includes("land")) return "🌾";
+  return "📍";
+}
+
+function makeIcon(row) {
+  const tx = row["Transaction Type"];
+  const ptype = row["Property Type"];
+
+  const cls = txClass(tx);
+  const emoji = typeEmoji(ptype);
+
+  return L.divIcon({
+    className: "", // keep Leaflet from adding default icon styles
+    html: `<div class="marker ${cls}" title="${ptype || ""}">${emoji}</div>`,
+    iconSize: [34, 34],
+    iconAnchor: [17, 34],
+    popupAnchor: [0, -30]
+  });
+}
 function buildPopup(row) {
   const price = parseSoldPrice(row["Sold Price"]);
   const dt = parseDate(row["Sold Date"]);
@@ -168,7 +200,7 @@ function refresh() {
     const year = dt ? String(dt.getFullYear()) : null;
     if (activeYear !== "all" && year !== activeYear) continue;
 
-    const marker = L.marker([lat, lng]);
+    const marker = L.marker([lat, lng], { icon: makeIcon(row) });
     marker.bindPopup(buildPopup(row), { maxWidth: 320 });
     cluster.addLayer(marker);
     plottedMarkers.push(marker);
